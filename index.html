@@ -14,11 +14,11 @@
       background: radial-gradient(circle at 10% 20%, #030014, #010108);
       color: #f1f5f9;
     }
-    /* glassmorphism core */
+    /* Glassmorphic core */
     .glass-card {
       background: rgba(15, 25, 45, 0.55);
       backdrop-filter: blur(14px);
-      border: 1px solid rgba(139, 92, 246, 0.25);
+      border: 1px solid rgba(139, 92, 246, 0.3);
       border-radius: 2rem;
       box-shadow: 0 25px 40px -12px rgba(0,0,0,0.5);
     }
@@ -31,18 +31,42 @@
       background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(59,130,246,0.1));
       border: 1px solid rgba(139,92,246,0.4);
       backdrop-filter: blur(4px);
+      border-radius: 1.5rem;
+      transition: all 0.2s;
     }
     .category-chip {
-      transition: all 0.2s ease;
       background: rgba(30, 41, 59, 0.5);
       backdrop-filter: blur(4px);
       border: 1px solid rgba(139, 92, 246, 0.3);
+      transition: all 0.2s ease;
+      border-radius: 9999px;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
     }
     .category-chip:hover, .category-chip.active-cat {
       background: linear-gradient(135deg, #8b5cf6, #6366f1);
       border-color: transparent;
       transform: translateY(-2px);
       box-shadow: 0 8px 20px -8px #8b5cf6;
+      color: white;
+    }
+    .explore-cat-card {
+      background: rgba(18, 28, 45, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      border-radius: 1.5rem;
+      transition: all 0.2s;
+      cursor: pointer;
+      text-align: center;
+      padding: 1.5rem 1rem;
+    }
+    .explore-cat-card:hover {
+      transform: translateY(-6px);
+      background: rgba(139, 92, 246, 0.2);
+      border-color: #8b5cf6;
+      box-shadow: 0 15px 30px -12px rgba(139,92,246,0.3);
     }
     .app-card {
       background: rgba(18, 28, 45, 0.75);
@@ -128,7 +152,7 @@
   <div id="toastContainer"></div>
 </div>
 
-<!-- M-Pesa Modal Glass-->
+<!-- M-Pesa Modal Glass -->
 <div id="mpesaModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden modal-transition">
   <div class="bg-[#0a0f1f]/90 backdrop-blur-xl rounded-3xl p-6 w-full max-w-md mx-4 border border-purple-500/40 shadow-2xl">
     <h2 class="text-2xl font-bold mb-2 bg-gradient-to-r from-purple-300 to-indigo-300 bg-clip-text text-transparent">Pay with M-Pesa</h2>
@@ -141,7 +165,7 @@
 </div>
 
 <script>
-  // ---------- FULL APP DATA (15 APPS with exact logos mapping) ----------
+  // ========== FULL APP DATA (15 apps, logos, screenshots) ==========
   const logoMapping = {
     "maji-gas": "https://i.ibb.co/sJwP77mq/file-000000002a7c724698774712139656f9.png",
     "deep-focus": "https://i.ibb.co/204QYyVF/file-00000000c6707243af95f3105457c8b5.png",
@@ -183,7 +207,7 @@
   function fallbackLogo(appId, size=60){ return `https://ui-avatars.com/api/?background=8b5cf6&color=fff&name=${appId.slice(0,2)}&size=${size}&rounded=true&bold=true`; }
   function appLogoImg(app, sizeClass="w-14 h-14", px=56){ return `<img src="${app.logoUrl || fallbackLogo(app.id, px)}" class="${sizeClass} rounded-2xl shadow-lg object-cover border border-purple-500/30" onerror="this.src='${fallbackLogo(app.id, px)}'">`; }
   
-  // state
+  // ---------- STATE (fully preserved) ----------
   let currentUser = JSON.parse(localStorage.getItem("meonUser")) || null;
   let activeView = "home", selectedApp = null, searchQuery = "", activeCategoryFilter = "";
   let userFavorites = JSON.parse(localStorage.getItem("meonFavorites")) || [];
@@ -199,29 +223,56 @@
   async function initiateMpesaPayment(phone,amount,ref,appName){ return new Promise((resolve)=>{ showToast(`📱 STK push to ${phone} for KES ${amount}. Check your phone.`,"info"); setTimeout(()=>{ showToast(`✅ Payment of KES ${amount} for ${appName} successful! Receipt: MOCK${Date.now()}`,"success"); resolve(true); },2500); });}
   let currentPaymentApp=null; function showMpesaPaymentModal(app){ if(!currentUser){ showToast("Login to purchase","error"); return; } currentPaymentApp=app; document.getElementById("mpesaAppName").innerText=`${app.name} - KES ${app.price}`; document.getElementById("mpesaAmount").value=app.price; document.getElementById("mpesaPhone").value=""; document.getElementById("mpesaModal").classList.remove("hidden");}
   async function confirmMpesaPayment(){ const phone=document.getElementById("mpesaPhone").value.trim(); if(!phone){ showToast("Enter M-Pesa number","error"); return; } if(!currentPaymentApp) return; const amount=currentPaymentApp.price; document.getElementById("mpesaModal").classList.add("hidden"); const success=await initiateMpesaPayment(phone,amount,`MEON_${currentPaymentApp.id}`,currentPaymentApp.name); if(success){ if(!userDownloads.find(d=>d.appId===currentPaymentApp.id)){ userDownloads.push({appId:currentPaymentApp.id, downloadedAt:new Date().toISOString(), version:currentPaymentApp.version}); currentPaymentApp.downloads+=1; saveState(); showToast(`${currentPaymentApp.name} added to library`,"success"); renderCurrentView(); } } currentPaymentApp=null; }
-
   function getFilteredApps(){ let filtered=[...appList]; if(searchQuery){ const q=searchQuery.toLowerCase(); filtered=filtered.filter(app=>app.name.toLowerCase().includes(q)||app.shortDesc.toLowerCase().includes(q)||app.category.toLowerCase().includes(q)); } if(activeCategoryFilter) filtered=filtered.filter(app=>app.category.toLowerCase()===activeCategoryFilter.toLowerCase()); return filtered; }
   
-  // ---------- MODERN UI RENDER ----------
+  // ---------- MODERN UI RENDER (image match) ----------
   function renderHome(){
     const filtered = getFilteredApps();
     const featuredApps = ["guard-ai","deep-focus","luminor-studio"].map(id=>appList.find(a=>a.id===id)).filter(Boolean);
     const trending = [...filtered].sort((a,b)=>b.downloads-a.downloads).slice(0,6);
-    const categoryList = ["All Solutions","AI Solutions","Business","Education","Agriculture","Transport","Creativity"];
-    const catFilters = {"All Solutions":"","AI Solutions":"ai tools","Business":"business","Education":"education","Agriculture":"agriculture","Transport":"transport","Creativity":"design"};
+    // Category chips exactly as image
+    const categoryChips = ["All Solutions","AI Solutions","Business","Education","Agriculture","Transport","Creativity"];
+    const catFilterMap = {"All Solutions":"","AI Solutions":"ai tools","Business":"business","Education":"education","Agriculture":"agriculture","Transport":"transport","Creativity":"design"};
+    // Explore categories cards (Agriculture, Transport, Creativity, etc)
+    const exploreCategories = [
+      { name: "Agriculture", icon: "🌾", filter: "agriculture" },
+      { name: "Transport", icon: "🚚", filter: "transport" },
+      { name: "Creativity", icon: "🎨", filter: "design" },
+      { name: "AI Solutions", icon: "🧠", filter: "ai tools" },
+      { name: "Business", icon: "💼", filter: "business" },
+      { name: "Education", icon: "📚", filter: "education" }
+    ];
     return `
       <div class="space-y-12">
-        <!-- Hero Section glass stats + glow -->
+        <!-- Hero Section with stats (inspired by reference image) -->
         <div class="relative overflow-hidden rounded-3xl glass-card p-8 md:p-10">
           <div class="hero-glow top-0 -right-40"></div><div class="hero-glow bottom-0 left-20 opacity-40"></div>
-          <div class="relative z-10"><div class="flex flex-wrap justify-between items-start gap-6"><div><div class="text-sm font-mono text-purple-300 tracking-wider">MEON MARKETPLACE</div><h1 class="text-5xl md:text-7xl font-black mt-2 tracking-tight">LogicDriven. <span class="gradient-text">FutureProven.</span></h1><p class="text-gray-300 max-w-xl mt-3 text-lg">Building intelligent solutions for a smarter tomorrow. Technology, creativity, purpose.</p></div><div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 md:mt-0"><div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-black">15+</div><div class="text-xs uppercase tracking-wider text-purple-300">Applications</div></div><div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-black">500K+</div><div class="text-xs uppercase tracking-wider text-purple-300">Downloads</div></div><div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-black">4.8★</div><div class="text-xs uppercase tracking-wider text-purple-300">Avg Rating</div></div><div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-black">24/7</div><div class="text-xs uppercase tracking-wider text-purple-300">Innovation</div></div></div></div><div class="flex flex-wrap gap-4 mt-8"><button id="exploreAllBtn" class="btn-primary px-6 py-3 rounded-xl font-bold text-white shadow-lg">Explore All Apps →</button><button id="becomeDevHeroBtn" class="bg-white/10 border border-purple-400/40 px-6 py-3 rounded-xl font-bold backdrop-blur-sm hover:bg-white/20">Become a Developer</button></div></div></div>
-        <!-- search bar glass -->
+          <div class="relative z-10">
+            <div class="flex flex-wrap justify-between items-start gap-6">
+              <div>
+                <div class="text-sm font-mono text-purple-300 tracking-wider">MEON MARKETPLACE</div>
+                <h1 class="text-5xl md:text-7xl font-black mt-2 tracking-tight">LogicDriven. <span class="gradient-text">FutureProven.</span></h1>
+                <p class="text-gray-300 max-w-xl mt-3 text-lg">Building intelligent solutions for a smarter tomorrow. Technology, creativity, purpose.</p>
+              </div>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 md:mt-0">
+                <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-black">15+</div><div class="text-xs uppercase tracking-wider text-purple-300">Applications</div></div>
+                <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-black">500K+</div><div class="text-xs uppercase tracking-wider text-purple-300">Downloads</div></div>
+                <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-black">4.8★</div><div class="text-xs uppercase tracking-wider text-purple-300">Avg Rating</div></div>
+                <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-black">24/7</div><div class="text-xs uppercase tracking-wider text-purple-300">Innovation</div></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-4 mt-8"><button id="exploreAllBtn" class="btn-primary px-6 py-3 rounded-xl font-bold text-white shadow-lg">Explore All Apps →</button><button id="becomeDevHeroBtn" class="bg-white/10 border border-purple-400/40 px-6 py-3 rounded-xl font-bold backdrop-blur-sm hover:bg-white/20">Become a Developer</button></div>
+          </div>
+        </div>
+        <!-- Search bar -->
         <div class="glass-panel rounded-2xl p-3 flex items-center gap-3"><i data-lucide="search" class="text-purple-400 w-5 h-5"></i><input type="text" id="globalSearchInput" placeholder="Search apps, services, AI tools, business solutions..." class="w-full bg-transparent outline-none text-white" value="${searchQuery.replace(/"/g, '&quot;')}"></div>
-        <!-- category chips -->
-        <div><div class="flex flex-wrap gap-3 justify-center">${categoryList.map(cat=>`<button data-cat-filter="${catFilters[cat] || ''}" class="category-chip px-5 py-2 rounded-full text-sm font-medium ${(activeCategoryFilter===catFilters[cat]) ? 'active-cat text-white' : 'text-gray-300'}">${cat}</button>`).join('')}${activeCategoryFilter?`<button id="clearCatFilter" class="bg-red-500/20 border border-red-400/40 px-4 py-2 rounded-full text-sm">Clear ✕</button>`:""}</div></div>
-        <!-- featured three cards exactly like image -->
+        <!-- Category chips row -->
+        <div class="flex flex-wrap gap-3 justify-center">${categoryChips.map(cat=>`<button data-cat-filter="${catFilterMap[cat] || ''}" class="category-chip ${(activeCategoryFilter===catFilterMap[cat]) ? 'active-cat' : ''}">${cat}</button>`).join('')}${activeCategoryFilter?`<button id="clearCatFilter" class="bg-red-500/20 border border-red-400/40 px-4 py-2 rounded-full text-sm">Clear ✕</button>`:""}</div>
+        <!-- Explore Categories section with cards -->
+        <div><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-lucide="grid" class="text-purple-400"></i> Explore Categories</h2><div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">${exploreCategories.map(cat=>`<div class="explore-cat-card" data-cat-filter="${cat.filter}"><div class="text-3xl mb-2">${cat.icon}</div><div class="font-semibold">${cat.name}</div><div class="text-xs text-purple-300 mt-1">View All →</div></div>`).join('')}</div></div>
+        <!-- Featured Apps row (3 cards exactly as image) -->
         <div><h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="zap" class="text-purple-400"></i> Featured Intelligence</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">${featuredApps.map(app=>appCardModern(app)).join('')}</div></div>
-        <!-- trending apps -->
+        <!-- Trending section -->
         <div><h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="trending-up" class="text-purple-400"></i> Trending on Meon</h2><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">${trending.map(app=>appCardModern(app)).join('')}</div></div>
       </div>
     `;
@@ -235,7 +286,7 @@
   function renderAdmin(){ if(!currentUser||(currentUser.role!=='admin'&&currentUser.role!=='super_admin')) return `<div class="text-center py-20">Admin Restricted</div>`; return `<div class="glass-panel p-7 rounded-3xl"><h1 class="text-3xl font-bold">Meon Admin Console</h1><div class="grid grid-cols-3 gap-5 mt-6"><div class="stats-glow p-4 rounded-2xl"><div class="text-2xl font-black">1.2k+</div><div>Active Users</div></div><div class="stats-glow p-4 rounded-2xl"><div class="text-2xl font-black">${appList.reduce((s,a)=>s+a.downloads,0).toLocaleString()}</div><div>Downloads</div></div><div class="stats-glow p-4 rounded-2xl"><div class="text-2xl font-black">$22.4k</div><div>Revenue</div></div></div><div class="mt-8"><h2 class="font-bold">App Management</h2>${appList.map(a=>`<div class="flex justify-between items-center border-b border-white/10 py-2"><span>${a.name}</span><button class="btn-primary px-3 py-1 rounded-lg text-xs" onclick="alert('Demo: Manage ${a.name}')">Edit</button></div>`).join('')}</div></div>`;}
   function renderDeveloper(){ if(!currentUser||currentUser.role!=='developer') return `<div class="text-center py-20">Developer Hub Access Only</div>`; return `<div class="glass-panel p-7 rounded-3xl"><h1 class="text-3xl font-bold">🛠️ Developer Hub</h1><p>Analytics & Submissions</p><div class="mt-5 grid gap-3">${appList.slice(0,3).map(a=>`<div class="flex justify-between"><span>${a.name}</span><span>📈 ${a.downloads} downloads | ⭐${a.rating}</span></div>`).join('')}</div><button class="mt-7 btn-primary px-6 py-2 rounded-xl">+ Submit New Version</button></div>`;}
   
-  function renderCurrentView(){ const container=document.getElementById("mainContent"); if(!container) return; if(selectedApp) container.innerHTML=renderAppDetail(); else if(activeView==="home"){ container.innerHTML=renderHome(); setTimeout(()=>{ const search=document.getElementById("globalSearchInput"); if(search) search.addEventListener("input",(e)=>{ searchQuery=e.target.value; renderCurrentView(); }); document.querySelectorAll(".category-chip").forEach(ch=>{ ch.addEventListener("click",()=>{ activeCategoryFilter=ch.getAttribute("data-cat-filter")||""; renderCurrentView(); }); }); const clear=document.getElementById("clearCatFilter"); if(clear) clear.addEventListener("click",()=>{ activeCategoryFilter=""; renderCurrentView(); }); const exploreBtn=document.getElementById("exploreAllBtn"); if(exploreBtn) exploreBtn.addEventListener("click",()=>window.scrollTo({top:document.body.scrollHeight/2,behavior:"smooth"})); const devHero=document.getElementById("becomeDevHeroBtn"); if(devHero) devHero.addEventListener("click",()=>{ if(!currentUser) showToast("Login to become developer","error"); else { activeView="developer"; renderCurrentView(); } }); },50); } else if(activeView==="dashboard") container.innerHTML=renderDashboard(); else if(activeView==="admin") container.innerHTML=renderAdmin(); else if(activeView==="developer") container.innerHTML=renderDeveloper(); if(window.lucide) lucide.createIcons(); if(selectedApp&&document.getElementById("reviewStars")){ let ratingVal=0; const starDiv=document.getElementById("reviewStars"); starDiv.innerHTML=""; for(let i=1;i<=5;i++){ let star=document.createElement("i"); star.setAttribute("data-lucide","star"); star.className="w-6 h-6 cursor-pointer rating-star text-gray-400 hover:text-yellow-400"; star.onclick=()=>{ratingVal=i; document.querySelectorAll("#reviewStars i").forEach((s,idx)=>s.style.fill=idx<i?"#facc15":"none");}; starDiv.appendChild(star);} if(window.lucide) lucide.createIcons(); document.getElementById("submitReviewBtn")?.addEventListener("click",()=>{ const txt=document.getElementById("reviewText").value; if(ratingVal&&txt) submitReview(selectedApp.id,ratingVal,txt); else showToast("Provide rating & comment","error");}); } }
+  function renderCurrentView(){ const container=document.getElementById("mainContent"); if(!container) return; if(selectedApp) container.innerHTML=renderAppDetail(); else if(activeView==="home"){ container.innerHTML=renderHome(); setTimeout(()=>{ const search=document.getElementById("globalSearchInput"); if(search) search.addEventListener("input",(e)=>{ searchQuery=e.target.value; renderCurrentView(); }); document.querySelectorAll(".category-chip").forEach(ch=>{ ch.addEventListener("click",()=>{ activeCategoryFilter=ch.getAttribute("data-cat-filter")||""; renderCurrentView(); }); }); document.querySelectorAll(".explore-cat-card").forEach(card=>{ card.addEventListener("click",()=>{ const filter=card.getAttribute("data-cat-filter"); if(filter){ activeCategoryFilter=filter; renderCurrentView(); } }); }); const clear=document.getElementById("clearCatFilter"); if(clear) clear.addEventListener("click",()=>{ activeCategoryFilter=""; renderCurrentView(); }); const exploreBtn=document.getElementById("exploreAllBtn"); if(exploreBtn) exploreBtn.addEventListener("click",()=>window.scrollTo({top:document.body.scrollHeight/2,behavior:"smooth"})); const devHero=document.getElementById("becomeDevHeroBtn"); if(devHero) devHero.addEventListener("click",()=>{ if(!currentUser) showToast("Login to become developer","error"); else { activeView="developer"; renderCurrentView(); } }); },50); } else if(activeView==="dashboard") container.innerHTML=renderDashboard(); else if(activeView==="admin") container.innerHTML=renderAdmin(); else if(activeView==="developer") container.innerHTML=renderDeveloper(); if(window.lucide) lucide.createIcons(); if(selectedApp&&document.getElementById("reviewStars")){ let ratingVal=0; const starDiv=document.getElementById("reviewStars"); starDiv.innerHTML=""; for(let i=1;i<=5;i++){ let star=document.createElement("i"); star.setAttribute("data-lucide","star"); star.className="w-6 h-6 cursor-pointer rating-star text-gray-400 hover:text-yellow-400"; star.onclick=()=>{ratingVal=i; document.querySelectorAll("#reviewStars i").forEach((s,idx)=>s.style.fill=idx<i?"#facc15":"none");}; starDiv.appendChild(star);} if(window.lucide) lucide.createIcons(); document.getElementById("submitReviewBtn")?.addEventListener("click",()=>{ const txt=document.getElementById("reviewText").value; if(ratingVal&&txt) submitReview(selectedApp.id,ratingVal,txt); else showToast("Provide rating & comment","error");}); } }
   function renderNav(){ const authDiv=document.getElementById("authSection"); if(!authDiv) return; if(currentUser){ authDiv.innerHTML=`<span class="text-sm hidden sm:inline">${currentUser.email}</span><button id="logoutBtn" class="bg-red-600/80 px-4 py-1.5 rounded-xl text-sm font-medium">Logout</button>`; document.getElementById("logoutBtn")?.addEventListener("click",logout); const adminBtn=document.getElementById("adminNavBtn"),devBtn=document.getElementById("devNavBtn"); if(currentUser.role==="admin"||currentUser.role==="super_admin") adminBtn?.classList.remove("hidden"); else adminBtn?.classList.add("hidden"); if(currentUser.role==="developer") devBtn?.classList.remove("hidden"); else devBtn?.classList.add("hidden"); } else { authDiv.innerHTML=`<button id="showLoginModalBtn" class="bg-purple-600/80 px-5 py-1.5 rounded-xl text-sm font-medium">Sign In</button>`; document.getElementById("showLoginModalBtn")?.addEventListener("click",()=>{ const modalDiv=document.createElement("div"); modalDiv.className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"; modalDiv.innerHTML=`<div class="bg-[#0a0f1f] rounded-3xl p-7 w-96 border border-purple-500/40"><h2 class="text-2xl font-bold">Meon Access</h2><input id="loginEmailDemo" placeholder="Email" class="w-full mt-4 p-3 rounded-xl bg-white/10 border"><div class="flex gap-3 mt-5"><button id="demoLoginBtn" class="flex-1 btn-primary py-2 rounded-xl">Login</button><button id="demoAdminAccessBtn" class="flex-1 bg-purple-800 py-2 rounded-xl">Admin Demo</button><button id="demoDevAccessBtn" class="flex-1 bg-amber-700 py-2 rounded-xl">Dev Demo</button></div><button id="closeAuthModal" class="mt-4 text-gray-400 text-sm w-full">Cancel</button></div>`; document.body.appendChild(modalDiv); document.getElementById("demoLoginBtn")?.addEventListener("click",()=>{ const email=document.getElementById("loginEmailDemo").value||"user@meon.com"; loginUser(email,"user"); modalDiv.remove();}); document.getElementById("demoAdminAccessBtn")?.addEventListener("click",()=>{ loginUser("admin@meon.com","admin"); modalDiv.remove();}); document.getElementById("demoDevAccessBtn")?.addEventListener("click",()=>{ loginUser("dev@meon.com","developer"); modalDiv.remove();}); document.getElementById("closeAuthModal")?.addEventListener("click",()=>modalDiv.remove()); }); document.getElementById("adminNavBtn")?.classList.add("hidden"); document.getElementById("devNavBtn")?.classList.add("hidden"); } if(window.lucide) lucide.createIcons(); }
   window.showAppDetail=(id)=>{ selectedApp=appList.find(a=>a.id===id); renderCurrentView(); };
   window.backToHome=()=>{ selectedApp=null; renderCurrentView(); };
