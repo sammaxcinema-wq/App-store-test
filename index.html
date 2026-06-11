@@ -21,6 +21,19 @@
       border-radius: 2rem;
       transition: all 0.25s ease;
     }
+    /* Hero specific overlay to keep readability over background image */
+    .hero-bg-image {
+      background-image: url('https://i.ibb.co/kgyWPLFs/1781207309398.png');
+      background-size: cover;
+      background-position: center 30%;
+      background-repeat: no-repeat;
+      position: relative;
+    }
+    .hero-overlay {
+      background: rgba(3, 0, 20, 0.65);
+      backdrop-filter: blur(2px);
+      border-radius: inherit;
+    }
     .app-card {
       background: rgba(18, 28, 45, 0.75);
       backdrop-filter: blur(16px);
@@ -82,10 +95,6 @@
       border: 1px solid rgba(139,92,246,0.4);
       backdrop-filter: blur(4px);
       border-radius: 1.5rem;
-    }
-    /* Hero background overlay ensures text readability */
-    .hero-bg-overlay {
-      background: radial-gradient(circle at 20% 30%, rgba(0,0,0,0.5), rgba(0,0,0,0.75));
     }
   </style>
 </head>
@@ -195,7 +204,7 @@
   function submitReview(appId, rating, content){ if(!currentUser) return false; if(!reviewsData[appId]) reviewsData[appId]=[]; reviewsData[appId].push({userId:currentUser.id, user:currentUser.name, rating, content, date:new Date().toISOString()}); const allRatings=reviewsData[appId].map(r=>r.rating); const avg=allRatings.reduce((a,b)=>a+b,0)/allRatings.length; const appObj=appList.find(a=>a.id===appId); if(appObj){ appObj.rating=parseFloat(avg.toFixed(1)); appObj.ratingCount=allRatings.length; } saveState(); showToast("Review submitted","success"); renderCurrentView(); return true;}
   function getFilteredApps(){ let filtered=[...appList]; if(searchQuery){ const q=searchQuery.toLowerCase(); filtered=filtered.filter(app=>app.name.toLowerCase().includes(q)||app.shortDesc.toLowerCase().includes(q)||app.category.toLowerCase().includes(q)); } if(activeCategoryFilter) filtered=filtered.filter(app=>app.category.toLowerCase()===activeCategoryFilter.toLowerCase()); return filtered; }
 
-  // Updated Hero Section: using the provided image as background, preserving all apps and design
+  // Updated Hero Section: background image applied via CSS, overlay for readability, original content preserved
   function renderHome() {
     const filtered = getFilteredApps();
     const featured = ["guard-ai","deep-focus","luminor-studio"].map(id=>appList.find(a=>a.id===id));
@@ -204,42 +213,39 @@
     const catMap = {"AI Solutions":"ai tools","Business":"business","Education":"education","Agriculture":"agriculture","Transport":"transport","Creativity":"design","Productivity":"productivity","Analytics":"analytics"};
     return `
       <div class="space-y-10">
-        <!-- Hero Section: Background image with dark overlay, no separate img tag -->
-        <div class="relative overflow-hidden rounded-3xl p-8 md:p-10 flex flex-wrap items-center gap-8 border border-purple-500/30 shadow-2xl" style="background-image: url('https://i.ibb.co/kgyWPLFs/1781207309398.png'); background-size: cover; background-position: center 30%;">
-          <!-- Dark gradient overlay for text readability -->
-          <div class="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-purple-900/40 rounded-3xl"></div>
-          <div class="hero-glow top-0 -right-40 z-0"></div>
-          <div class="hero-glow bottom-0 left-20 opacity-40 z-0"></div>
-          
-          <!-- Text Content (left side) -->
-          <div class="flex-1 min-w-[280px] z-10 relative">
-            <div class="text-purple-300 text-sm font-mono tracking-wider">MEON MARKETPLACE</div>
-            <h1 class="text-5xl md:text-7xl font-black mt-2 tracking-tight">LogicDriven. <span class="gradient-text">FutureProven.</span></h1>
-            <p class="text-gray-200 max-w-xl mt-3 text-lg drop-shadow-md">Building intelligent solutions for a smarter tomorrow. 15+ applications, AI-powered.</p>
-            <div class="flex gap-4 mt-6">
-              <button id="exploreBtn" class="btn-primary px-6 py-3 rounded-xl font-bold shadow-lg">Explore All Apps →</button>
-              <button id="devHeroBtn" class="border border-purple-400/40 bg-black/20 backdrop-blur-sm px-6 py-3 rounded-xl hover:bg-white/10 transition">Become a Developer</button>
+        <!-- Hero Section with background image (i.ibb.co image) and overlay preserving content -->
+        <div class="relative overflow-hidden rounded-3xl border border-purple-500/40 hero-bg-image">
+          <div class="hero-overlay p-8 md:p-10 flex flex-wrap items-center gap-8">
+            <div class="hero-glow top-0 -right-40"></div>
+            <div class="hero-glow bottom-0 left-20 opacity-40"></div>
+            <div class="flex-1 min-w-[280px] z-10">
+              <div class="text-purple-300 text-sm font-mono tracking-wider">MEON MARKETPLACE</div>
+              <h1 class="text-5xl md:text-7xl font-black mt-2 tracking-tight">LogicDriven. <span class="gradient-text">FutureProven.</span></h1>
+              <p class="text-gray-300 max-w-xl mt-3 text-lg">Building intelligent solutions for a smarter tomorrow. 15+ applications, AI-powered.</p>
+              <div class="flex gap-4 mt-6">
+                <button id="exploreBtn" class="btn-primary px-6 py-3 rounded-xl font-bold shadow-lg">Explore All Apps →</button>
+                <button id="devHeroBtn" class="border border-purple-400/40 px-6 py-3 rounded-xl backdrop-blur-sm hover:bg-white/10">Become a Developer</button>
+              </div>
+            </div>
+            <!-- No separate image element; it's the background, so content remains crisp -->
+            <div class="flex-1 flex justify-center z-10">
+              <!-- decorative empty block to maintain layout symmetry, but no visible image duplicated -->
+            </div>
+            <!-- Stats summary -->
+            <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 z-10">
+              <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-bold">15+</div><div class="text-xs text-purple-300">Apps</div></div>
+              <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-bold">500K+</div><div class="text-xs text-purple-300">Downloads</div></div>
+              <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-bold">4.8★</div><div class="text-xs text-purple-300">Rating</div></div>
+              <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-bold">24/7</div><div class="text-xs text-purple-300">Innovation</div></div>
             </div>
           </div>
-          
-          <!-- Stats summary (full width below text, no separate image column) -->
-          <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 z-10 relative">
-            <div class="stats-glow rounded-2xl p-4 text-center bg-black/30 backdrop-blur-sm"><div class="text-2xl font-bold">15+</div><div class="text-xs text-purple-300">Apps</div></div>
-            <div class="stats-glow rounded-2xl p-4 text-center bg-black/30 backdrop-blur-sm"><div class="text-2xl font-bold">500K+</div><div class="text-xs text-purple-300">Downloads</div></div>
-            <div class="stats-glow rounded-2xl p-4 text-center bg-black/30 backdrop-blur-sm"><div class="text-2xl font-bold">4.8★</div><div class="text-xs text-purple-300">Rating</div></div>
-            <div class="stats-glow rounded-2xl p-4 text-center bg-black/30 backdrop-blur-sm"><div class="text-2xl font-bold">24/7</div><div class="text-xs text-purple-300">Innovation</div></div>
-          </div>
         </div>
-        
         <!-- Search bar -->
-        <div class="glass-card rounded-2xl p-3 flex gap-3"><i data-lucide="search" class="text-purple-400"></i><input type="text" id="globalSearch" placeholder="Search apps, AI tools, business solutions..." class="w-full bg-transparent outline-none text-white" value="${searchQuery.replace(/"/g, '&quot;')}"></div>
-        
+        <div class="glass-panel rounded-2xl p-3 flex gap-3"><i data-lucide="search" class="text-purple-400"></i><input type="text" id="globalSearch" placeholder="Search apps, AI tools, business solutions..." class="w-full bg-transparent outline-none text-white" value="${searchQuery.replace(/"/g, '&quot;')}"></div>
         <!-- Category filters -->
         <div class="flex flex-wrap gap-3 justify-center">${categories.map(cat=>`<button data-cat="${catMap[cat] || (cat==='All'?'':cat.toLowerCase())}" class="category-chip ${(activeCategoryFilter=== (catMap[cat]||(cat==='All'?'':cat.toLowerCase()))) ? 'active' : ''}">${cat}</button>`).join('')}${activeCategoryFilter?`<button id="clearCat" class="bg-red-500/20 px-4 py-2 rounded-full text-sm">Clear ✕</button>`:""}</div>
-        
         <!-- Featured apps row -->
         <div><h2 class="text-2xl font-bold flex gap-2 mb-4"><i data-lucide="zap" class="text-purple-400"></i> Featured Intelligence</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-6">${featured.map(app=>appCard(app)).join('')}</div></div>
-        
         <!-- Trending apps -->
         <div><h2 class="text-2xl font-bold flex gap-2 mb-4"><i data-lucide="trending-up" class="text-purple-400"></i> Trending on Meon</h2><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">${trending.map(app=>appCard(app)).join('')}</div></div>
       </div>
