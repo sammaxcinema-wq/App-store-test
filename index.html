@@ -21,9 +21,9 @@
       border-radius: 2rem;
       transition: all 0.25s ease;
     }
-    /* Hero specific overlay to keep readability over background image */
+    /* Hero background with the NEW Instagram screenshot image */
     .hero-bg-image {
-      background-image: url('https://i.ibb.co/kgyWPLFs/1781207309398.png');
+      background-image: url('https://i.ibb.co/7tFcgq9H/Screenshot-20260611-224639-Instagram.jpg');
       background-size: cover;
       background-position: center 30%;
       background-repeat: no-repeat;
@@ -141,7 +141,7 @@
 </div>
 
 <script>
-  // ==================== ACTUAL MEON APPS (15 apps) ====================
+  // ==================== ACTUAL MEON APPS (15 apps) - FULLY PRESERVED ====================
   const logoMapping = {
     "maji-gas": "https://i.ibb.co/sJwP77mq/file-000000002a7c724698774712139656f9.png",
     "deep-focus": "https://i.ibb.co/204QYyVF/file-00000000c6707243af95f3105457c8b5.png",
@@ -204,7 +204,7 @@
   function submitReview(appId, rating, content){ if(!currentUser) return false; if(!reviewsData[appId]) reviewsData[appId]=[]; reviewsData[appId].push({userId:currentUser.id, user:currentUser.name, rating, content, date:new Date().toISOString()}); const allRatings=reviewsData[appId].map(r=>r.rating); const avg=allRatings.reduce((a,b)=>a+b,0)/allRatings.length; const appObj=appList.find(a=>a.id===appId); if(appObj){ appObj.rating=parseFloat(avg.toFixed(1)); appObj.ratingCount=allRatings.length; } saveState(); showToast("Review submitted","success"); renderCurrentView(); return true;}
   function getFilteredApps(){ let filtered=[...appList]; if(searchQuery){ const q=searchQuery.toLowerCase(); filtered=filtered.filter(app=>app.name.toLowerCase().includes(q)||app.shortDesc.toLowerCase().includes(q)||app.category.toLowerCase().includes(q)); } if(activeCategoryFilter) filtered=filtered.filter(app=>app.category.toLowerCase()===activeCategoryFilter.toLowerCase()); return filtered; }
 
-  // Updated Hero Section: background image applied via CSS, overlay for readability, original content preserved
+  // Updated Hero Section with new background image (Instagram screenshot)
   function renderHome() {
     const filtered = getFilteredApps();
     const featured = ["guard-ai","deep-focus","luminor-studio"].map(id=>appList.find(a=>a.id===id));
@@ -213,7 +213,7 @@
     const catMap = {"AI Solutions":"ai tools","Business":"business","Education":"education","Agriculture":"agriculture","Transport":"transport","Creativity":"design","Productivity":"productivity","Analytics":"analytics"};
     return `
       <div class="space-y-10">
-        <!-- Hero Section with background image (i.ibb.co image) and overlay preserving content -->
+        <!-- Hero Section: background image = your new Instagram screenshot -->
         <div class="relative overflow-hidden rounded-3xl border border-purple-500/40 hero-bg-image">
           <div class="hero-overlay p-8 md:p-10 flex flex-wrap items-center gap-8">
             <div class="hero-glow top-0 -right-40"></div>
@@ -227,10 +227,8 @@
                 <button id="devHeroBtn" class="border border-purple-400/40 px-6 py-3 rounded-xl backdrop-blur-sm hover:bg-white/10">Become a Developer</button>
               </div>
             </div>
-            <!-- No separate image element; it's the background, so content remains crisp -->
-            <div class="flex-1 flex justify-center z-10">
-              <!-- decorative empty block to maintain layout symmetry, but no visible image duplicated -->
-            </div>
+            <!-- Empty right side to keep balance; background image visible through overlay -->
+            <div class="flex-1 flex justify-center z-10"></div>
             <!-- Stats summary -->
             <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 z-10">
               <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-bold">15+</div><div class="text-xs text-purple-300">Apps</div></div>
