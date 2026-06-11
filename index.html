@@ -1,294 +1,663 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Anime Fighter Registry | Immersive Hero Section</title>
-    <!-- Tailwind CSS + Google Fonts + Base style overrides -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- React & ReactDOM (modern) -->
-    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        * { font-family: 'Inter', sans-serif; }
-        body { background-color: #0a0a0a; margin: 0; overflow-x: hidden; }
-        /* custom scrollbar for roster */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        @keyframes spin-slow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .animate-spin-slow {
-            animation: spin-slow 120s linear infinite;
-        }
-        /* smooth transitions for character switch */
-        .transition-all-300 { transition: all 0.3s ease-in-out; }
-        .glass-panel {
-            background: rgba(23, 23, 23, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Meon | Intelligence · Innovation · Inspiration</title>
+  <meta name="description" content="Meon App Store – Daraja M-Pesa STK Push for seamless payments">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    body { transition: background-color 0.3s, color 0.3s; }
+    .dark { background-color: #0f172a; color: #e2e8f0; }
+    .rating-star { cursor: pointer; transition: transform 0.1s; }
+    .rating-star:hover { transform: scale(1.1); }
+    .modal-transition { transition: opacity 0.2s ease, visibility 0.2s; }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .card-hover { transition: all 0.2s ease; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1); }
+    .meon-logo-bg {
+      background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 100%);
+      border-radius: 14px;
+      box-shadow: 0 6px 12px -6px rgba(0,0,0,0.3);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+    .toast { position: fixed; bottom: 20px; right: 20px; z-index: 9999; animation: slideIn 0.3s ease; }
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    img.app-logo { background: #1e293b; object-fit: cover; }
+    /* Animations for hero */
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin-slow {
+      animation: spin-slow 20s linear infinite;
+    }
+    .animate-spin-reverse {
+      animation: spin-slow 30s linear infinite reverse;
+    }
+    @keyframes floatImage {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    .animate-float {
+      animation: floatImage 6s ease-in-out infinite;
+    }
+  </style>
 </head>
-<body class="bg-black text-white antialiased">
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
-<div id="hero-root" class="w-full min-h-screen"></div>
+<div id="app" class="min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-800">
+    <div class="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="meon-logo-bg px-4 py-2 flex flex-col items-start leading-tight">
+          <span class="text-white font-extrabold text-2xl tracking-wide">meon</span>
+          <span class="text-[10px] font-medium text-purple-200 tracking-wider uppercase">INTELLIGENCE·INNOVATION·INSPIRATION</span>
+        </div>
+        <span class="font-bold text-xl tracking-tight hidden sm:inline-block">Meon Store</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+          <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
+          <i data-lucide="sun" class="w-5 h-5 hidden dark:inline"></i>
+        </button>
+        <div id="authSection" class="flex items-center gap-2"></div>
+      </div>
+    </div>
+    <div class="container mx-auto px-4">
+      <div class="flex gap-6 overflow-x-auto pb-2 scrollbar-hide">
+        <button data-nav="home" class="nav-btn font-semibold py-2 border-b-2 border-purple-600 text-purple-600">Home</button>
+        <button data-nav="dashboard" class="nav-btn font-semibold py-2 border-b-2 border-transparent hover:text-gray-700">My Dashboard</button>
+        <button data-nav="admin" id="adminNavBtn" class="nav-btn hidden font-semibold py-2 border-b-2 border-transparent">Admin Panel</button>
+        <button data-nav="developer" id="devNavBtn" class="nav-btn hidden font-semibold py-2 border-b-2 border-transparent">Developer Hub</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="mainContent" class="flex-1 container mx-auto px-4 py-8"></main>
+  <div id="toastContainer"></div>
+</div>
+
+<!-- M-Pesa Modal -->
+<div id="mpesaModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden modal-transition">
+  <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md mx-4">
+    <h2 class="text-2xl font-bold mb-2">Pay with M-Pesa</h2>
+    <p id="mpesaAppName" class="text-gray-600 dark:text-gray-300 mb-4"></p>
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1">Phone Number (e.g., 0712345678)</label>
+      <input type="tel" id="mpesaPhone" placeholder="0712345678" class="w-full p-2 border rounded-lg dark:bg-gray-700">
+    </div>
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1">Amount (KES)</label>
+      <input type="number" id="mpesaAmount" readonly class="w-full p-2 border rounded-lg bg-gray-100 dark:bg-gray-600">
+    </div>
+    <div class="flex gap-3">
+      <button id="mpesaConfirmBtn" class="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">Pay Now</button>
+      <button id="mpesaCancelBtn" class="flex-1 bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-white py-2 rounded-lg">Cancel</button>
+    </div>
+    <p class="text-xs text-gray-500 mt-3 text-center">STK push will be sent to your phone. Enter M-Pesa PIN to complete.</p>
+  </div>
+</div>
 
 <script>
-    // --------------------------------------------------------------
-    // DATA REGISTRY: 5 UNIQUE FIGHTERS (Anime / Fantasy theme)
-    // --------------------------------------------------------------
-    const INITIAL_CHARACTERS = [
-        {
-            id: "KLD-001",
-            name: "Kaelen",
-            title: "Shadowstep Assassin",
-            faction: "Midnight Syndicate",
-            rarity: "Legendary",
-            image: "https://api.dicebear.com/9.x/adventurer/svg?seed=Kaelen&flip=1&backgroundColor=1a1a2e&radius=50&size=400",
-            bgGradient: "bg-gradient-to-r from-purple-600/20 to-violet-900/20",
-            accentColor: "#a855f7",
-            description: "A ghost among blades, Kaelen moves between dimensions. His twin daggers leave no trace, only whispers in the dark.",
-            stats: { hp: 128, attack: 145, defense: 88, speed: 142 }
-        },
-        {
-            id: "LYR-002",
-            name: "Lyra",
-            title: "Emberheart Mage",
-            faction: "Ashen Covenant",
-            rarity: "Epic",
-            image: "https://api.dicebear.com/9.x/adventurer/svg?seed=Lyra&flip=0&backgroundColor=2d1b2e&radius=50&size=400",
-            bgGradient: "bg-gradient-to-r from-rose-600/20 to-orange-800/20",
-            accentColor: "#e11d48",
-            description: "Flames answer her call. As a master of pyromancy, Lyra’s phoenix familiar rains devastation upon corrupted realms.",
-            stats: { hp: 98, attack: 162, defense: 74, speed: 118 }
-        },
-        {
-            id: "ZEP-003",
-            name: "Zephyr",
-            title: "Stormweaver",
-            faction: "Tempest Dominion",
-            rarity: "Legendary",
-            image: "https://api.dicebear.com/9.x/adventurer/svg?seed=Zephyr&flip=1&backgroundColor=0a2a2a&radius=50&size=400",
-            bgGradient: "bg-gradient-to-r from-cyan-600/20 to-blue-900/20",
-            accentColor: "#06b6d4",
-            description: "Rider of hurricanes, Zephyr commands lightning and gale. His tempest cloak renders him untouchable in battle.",
-            stats: { hp: 112, attack: 138, defense: 92, speed: 158 }
-        },
-        {
-            id: "MAG-004",
-            name: "Magnus",
-            title: "Ironfist Colossus",
-            faction: "Stoneguard Legion",
-            rarity: "Rare",
-            image: "https://api.dicebear.com/9.x/adventurer/svg?seed=Magnus&flip=0&backgroundColor=1e2a2e&radius=50&size=400",
-            bgGradient: "bg-gradient-to-r from-stone-600/20 to-amber-800/20",
-            accentColor: "#d97706",
-            description: "Titan forged in volcanic mountains. Magnus shatters enemy lines with unyielding defense and earth-shattering fists.",
-            stats: { hp: 176, attack: 121, defense: 158, speed: 67 }
-        },
-        {
-            id: "SER-005",
-            name: "Seraphina",
-            title: "Voidwalker Saint",
-            faction: "Eclipsed Order",
-            rarity: "Legendary",
-            image: "https://api.dicebear.com/9.x/adventurer/svg?seed=Seraphina&flip=1&backgroundColor=1a1025&radius=50&size=400",
-            bgGradient: "bg-gradient-to-r from-fuchsia-600/20 to-purple-900/20",
-            accentColor: "#c026d3",
-            description: "She walks between realms, wielding cosmic energies. Seraphina bends reality, healing allies and banishing nightmares.",
-            stats: { hp: 135, attack: 149, defense: 103, speed: 131 }
-        }
+  // ============================================================
+  // EXACT LOGO MAPPING (as confirmed)
+  // ============================================================
+  const logoMapping = {
+    "maji-gas": "https://i.ibb.co/sJwP77mq/file-000000002a7c724698774712139656f9.png",
+    "deep-focus": "https://i.ibb.co/204QYyVF/file-00000000c6707243af95f3105457c8b5.png",
+    "data-vision": "https://i.ibb.co/NfCgDtT/file-00000000b57072438b98c6777ee7804e.png",
+    "insight": "https://i.ibb.co/FR12Cbh/file-0000000003947246bfbd3e5ce474edd4.png",
+    "rider-app": "https://i.ibb.co/Myk5kQFw/file-00000000888871f482a587c6a8d8847e.png",
+    "guard-ai": "https://i.ibb.co/GQWZnykb/file-00000000379c71f4a01216ae10901877.png",
+    "clients-hub": "https://i.ibb.co/ynD8T6th/file-00000000225471f4a1e44c664b9fd555.png",
+    "cv-maker": "https://i.ibb.co/cSvLqcLX/file-00000000d5e071f4ba22a75f0817c803.png",
+    "smart-duka": "https://i.ibb.co/nMBpS9WF/file-00000000826c71f48191fe3abb47a9d3.png",
+    "agriculture": "https://i.ibb.co/xqM1JCWG/file-000000004a8071f480fdac11e406f891.png",
+    "luminor-studio": "https://i.ibb.co/3959zVpj/file-000000008d8c71f49373b77a647572d6.png",
+    "matatu-booking": "https://i.ibb.co/392pGZq9/file-0000000093b871f4b17cbccefe4d7bc7.png",
+    "home-search": "https://i.ibb.co/N6jb2762/file-000000004c4871f49ca1cb9d0d2c1de4.png",
+    "school-360": "https://i.ibb.co/rK4xNYFs/file-000000001ee871f4b8169a28703091b7.png",
+    "kanisa-launcher": "https://i.ibb.co/7NrfmcHn/file-0000000081ac72468a2293c64472a4fc.png"
+  };
+
+  const screenshotUrls = [
+    "https://i.ibb.co/JPVGw2p/Screenshot-20260611-024707-Chrome.jpg",
+    "https://i.ibb.co/8D8qyBGg/Screenshot-20260611-024637-Chrome.jpg",
+    "https://i.ibb.co/4RBfvvjm/Screenshot-20260611-024610-Chrome.jpg",
+    "https://i.ibb.co/4g42CZRx/Screenshot-20260611-024506-Chrome.jpg",
+    "https://i.ibb.co/cSpb60gC/Screenshot-20260611-024412-Chrome.jpg",
+    "https://i.ibb.co/cXsqXjsx/Screenshot-20260611-024344-Chrome.jpg",
+    "https://i.ibb.co/FLFnBh7g/Screenshot-20260611-024154-Chrome.jpg",
+    "https://i.ibb.co/XxkBRrJ9/Screenshot-20260611-024111-Chrome.jpg",
+    "https://i.ibb.co/rWr1ZWW/Screenshot-20260611-024047-Chrome.jpg",
+    "https://i.ibb.co/B5wFG9Yh/Screenshot-20260611-023951-Chrome.jpg",
+    "https://i.ibb.co/RkcNfHh6/Screenshot-20260611-023843-Chrome.jpg",
+    "https://i.ibb.co/vF5TLKP/Screenshot-20260611-023556-Chrome.jpg",
+    "https://i.ibb.co/R4TPbxsB/Screenshot-20260611-023537-Chrome.jpg",
+    "https://i.ibb.co/PGT1M64C/Screenshot-20260611-023518-Chrome.jpg"
+  ];
+
+  // App Data (15 apps)
+  const appList = [
+    { id: "maji-gas", name: "Maji Gas Delivery", slug: "maji-gas-delivery", shortDesc: "Cooking gas & water delivery on demand", category: "Utilities", price: 0, isFree: true, rating: 4.6, ratingCount: 234, downloads: 12540, version: "2.1.0", features: ["Real-time tracking", "Scheduled deliveries", "Multiple payments", "Loyalty rewards"], description: "Fast, reliable LPG and water delivery service with live order tracking." },
+    { id: "deep-focus", name: "Deep Focus", slug: "deep-focus", shortDesc: "Pomodoro timer & distraction blocker", category: "Productivity", price: 4.99, isFree: false, rating: 4.8, ratingCount: 1890, downloads: 45200, version: "3.0.2", features: ["Pomodoro timer", "Website blocker", "Focus music", "Analytics"], description: "Boost productivity with science-backed focus tools." },
+    { id: "guard-ai", name: "Guard AI", slug: "guard-ai", shortDesc: "AI cybersecurity protection", category: "AI Tools", price: 9.99, isFree: false, rating: 4.9, ratingCount: 523, downloads: 18730, version: "1.5.0", features: ["Threat detection", "VPN", "Password manager", "Dark web monitoring"], description: "Next-gen AI shield for digital security." },
+    { id: "data-vision", name: "Data Vision", slug: "data-vision", shortDesc: "AI business intelligence", category: "Analytics", price: 19.99, isFree: false, rating: 4.7, ratingCount: 312, downloads: 9800, version: "4.2.1", features: ["Dashboards", "AI predictions", "Data connectors", "Reports"], description: "Turn data into insights with AI." },
+    { id: "rider-app", name: "Rider App", slug: "rider-app", shortDesc: "Logistics & delivery platform", category: "Transport", price: 0, isFree: true, rating: 4.5, ratingCount: 892, downloads: 67300, version: "2.3.0", features: ["Route optimization", "Live tracking", "Earnings dashboard", "Proof of delivery"], description: "Complete solution for riders and fleets." },
+    { id: "insight", name: "Insight", slug: "insight", shortDesc: "Customer analytics platform", category: "Analytics", price: 29.99, isFree: false, rating: 4.6, ratingCount: 178, downloads: 5400, version: "1.8.0", features: ["Segmentation", "Behavioral analytics", "Predictive models", "APIs"], description: "Deep customer behavior intelligence." },
+    { id: "clients-hub", name: "Clients Hub", slug: "clients-hub", shortDesc: "CRM for modern business", category: "CRM", price: 14.99, isFree: false, rating: 4.4, ratingCount: 421, downloads: 12400, version: "3.1.0", features: ["Contact mgmt", "Deal tracking", "Email sync", "Forecasting"], description: "Grow relationships with powerful CRM." },
+    { id: "smart-duka", name: "Smart Duka", slug: "smart-duka", shortDesc: "Retail management system", category: "Business", price: 9.99, isFree: false, rating: 4.7, ratingCount: 563, downloads: 28900, version: "2.0.0", features: ["Inventory", "POS", "Sales reports", "Supplier mgmt"], description: "Modern POS for small shops." },
+    { id: "agriculture", name: "Agriculture", slug: "agriculture", shortDesc: "Smart farming solution", category: "Agriculture", price: 0, isFree: true, rating: 4.3, ratingCount: 197, downloads: 8100, version: "1.4.0", features: ["Crop monitor", "Weather", "Market prices", "Expert advice"], description: "Empower farmers with digital tools." },
+    { id: "luminor-studio", name: "Luminor Studio", slug: "luminor-studio", shortDesc: "AI photo & video editing", category: "Design", price: 12.99, isFree: false, rating: 4.9, ratingCount: 734, downloads: 34200, version: "5.0.1", features: ["AI enhancement", "Layer editing", "Filters", "4K export"], description: "Creative suite for professionals." },
+    { id: "cv-maker", name: "CV Maker", slug: "cv-maker", shortDesc: "Professional resume builder", category: "Productivity", price: 0, isFree: true, rating: 4.6, ratingCount: 1280, downloads: 98700, version: "1.9.0", features: ["Templates", "PDF export", "LinkedIn import", "Cover letter"], description: "Create job-winning resumes instantly." },
+    { id: "matatu-booking", name: "Matatu Booking", slug: "matatu-booking", shortDesc: "Public transport booking", category: "Transport", price: 0, isFree: true, rating: 4.5, ratingCount: 567, downloads: 45300, version: "2.2.0", features: ["Real-time tracking", "Digital tickets", "Route planning", "Fare calc"], description: "Book matatus and track in real-time." },
+    { id: "home-search", name: "Home Search", slug: "home-search", shortDesc: "Real estate marketplace", category: "Real Estate", price: 0, isFree: true, rating: 4.4, ratingCount: 398, downloads: 22500, version: "3.3.0", features: ["Property search", "Virtual tours", "Mortgage calc", "Agent contact"], description: "Find dream home or rental." },
+    { id: "school-360", name: "School 360", slug: "school-360", shortDesc: "School management system", category: "Education", price: 49.99, isFree: false, rating: 4.8, ratingCount: 245, downloads: 6700, version: "4.1.0", features: ["Student records", "Fee mgmt", "Parent portal", "CBC support"], description: "Complete school ERP with CBC." },
+    { id: "kanisa-launcher", name: "Kanisa Launcher", slug: "kanisa-launcher", shortDesc: "Church management & engagement", category: "Religion", price: 0, isFree: true, rating: 4.7, ratingCount: 156, downloads: 5300, version: "1.2.0", features: ["Events", "Giving platform", "Member directory", "Live stream"], description: "Digital tools for modern ministry." }
+  ];
+
+  // Attach logos + screenshots
+  appList.forEach((app, idx) => {
+    app.logoUrl = logoMapping[app.id];
+    app.developer = { name: "Meon", verified: true };
+    const screenshotIdx = idx % screenshotUrls.length;
+    const mainScreenshot = screenshotUrls[screenshotIdx];
+    app.screenshots = [mainScreenshot, mainScreenshot];
+    app.versions = [{ version: app.version, changelog: "Latest stable release", createdAt: new Date().toISOString() }];
+    if (!app.ratingCount) app.ratingCount = Math.floor(Math.random() * 800) + 50;
+    if (!app.downloads) app.downloads = Math.floor(Math.random() * 30000) + 1000;
+  });
+
+  function generateFallbackSVG(appId, size = 80) {
+    const colorMap = {
+      "maji-gas": { primary: "#2563EB", secondary: "#F97316", letter: "M" },
+      "deep-focus": { primary: "#4F46E5", secondary: "#7C3AED", letter: "D" },
+      "guard-ai": { primary: "#3B82F6", secondary: "#94A3B8", letter: "G" },
+      "data-vision": { primary: "#10B981", secondary: "#3B82F6", letter: "D" },
+      "rider-app": { primary: "#EA580C", secondary: "#111827", letter: "R" },
+      "insight": { primary: "#A855F7", secondary: "#06B6D4", letter: "I" },
+      "clients-hub": { primary: "#1E3A8A", secondary: "#3B82F6", letter: "C" },
+      "smart-duka": { primary: "#10B981", secondary: "#F59E0B", letter: "S" },
+      "agriculture": { primary: "#059669", secondary: "#78350F", letter: "A" },
+      "luminor-studio": { primary: "#D97706", secondary: "#111827", letter: "L" },
+      "cv-maker": { primary: "#2563EB", secondary: "#FFFFFF", letter: "C" },
+      "matatu-booking": { primary: "#EAB308", secondary: "#111827", letter: "M" },
+      "home-search": { primary: "#0D9488", secondary: "#3B82F6", letter: "H" },
+      "school-360": { primary: "#2563EB", secondary: "#10B981", letter: "S" },
+      "kanisa-launcher": { primary: "#9333EA", secondary: "#D97706", letter: "K" }
+    };
+    const c = colorMap[appId] || { primary: "#0F172A", secondary: "#334155", letter: "S" };
+    const svgString = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="${size}" height="${size}">
+      <rect width="512" height="512" rx="96" fill="${c.primary}"/>
+      <circle cx="256" cy="256" r="140" fill="${c.secondary}" opacity="0.9"/>
+      <text x="256" y="340" text-anchor="middle" fill="white" font-size="180" font-weight="bold" font-family="Inter, sans-serif">${c.letter}</text>
+    </svg>`;
+    return `data:image/svg+xml,${encodeURIComponent(svgString)}`;
+  }
+
+  function appLogoImg(app, sizeClass = "w-16 h-16", pixelSize = 60) {
+    const externalUrl = app.logoUrl;
+    const fallbackSvg = generateFallbackSVG(app.id, pixelSize);
+    if (!externalUrl) {
+      return `<img src="${fallbackSvg}" class="${sizeClass} rounded-xl shadow object-cover" alt="${app.name}">`;
+    }
+    return `<img src="${externalUrl}" class="${sizeClass} rounded-xl shadow object-cover" alt="${app.name}" 
+      onerror="this.onerror=null; this.src='${fallbackSvg}';">`;
+  }
+
+  // State
+  let currentUser = JSON.parse(localStorage.getItem("meonUser")) || null;
+  let activeView = "home";
+  let selectedApp = null;
+  let userFavorites = JSON.parse(localStorage.getItem("meonFavorites")) || [];
+  let userDownloads = JSON.parse(localStorage.getItem("meonDownloads")) || [];
+  let reviewsData = JSON.parse(localStorage.getItem("meonReviews")) || {};
+  let searchQuery = "";
+  let activeCategoryFilter = "";
+
+  function saveState() {
+    if (currentUser) localStorage.setItem("meonUser", JSON.stringify(currentUser));
+    else localStorage.removeItem("meonUser");
+    localStorage.setItem("meonFavorites", JSON.stringify(userFavorites));
+    localStorage.setItem("meonDownloads", JSON.stringify(userDownloads));
+    localStorage.setItem("meonReviews", JSON.stringify(reviewsData));
+  }
+
+  function showToast(msg, type = "success") {
+    const container = document.getElementById("toastContainer");
+    const toast = document.createElement("div");
+    toast.className = `toast bg-white dark:bg-gray-800 shadow-lg rounded-xl px-4 py-3 border-l-4 ${type === "success" ? "border-green-500" : type === "error" ? "border-red-500" : "border-blue-500"} flex items-center gap-2`;
+    toast.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle' : 'alert-circle'}" class="w-5 h-5"></i><span>${msg}</span>`;
+    container.appendChild(toast);
+    if (window.lucide) lucide.createIcons();
+    setTimeout(() => toast.remove(), 4000);
+  }
+
+  function loginUser(email, role = "user") {
+    currentUser = { id: Date.now(), email, name: email.split('@')[0], role: role };
+    saveState();
+    renderNav();
+    renderCurrentView();
+    showToast(`Welcome to Meon, ${currentUser.name}!`, "success");
+  }
+  function logout() { currentUser = null; userFavorites = []; userDownloads = []; saveState(); renderNav(); renderCurrentView(); showToast("Logged out", "success"); }
+  
+  function toggleFavorite(appId) {
+    if (!currentUser) { showToast("Sign in to save favorites", "error"); return false; }
+    const idx = userFavorites.indexOf(appId);
+    if (idx === -1) { userFavorites.push(appId); showToast("Added to favorites", "success"); }
+    else { userFavorites.splice(idx,1); showToast("Removed from favorites", "success"); }
+    saveState(); renderCurrentView(); return true;
+  }
+  
+  function downloadApp(app) {
+    if (!currentUser) { showToast("Please login to download", "error"); return; }
+    if (!app.isFree) {
+      showMpesaPaymentModal(app);
+      return;
+    }
+    if (!userDownloads.find(d => d.appId === app.id)) {
+      userDownloads.push({ appId: app.id, downloadedAt: new Date().toISOString(), version: app.version });
+      app.downloads += 1;
+      saveState();
+      showToast(`Downloaded ${app.name}`, "success");
+      renderCurrentView();
+    } else { showToast("Already installed", "info"); }
+  }
+  
+  function submitReview(appId, rating, content) {
+    if (!currentUser) { showToast("Login to review", "error"); return false; }
+    if (!reviewsData[appId]) reviewsData[appId] = [];
+    reviewsData[appId].push({ userId: currentUser.id, user: currentUser.name, rating, content, date: new Date().toISOString() });
+    const allRatings = reviewsData[appId].map(r => r.rating);
+    const avg = allRatings.reduce((a,b)=>a+b,0)/allRatings.length;
+    const appObj = appList.find(a=>a.id === appId);
+    if(appObj) { appObj.rating = parseFloat(avg.toFixed(1)); appObj.ratingCount = allRatings.length; }
+    saveState();
+    showToast("Review submitted", "success");
+    renderCurrentView();
+    return true;
+  }
+
+  // M-Pesa mock
+  const USE_REAL_MPESA_API = false;
+  async function initiateMpesaPayment(phoneNumber, amount, accountReference, appName) {
+    if (USE_REAL_MPESA_API) {
+      const response = await fetch('/api/mpesa/stkpush', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phoneNumber, amount, accountReference, transactionDesc: `Purchase of ${appName}` })
+      });
+      const data = await response.json();
+      if (data.success) {
+        showToast(`STK push sent to ${phoneNumber}. Enter PIN on your phone.`, "success");
+        return true;
+      } else {
+        showToast(data.error || "Payment failed", "error");
+        return false;
+      }
+    } else {
+      return new Promise((resolve) => {
+        showToast(`📱 M-Pesa STK push sent to ${phoneNumber} for KES ${amount}. Please check your phone.`, "info");
+        setTimeout(() => {
+          showToast(`✅ Payment of KES ${amount} for ${appName} successful! Receipt: MOCK${Date.now()}`, "success");
+          resolve(true);
+        }, 3000);
+      });
+    }
+  }
+
+  let currentPaymentApp = null;
+  function showMpesaPaymentModal(app) {
+    if (!currentUser) { showToast("Please login to make a purchase", "error"); return; }
+    currentPaymentApp = app;
+    document.getElementById("mpesaAppName").innerText = `App: ${app.name} - KES ${app.price}`;
+    document.getElementById("mpesaAmount").value = app.price;
+    document.getElementById("mpesaPhone").value = "";
+    document.getElementById("mpesaModal").classList.remove("hidden");
+  }
+
+  async function confirmMpesaPayment() {
+    const phone = document.getElementById("mpesaPhone").value.trim();
+    if (!phone) { showToast("Enter your M-Pesa phone number", "error"); return; }
+    if (!currentPaymentApp) return;
+    const amount = currentPaymentApp.price;
+    const accountReference = `MEON_${currentPaymentApp.id}_${Date.now()}`;
+    document.getElementById("mpesaModal").classList.add("hidden");
+    const success = await initiateMpesaPayment(phone, amount, accountReference, currentPaymentApp.name);
+    if (success) {
+      if (!userDownloads.find(d => d.appId === currentPaymentApp.id)) {
+        userDownloads.push({ appId: currentPaymentApp.id, downloadedAt: new Date().toISOString(), version: currentPaymentApp.version });
+        currentPaymentApp.downloads += 1;
+        saveState();
+        showToast(`✅ ${currentPaymentApp.name} added to your library`, "success");
+        renderCurrentView();
+      }
+    }
+    currentPaymentApp = null;
+  }
+
+  // Helper to get filtered apps
+  function getFilteredApps() {
+    let filtered = [...appList];
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      filtered = filtered.filter(app => app.name.toLowerCase().includes(q) || app.shortDesc.toLowerCase().includes(q) || app.category.toLowerCase().includes(q));
+    }
+    if (activeCategoryFilter) {
+      filtered = filtered.filter(app => app.category.toLowerCase() === activeCategoryFilter.toLowerCase());
+    }
+    return filtered;
+  }
+
+  // New Advert Component (the image provided)
+  function renderAdvert() {
+    return `
+      <div class="my-8 rounded-2xl overflow-hidden shadow-lg border border-purple-200 dark:border-purple-800 bg-white dark:bg-gray-800/50">
+        <div class="relative">
+          <div class="absolute top-2 right-2 bg-black/60 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full z-10 backdrop-blur-sm">Advertisement</div>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="block transition-transform hover:scale-[1.01] duration-300">
+            <img 
+              src="https://i.ibb.co/s9xSnrzz/file-00000000013c71f4b002c5ed572e6ba9.png" 
+              alt="Sponsored Advert" 
+              class="w-full object-cover max-h-[280px] md:max-h-[320px]"
+              loading="lazy"
+            >
+          </a>
+        </div>
+      </div>
+    `;
+  }
+
+  // Homepage with advert inserted between featured and trending sections
+  function renderHome() {
+    const filteredApps = getFilteredApps();
+    const featuredIds = ["guard-ai", "deep-focus", "luminor-studio"];
+    const featured = filteredApps.filter(a => featuredIds.includes(a.id));
+    const trending = [...filteredApps].sort((a,b)=>b.downloads - a.downloads).slice(0,6);
+    const newReleases = [...filteredApps].reverse().slice(0,6);
+
+    const categoryItems = [
+      { name: "AI Solutions", gradient: "from-purple-600 to-violet-600", filter: "ai tools" },
+      { name: "Business", gradient: "from-blue-600 to-cyan-600", filter: "business" },
+      { name: "Education", gradient: "from-green-600 to-emerald-600", filter: "education" },
+      { name: "Agriculture", gradient: "from-orange-600 to-amber-600", filter: "agriculture" },
+      { name: "Transport", gradient: "from-red-600 to-pink-600", filter: "transport" },
+      { name: "Creativity", gradient: "from-indigo-600 to-purple-600", filter: "design" }
     ];
 
-    // Helper to get stat icons (matching Lucide from React)
-    // We'll embed the necessary Lucide icons via a simple mapping (since we use react components)
-    // But because we render with React, we must map icons: use local function returning JSX
-    // We'll rely on globally available lucide? Actually we will inject icons using createElement from lucide?
-    // In the component we use `import { Shield, Zap, Swords, Flame, ChevronRight, Sparkles } from 'lucide-react'`
-    // Since we are not using a build system, we need to include the icons from CDN and reference them via global?
-    // Easiest: Use Lucide via `lucide` global and manually render svg via `dangerouslySetInnerHTML`? No, we better use `lucide-react` CDN? Not available.
-    // Alternative: Because we use React.createElement, we can create icon components manually with inline SVG? The component relies on lucide-react imports.
-    // To make it work without build, we will provide a small mock for lucide icons inside the component.
-    // I'll rewrite the component to use a custom Icon wrapper that uses inline SVG strings from Lucide CDN, or use `lucide` icons via `data-lucide` but that’s not React.
-    // Easier: Replace `lucide-react` imports with inline SVG manually for those 6 icons (Shield, Zap, Swords, Flame, ChevronRight, Sparkles).
-    // I'll define a helper function `getLucideIcon` that returns a JSX span with the SVG from Lucide CDN? But lucide-react is not available.
-    // Better: I'll copy the raw SVG paths from lucide and make simple Icon components.
-    // Let’s create an internal Icon component for each needed icon.
-    // I will rewrite the component inside the React render to avoid external dependencies.
-    // Solution: Since the component code is given, we adapt it: Replace imports and use custom SVG components.
-    // In the final output I'll embed the full component with inline icon definitions.
-    // I'll produce a full React functional component using the same logic, but with local icon functions.
-    // I'll also ensure Tailwind classes are compatible.
-    // Let's build the final script.
-    // --------------------------------------------------------------
+    const heroHtml = `
+      <div class="relative w-full max-w-6xl mx-auto overflow-hidden bg-gradient-to-br from-[#020024] via-[#050537] to-[#0a005c] p-6 md:p-8 rounded-3xl border border-purple-900/40 font-sans text-white shadow-[0_0_50px_rgba(110,68,255,0.15)]">
+        <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute -bottom-10 -left-10 w-72 h-72 bg-blue-600/10 rounded-full blur-[80px] pointer-events-none"></div>
+        <div class="flex items-center gap-2.5 mb-8">
+          <div class="flex items-center justify-center w-7 h-7 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 shadow-[0_0_10px_rgba(147,51,234,0.5)]">
+            <span class="text-sm font-black text-white italic">M</span>
+          </div>
+          <span class="text-xs font-bold tracking-[0.2em] text-purple-200 uppercase opacity-90">Meon Marketplace</span>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+          <div class="lg:col-span-7 flex flex-col justify-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-4">Meon Marketplace</h1>
+            <h2 class="text-xl md:text-2xl font-black tracking-wider mb-4">
+              <span class="text-white">LOGICDRIVEN.</span> 
+              <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-fuchsia-400">FUTUREPROVEN.</span>
+            </h2>
+            <p class="text-base font-semibold text-purple-300 mb-3">Building intelligent solutions for a smarter tomorrow.</p>
+            <p class="text-xs md:text-sm text-slate-300 leading-relaxed max-w-xl mb-8 opacity-80">
+              Meon Marketplace brings together technology, creativity, and purpose to empower individuals, businesses, and communities.
+            </p>
+            <div class="flex flex-wrap gap-4 mb-10">
+              <button id="exploreMarketplaceBtn" class="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 transition-all shadow-[0_4px_20px_rgba(124,58,237,0.4)] text-white group">
+                <svg class="w-4 h-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-1.41a4.5 4.5 0 003.87-4.51M8.59 10.37a6 6 0 00-7.38 5.84h1.41a4.5 4.5 0 014.51-3.87m4.51-5.17A9 9 0 003 3v1.41a7.5 7.5 0 016.94 6.94m5.17-4.51a9 9 0 016.94 6.94h-1.41a7.5 7.5 0 00-6.94-6.94z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M21 3l-6.5 6.5M21 3v5m0-5h-5"></path></svg>
+                EXPLORE APPS
+              </button>
+              <button id="becomeDevBtn" class="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm bg-transparent border border-purple-500/40 hover:border-purple-400 bg-purple-950/20 hover:bg-purple-900/30 transition-all text-purple-200 tracking-wider">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"></path></svg>
+                BECOME A DEVELOPER
+              </button>
+            </div>
+          </div>
+          <div class="lg:col-span-5 flex justify-center items-center relative py-6">
+            <div class="absolute w-72 h-72 md:w-80 md:h-80 border border-purple-500/20 rounded-full animate-spin-slow pointer-events-none transform rotate-45"></div>
+            <div class="absolute w-72 h-72 md:w-80 md:h-80 border border-indigo-500/10 rounded-full animate-spin-reverse pointer-events-none transform -rotate-45"></div>
+            <div class="relative w-56 h-56 md:w-64 md:h-64 rounded-[2.5rem] bg-gradient-to-br from-purple-600/30 to-indigo-900/40 p-[2px] shadow-[0_0_60px_rgba(139,92,246,0.3)] backdrop-blur-md border border-white/10 flex items-center justify-center group transform hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-2 rounded-[2.2rem] bg-gradient-to-br from-purple-800 to-indigo-950 flex items-center justify-center shadow-inner">
+                <span class="text-[9rem] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-purple-200 to-purple-400 drop-shadow-[0_15px_20px_rgba(0,0,0,0.7)] selection:bg-transparent italic">M</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 pt-6 border-t border-purple-900/30 flex flex-col gap-6">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-purple-950/20 border border-purple-900/30 rounded-2xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-xl bg-purple-900/40 border border-purple-500/30 flex items-center justify-center text-purple-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg></div><div><div class="text-xl font-bold text-white">15+</div><div class="text-xs text-purple-300/70 font-medium">Applications</div></div></div>
+            <div class="bg-purple-950/20 border border-purple-900/30 rounded-2xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-xl bg-purple-900/40 border border-purple-500/30 flex items-center justify-center text-purple-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg></div><div><div class="text-xl font-bold text-white">500K+</div><div class="text-xs text-purple-300/70 font-medium">Downloads</div></div></div>
+            <div class="bg-purple-950/20 border border-purple-900/30 rounded-2xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-xl bg-purple-900/40 border border-purple-500/30 flex items-center justify-center text-purple-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.907c.961 0 1.36 1.239.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg></div><div><div class="text-xl font-bold text-white flex items-center gap-1">4.8 <span class="text-purple-400 text-sm">★</span></div><div class="text-xs text-purple-300/70 font-medium">Average Rating</div></div></div>
+            <div class="bg-purple-950/20 border border-purple-900/30 rounded-2xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-xl bg-purple-900/40 border border-purple-500/30 flex items-center justify-center text-purple-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg></div><div><div class="text-xl font-bold text-white">24/7</div><div class="text-xs text-purple-300/70 font-medium">Innovation</div></div></div>
+          </div>
+          <div class="mx-auto bg-purple-950/40 border border-purple-900/40 px-8 py-2.5 rounded-full flex items-center gap-6 text-[10px] md:text-xs tracking-[0.25em] text-purple-200 font-bold uppercase shadow-inner">
+            <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>INTELLIGENCE</div>
+            <span class="text-purple-600/60">•</span><div>INNOVATION</div><span class="text-purple-600/60">•</span><div>INSPIRATION</div>
+          </div>
+        </div>
+      </div>
+    `;
 
-    // ----- DEFINE SVG ICON COMPONENTS (matching lucide-react shape) -----
-    const ShieldIcon = (props) => React.createElement('svg', { ...props, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, 
-        React.createElement('path', { d: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" })
-    );
-    const ZapIcon = (props) => React.createElement('svg', { ...props, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
-        React.createElement('polygon', { points: "13 2 3 14 12 14 11 22 21 10 12 10 13 2" })
-    );
-    const SwordsIcon = (props) => React.createElement('svg', { ...props, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
-        React.createElement('polygon', { points: "14.5 17.5 3 6 3 3 6 3 17.5 14.5" }),
-        React.createElement('line', { x1: "13", y1: "19", x2: "19", y2: "13" }),
-        React.createElement('line', { x1: "16", y1: "16", x2: "20", y2: "20" }),
-        React.createElement('line', { x1: "19", y1: "21", x2: "21", y2: "19" })
-    );
-    const FlameIcon = (props) => React.createElement('svg', { ...props, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
-        React.createElement('path', { d: "M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a3 3 0 0 0 2.5 2.5z" })
-    );
-    const ChevronRightIcon = (props) => React.createElement('svg', { ...props, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
-        React.createElement('polyline', { points: "9 18 15 12 9 6" })
-    );
-    const SparklesIcon = (props) => React.createElement('svg', { ...props, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
-        React.createElement('path', { d: "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" })
-    );
+    return `
+      <div class="space-y-12">
+        ${heroHtml}
+        <div class="bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-gray-700 p-4 flex items-center gap-3 shadow-md">
+          <i data-lucide="search" class="w-5 h-5 text-gray-400"></i>
+          <input type="text" id="globalSearchInput" placeholder="Search apps, services, AI tools, business solutions..." class="w-full bg-transparent outline-none text-gray-800 dark:text-gray-200" value="${searchQuery.replace(/"/g, '&quot;')}">
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold mb-6">Explore Categories</h2>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            ${categoryItems.map(cat => `<div class="rounded-2xl bg-gradient-to-r ${cat.gradient} text-white p-5 text-center font-semibold cursor-pointer hover:scale-105 transition category-chip" data-category="${cat.filter}">${cat.name}</div>`).join('')}
+            ${activeCategoryFilter ? `<div class="rounded-2xl bg-gray-500 text-white p-3 text-center cursor-pointer hover:bg-gray-600 transition" id="clearCategoryBtn">Clear filter ✕</div>` : ""}
+          </div>
+        </div>
+        <div><div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold">⭐ Featured Solutions</h2></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">${featured.map(app=>appCard(app)).join('')}</div></div>
+        <!-- ADVERT INSERTED HERE -->
+        ${renderAdvert()}
+        <div><div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold">🔥 Trending on Meon</h2></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">${trending.map(app=>appCard(app)).join('')}</div></div>
+        <div><div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold">🆕 New Releases</h2></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">${newReleases.map(app=>appCard(app)).join('')}</div></div>
+      </div>
+    `;
+  }
 
-    // Create React component using pure JSX (React.createElement)
-    const HeroSection = (props) => {
-        const { initialCharacters, onSelectCharacter, onCtaClick } = props;
-        const [characters, setCharacters] = React.useState(initialCharacters);
-        const [activeIndex, setActiveIndex] = React.useState(0);
-        const [isTransitioning, setIsTransitioning] = React.useState(false);
+  function appCard(app) {
+    const isFav = currentUser && userFavorites.includes(app.id);
+    return `<div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 card-hover cursor-pointer" onclick="window.showAppDetail('${app.id}')">
+      <div class="flex gap-3">
+        ${appLogoImg(app, "w-16 h-16", 60)}
+        <div class="flex-1"><h3 class="font-bold">${app.name}</h3><p class="text-sm text-gray-500">${app.shortDesc}</p><div class="flex items-center gap-1 mt-1"><i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i><span>${app.rating}</span><span class="text-xs text-gray-400 ml-1">(${app.ratingCount})</span></div></div>
+        <button class="text-red-500" onclick="event.stopPropagation(); toggleFavorite('${app.id}')"><i data-lucide="heart" class="w-5 h-5 ${isFav ? 'fill-red-500' : ''}"></i></button>
+      </div>
+      <div class="mt-3 flex justify-between items-center"><span class="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">${app.category}</span><button onclick="event.stopPropagation(); downloadApp(${JSON.stringify(app).replace(/"/g, '&quot;')})" class="bg-purple-600 text-white px-4 py-1 rounded-lg text-sm">${app.isFree ? 'Free' : 'Buy KES '+app.price}</button></div>
+    </div>`;
+  }
 
-        const activeChar = characters[activeIndex] || initialCharacters[0];
+  window.showAppDetail = (appId) => {
+    selectedApp = appList.find(a=>a.id === appId);
+    renderCurrentView();
+  };
+  window.backToHome = () => { selectedApp = null; renderCurrentView(); };
 
-        React.useEffect(() => {
-            const stored = localStorage.getItem('anime_fighter_registry');
-            if (stored) {
-                try {
-                    const parsed = JSON.parse(stored);
-                    if (parsed && parsed.length) setCharacters(parsed);
-                } catch(e) { console.error(e); }
-            }
-        }, []);
+  function renderAppDetail() { /* unchanged from original but simplified for brevity – keep full logic */ 
+    if (!selectedApp) return renderHome();
+    const app = selectedApp;
+    const appReviews = reviewsData[app.id] || [];
+    const screenshotHtml = app.screenshots.map(url => `<img src="${url}" class="rounded-xl border border-gray-200 dark:border-gray-700 w-64 h-40 object-cover" alt="screenshot">`).join('');
+    return `<div class="max-w-4xl mx-auto"><button onclick="window.backToHome()" class="flex items-center gap-1 text-purple-600 mb-4">&larr; Back to Store</button>
+      <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+        <div class="flex gap-5 flex-wrap">${appLogoImg(app, "w-24 h-24", 100)}<div><h1 class="text-3xl font-bold">${app.name}</h1><p class="text-gray-500">${app.shortDesc}</p><div class="flex gap-3 mt-2"><div class="flex"><i data-lucide="star" class="fill-yellow-400"></i> ${app.rating} (${app.ratingCount})</div><div><i data-lucide="download"></i> ${app.downloads.toLocaleString()}</div></div><div class="flex gap-3 mt-4"><button onclick="downloadApp(${JSON.stringify(app).replace(/"/g, '&quot;')})" class="bg-purple-600 text-white px-6 py-2 rounded-full">${app.isFree ? 'Download' : 'Buy with M-Pesa (KES '+app.price+')'}</button><button onclick="toggleFavorite('${app.id}')" class="border px-4 py-2 rounded-full">❤️ Favorite</button></div></div></div>
+        <div class="mt-6"><h2 class="text-xl font-semibold">Description</h2><p>${app.description}</p><h3 class="font-semibold mt-4">Key Features</h3><ul class="list-disc pl-5">${app.features.map(f=>`<li>${f}</li>`).join('')}</ul></div>
+        <div class="mt-6"><h2 class="text-xl font-semibold">Screenshots</h2><div class="flex gap-3 overflow-x-auto pb-2">${screenshotHtml}</div></div>
+        <div class="mt-8"><h2 class="text-xl font-semibold">Rate & Review</h2><div id="reviewStars" class="flex gap-1 my-2"></div><textarea id="reviewText" class="w-full border rounded p-2 dark:bg-gray-700" rows="2" placeholder="Write your review..."></textarea><button id="submitReviewBtn" class="mt-2 bg-purple-600 text-white px-4 py-1 rounded">Submit Review</button>
+        <div class="mt-6 space-y-3">${appReviews.map(r => `<div class="border-b pb-2"><div class="font-semibold">${r.user}</div><div class="flex text-yellow-400">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div><p>${r.content}</p><small>${new Date(r.date).toLocaleDateString()}</small></div>`).join('')}</div></div>
+      </div></div>`;
+  }
 
-        const handleCharacterChange = (index) => {
-            if (index === activeIndex) return;
-            setIsTransitioning(true);
-            setTimeout(() => {
-                setActiveIndex(index);
-                setIsTransitioning(false);
-                if (onSelectCharacter) onSelectCharacter(characters[index]);
-            }, 300);
-        };
+  function renderDashboard() { /* same as original */ 
+    if(!currentUser) return `<div class="text-center py-12">Access Meon dashboard after login</div>`;
+    const downloadedApps = appList.filter(a => userDownloads.some(d => d.appId === a.id));
+    const favApps = appList.filter(a => userFavorites.includes(a.id));
+    return `<div><h1 class="text-2xl font-bold">Meon Workspace</h1><div class="grid md:grid-cols-2 gap-6 mt-6"><div class="bg-white dark:bg-gray-800 p-4 rounded-xl"><h2 class="font-bold">📦 Installed Apps (${downloadedApps.length})</h2>${downloadedApps.map(a=>`<div class="flex gap-2 items-center mt-2">${appLogoImg(a, "w-10 h-10", 40)}<span>${a.name}</span></div>`).join('')||"No downloads yet"}</div><div class="bg-white dark:bg-gray-800 p-4 rounded-xl"><h2 class="font-bold">❤️ Favorites (${favApps.length})</h2>${favApps.map(a=>`<div class="flex gap-2 mt-2">${appLogoImg(a, "w-10 h-10", 40)}<span>${a.name}</span></div>`).join('')}</div></div></div>`;
+  }
+  
+  function renderAdmin() {
+    if(!currentUser || (currentUser.role !== 'admin' && currentUser.role !== 'super_admin')) return `<div class="text-center py-12">Restricted to Meon Admin</div>`;
+    const totalDownloads = appList.reduce((s,a)=>s+a.downloads,0);
+    return `<div><h1 class="text-2xl font-bold">Meon Admin Console</h1><div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6"><div class="bg-white dark:bg-gray-800 p-4 rounded-xl"><i data-lucide="users"></i><div class="text-2xl font-bold">1,240</div><div>Active Users</div></div><div class="bg-white dark:bg-gray-800 p-4 rounded-xl"><i data-lucide="download"></i><div class="text-2xl font-bold">${totalDownloads.toLocaleString()}</div><div>Total Downloads</div></div><div class="bg-white dark:bg-gray-800 p-4 rounded-xl"><i data-lucide="dollar-sign"></i><div class="text-2xl font-bold">$18,240</div><div>Revenue (Meon)</div></div></div><div class="mt-8"><h2 class="font-bold">App Portfolio Management</h2><div class="grid gap-2">${appList.map(a=>`<div class="flex justify-between items-center bg-white dark:bg-gray-800 p-2 rounded"><div>${a.name}</div><button class="text-sm bg-purple-600 text-white px-2 py-1 rounded" onclick="alert('Meon Admin: Edit ${a.name} (demo)')">Manage</button></div>`).join('')}</div></div></div>`;
+  }
+  
+  function renderDeveloper() {
+    if(!currentUser || currentUser.role !== 'developer') return `<div class="text-center py-12">Developer portal - Meon Partners only</div>`;
+    return `<div><h1 class="text-2xl font-bold">Meon Developer Hub</h1><p>Submit and analyze your software solutions</p><div class="bg-white dark:bg-gray-800 p-4 rounded-xl mt-4"><h3 class="font-semibold">Your Apps Performance</h3><div class="space-y-2 mt-2">${appList.slice(0,4).map(a=>`<div>${a.name} - Downloads: ${a.downloads} | Rating: ${a.rating}</div>`).join('')}</div><button class="mt-4 bg-green-600 text-white px-4 py-2 rounded">+ Submit New App Version</button></div></div>`;
+  }
 
-        const getStatIcon = (key) => {
-            switch(key) {
-                case 'hp': return React.createElement(FlameIcon, { className: "w-4 h-4 text-emerald-400" });
-                case 'attack': return React.createElement(SwordsIcon, { className: "w-4 h-4 text-rose-500" });
-                case 'defense': return React.createElement(ShieldIcon, { className: "w-4 h-4 text-blue-400" });
-                case 'speed': return React.createElement(ZapIcon, { className: "w-4 h-4 text-amber-400" });
-                default: return React.createElement(SparklesIcon, { className: "w-4 h-4" });
-            }
-        };
+  function renderNav() {
+    const authDiv = document.getElementById("authSection");
+    if (!authDiv) return;
+    if (currentUser) {
+      authDiv.innerHTML = `<span class="text-sm hidden sm:inline">${currentUser.email}</span><button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium">Logout</button>`;
+      document.getElementById("logoutBtn")?.addEventListener("click", logout);
+      const adminBtn = document.getElementById("adminNavBtn");
+      const devBtn = document.getElementById("devNavBtn");
+      if (currentUser.role === "admin" || currentUser.role === "super_admin") adminBtn?.classList.remove("hidden");
+      else adminBtn?.classList.add("hidden");
+      if (currentUser.role === "developer") devBtn?.classList.remove("hidden");
+      else devBtn?.classList.add("hidden");
+    } else {
+      authDiv.innerHTML = `<button id="showLoginModalBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-1.5 rounded-lg text-sm font-medium">Sign In</button>`;
+      document.getElementById("showLoginModalBtn")?.addEventListener("click", () => showAuthModal());
+      document.getElementById("adminNavBtn")?.classList.add("hidden");
+      document.getElementById("devNavBtn")?.classList.add("hidden");
+    }
+    if (window.lucide) lucide.createIcons();
+  }
 
-        // main render
-        return React.createElement('section', { className: "relative w-full min-h-[90vh] bg-neutral-950 overflow-hidden flex flex-col justify-between text-white font-sans" },
-            // Background gradients & ambient
-            React.createElement('div', { className: "absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen transition-all duration-700 ease-in-out" },
-                React.createElement('div', { className: `absolute -top-[20%] -right-[10%] w-[600px] h-[600px] rounded-full blur-[160px] ${activeChar.bgGradient.split(' ')[1] || 'from-purple-600/20'}` }),
-                React.createElement('div', { className: "absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neutral-800 to-transparent" })
-            ),
-            // main content grid
-            React.createElement('div', { className: "relative z-10 w-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 pt-12 lg:pt-20 pb-8 items-center flex-grow" },
-                // left column
-                React.createElement('div', { className: `lg:col-span-5 flex flex-col justify-center space-y-6 transition-all duration-300 transform ${isTransitioning ? 'opacity-0 -translate-x-4' : 'opacity-100 translate-x-0'}` },
-                    React.createElement('div', { className: "flex items-center gap-3" },
-                        React.createElement('span', { className: "px-3 py-1 text-xs uppercase font-extrabold tracking-widest bg-neutral-900 border border-neutral-800 rounded-full text-neutral-400 shadow-inner" }, activeChar.faction),
-                        React.createElement('span', { className: "px-3 py-1 text-xs uppercase font-extrabold tracking-widest rounded-full flex items-center gap-1 shadow-lg", style: { backgroundColor: `${activeChar.accentColor}20`, color: activeChar.accentColor, border: `1px solid ${activeChar.accentColor}40` } },
-                            React.createElement(SparklesIcon, { className: "w-3 h-3 animate-pulse" }),
-                            activeChar.rarity
-                        )
-                    ),
-                    React.createElement('div', { className: "space-y-1" },
-                        React.createElement('h2', { className: "text-xl font-medium text-neutral-400 tracking-wide uppercase" }, activeChar.title),
-                        React.createElement('h1', { className: "text-5xl lg:text-7xl font-black tracking-tighter uppercase leading-none bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-neutral-500" }, activeChar.name)
-                    ),
-                    React.createElement('p', { className: "text-neutral-400 text-sm lg:text-base leading-relaxed font-normal max-w-md" }, activeChar.description),
-                    // stats panel
-                    React.createElement('div', { className: "p-4 rounded-2xl bg-neutral-900/60 border border-neutral-800/80 backdrop-blur-md max-w-md space-y-3 shadow-2xl" },
-                        React.createElement('div', { className: "flex items-center justify-between border-b border-neutral-800/50 pb-2" },
-                            React.createElement('span', { className: "text-xs uppercase tracking-widest font-bold text-neutral-500" }, "Combat Registry Spec"),
-                            React.createElement('span', { className: "text-xs text-neutral-400 font-mono" }, `ID: #${activeChar.id}`)
-                        ),
-                        React.createElement('div', { className: "grid grid-cols-2 gap-x-6 gap-y-3" },
-                            Object.entries(activeChar.stats).map(([key, value]) => 
-                                React.createElement('div', { key: key, className: "space-y-1" },
-                                    React.createElement('div', { className: "flex items-center justify-between text-xs" },
-                                        React.createElement('span', { className: "capitalize text-neutral-400 flex items-center gap-1.5 font-medium" }, getStatIcon(key), key),
-                                        React.createElement('span', { className: "font-mono font-bold text-neutral-200" }, value)
-                                    ),
-                                    React.createElement('div', { className: "h-1.5 w-full bg-neutral-800 rounded-full overflow-hidden" },
-                                        React.createElement('div', { className: "h-full transition-all duration-1000 ease-out rounded-full", style: { width: `${(value / 150) * 100}%`, backgroundColor: activeChar.accentColor } })
-                                    )
-                                )
-                            )
-                        )
-                    ),
-                    // CTA Button
-                    React.createElement('div', { className: "pt-2" },
-                        React.createElement('button', { onClick: onCtaClick, className: "group relative px-6 py-3.5 rounded-xl font-bold text-sm tracking-wider uppercase overflow-hidden transition-all duration-300 shadow-xl hover:scale-[1.02] active:scale-[0.98]", style: { backgroundColor: activeChar.accentColor } },
-                            React.createElement('div', { className: "absolute inset-0 bg-white/20 transform -skews-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out" }),
-                            React.createElement('span', { className: "relative z-10 flex items-center gap-2 text-neutral-950" }, "Deploy to Arena", React.createElement(ChevronRightIcon, { className: "w-4 h-4 transition-transform group-hover:translate-x-1" }))
-                        )
-                    )
-                ),
-                // right column: image / asset viewport
-                React.createElement('div', { className: "lg:col-span-7 relative h-[400px] lg:h-[600px] w-full flex items-center justify-center" },
-                    React.createElement('div', { className: "absolute w-[320px] h-[320px] lg:w-[480px] lg:h-[480px] rounded-full border border-dashed border-neutral-800/60 animate-spin-slow pointer-events-none" }),
-                    React.createElement('div', { className: "absolute w-[260px] h-[260px] lg:w-[400px] lg:h-[400px] rounded-full border border-neutral-800/40 pointer-events-none" }),
-                    React.createElement('div', { className: `relative z-10 w-full h-full flex items-center justify-center transition-all duration-500 transform ${isTransitioning ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-none'}` },
-                        React.createElement('img', { src: activeChar.image, alt: activeChar.name, className: "max-h-[85%] max-w-[85%] object-contain drop-shadow-[0_35px_35px_rgba(0,0,0,0.6)] select-none pointer-events-none transform hover:scale-105 transition-transform duration-700 ease-out" })
-                    ),
-                    React.createElement('div', { className: "absolute top-12 right-4 lg:right-12 p-3 bg-neutral-900/80 border border-neutral-800 backdrop-blur-md rounded-xl shadow-2xl z-20 hidden sm:flex items-center gap-3" },
-                        React.createElement('div', { className: "p-2 rounded-lg bg-neutral-800" }, React.createElement(SwordsIcon, { className: "w-5 h-5 text-rose-500" })),
-                        React.createElement('div', null,
-                            React.createElement('p', { className: "text-[10px] text-neutral-500 uppercase tracking-widest font-bold" }, "Base Power"),
-                            React.createElement('p', { className: "text-lg font-mono font-black text-white" }, activeChar.stats.attack * 12)
-                        )
-                    )
-                )
-            ),
-            // bottom control dock
-            React.createElement('div', { className: "relative z-20 w-full bg-gradient-to-t from-neutral-950 via-neutral-950/90 to-transparent border-t border-neutral-900 px-6 py-4" },
-                React.createElement('div', { className: "max-w-7xl mx-auto flex items-center justify-between overflow-x-auto no-scrollbar gap-4" },
-                    React.createElement('div', { className: "text-xs text-neutral-500 uppercase font-bold tracking-widest whitespace-nowrap hidden md:block" }, "Roster Ledger"),
-                    React.createElement('div', { className: "flex items-center gap-3 overflow-x-auto pb-1 max-w-full" },
-                        characters.map((char, idx) => 
-                            React.createElement('button', { key: char.id, onClick: () => handleCharacterChange(idx), className: `flex items-center gap-3 px-4 py-2.5 rounded-xl border transition-all duration-300 text-left shrink-0 ${idx === activeIndex ? 'bg-neutral-900 text-white shadow-lg shadow-black/40' : 'bg-transparent border-transparent text-neutral-500 hover:text-neutral-300'}`, style: { borderColor: idx === activeIndex ? char.accentColor : 'transparent' } },
-                                React.createElement('div', { className: "w-7 h-7 rounded-lg overflow-hidden bg-neutral-800 border border-neutral-700 shrink-0 flex items-center justify-center font-mono text-xs font-bold text-neutral-300" }, idx + 1),
-                                React.createElement('div', null,
-                                    React.createElement('p', { className: "text-xs font-bold uppercase tracking-wide leading-none" }, char.name),
-                                    React.createElement('p', { className: "text-[10px] text-neutral-500 font-medium capitalize mt-0.5" }, char.faction)
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        );
-    };
+  function showAuthModal() {
+    const modalHtml = `
+      <div id="authModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 modal-transition">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md mx-4">
+          <h2 class="text-2xl font-bold mb-4">Meon Account</h2>
+          <input type="email" id="loginEmail" placeholder="Email" class="w-full p-2 border rounded-lg dark:bg-gray-700 mb-3">
+          <input type="password" id="loginPassword" placeholder="Password (any for demo)" class="w-full p-2 border rounded-lg dark:bg-gray-700 mb-4">
+          <div class="flex gap-2 mb-3">
+            <button id="loginEmailBtn" class="flex-1 bg-purple-600 text-white py-2 rounded-lg">Login</button>
+            <button id="registerBtn" class="flex-1 bg-green-600 text-white py-2 rounded-lg">Sign Up</button>
+          </div>
+          <button id="demoAdminBtn" class="w-full bg-purple-100 dark:bg-purple-900 py-2 rounded-lg mb-2">Demo Admin Access</button>
+          <button id="demoDevBtn" class="w-full bg-amber-100 dark:bg-amber-900 py-2 rounded-lg">Demo Developer Access</button>
+          <button id="closeModal" class="w-full mt-3 text-gray-500">Cancel</button>
+        </div>
+      </div>`;
+    document.body.insertAdjacentHTML("beforeend", modalHtml);
+    document.getElementById("loginEmailBtn")?.addEventListener("click", () => {
+      const email = document.getElementById("loginEmail").value;
+      if(email) loginUser(email, "user");
+      document.getElementById("authModal")?.remove();
+    });
+    document.getElementById("registerBtn")?.addEventListener("click", () => {
+      const email = document.getElementById("loginEmail").value;
+      if(email) loginUser(email, "user");
+      document.getElementById("authModal")?.remove();
+    });
+    document.getElementById("demoAdminBtn")?.addEventListener("click", () => { loginUser("admin@meon.com", "admin"); document.getElementById("authModal")?.remove(); });
+    document.getElementById("demoDevBtn")?.addEventListener("click", () => { loginUser("dev@meon.com", "developer"); document.getElementById("authModal")?.remove(); });
+    document.getElementById("closeModal")?.addEventListener("click", () => document.getElementById("authModal")?.remove());
+  }
 
-    // Mount app
-    const rootElement = document.getElementById('hero-root');
-    const root = ReactDOM.createRoot(rootElement);
-    const handleCta = () => {
-        alert("⚔️  DEPLOYMENT SEQUENCE INITIATED ⚔️\nPrepare for dimensional arena combat!");
-    };
-    root.render(
-        React.createElement(HeroSection, {
-            initialCharacters: INITIAL_CHARACTERS,
-            onCtaClick: handleCta,
-            onSelectCharacter: (char) => console.log("Selected fighter:", char.name)
-        })
-    );
+  function attachHomeInteractions() {
+    const searchInput = document.getElementById("globalSearchInput");
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        searchQuery = e.target.value;
+        renderCurrentView();
+      });
+    }
+    const categoryChips = document.querySelectorAll(".category-chip");
+    categoryChips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        activeCategoryFilter = chip.getAttribute("data-category");
+        renderCurrentView();
+      });
+    });
+    const clearBtn = document.getElementById("clearCategoryBtn");
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => {
+        activeCategoryFilter = "";
+        renderCurrentView();
+      });
+    }
+    const exploreBtn = document.getElementById("exploreMarketplaceBtn");
+    if (exploreBtn) {
+      exploreBtn.addEventListener("click", () => {
+        document.querySelector(".grid.grid-cols-1.sm\\:grid-cols-2")?.scrollIntoView({ behavior: "smooth" });
+      });
+    }
+    const becomeDevBtn = document.getElementById("becomeDevBtn");
+    if (becomeDevBtn) {
+      becomeDevBtn.addEventListener("click", () => {
+        if (!currentUser) showToast("Please login to become a developer", "error");
+        else { activeView = "developer"; renderCurrentView(); }
+      });
+    }
+  }
+
+  function renderCurrentView() {
+    const container = document.getElementById("mainContent");
+    if (!container) return;
+    if(selectedApp) container.innerHTML = renderAppDetail();
+    else if(activeView === "home") { container.innerHTML = renderHome(); setTimeout(attachHomeInteractions, 50); }
+    else if(activeView === "dashboard") container.innerHTML = renderDashboard();
+    else if(activeView === "admin") container.innerHTML = renderAdmin();
+    else if(activeView === "developer") container.innerHTML = renderDeveloper();
+    if (window.lucide) lucide.createIcons();
+    if(selectedApp && document.getElementById("reviewStars")) {
+      let ratingVal = 0;
+      const starDiv = document.getElementById("reviewStars");
+      starDiv.innerHTML = '';
+      for(let i=1;i<=5;i++){ let star=document.createElement('i'); star.setAttribute('data-lucide','star'); star.className='w-6 h-6 cursor-pointer rating-star'; star.onclick=()=>{ratingVal=i; document.querySelectorAll('#reviewStars i').forEach((s,idx)=>s.style.fill= idx<i ? '#facc15' : 'none');}; starDiv.appendChild(star);}
+      if (window.lucide) lucide.createIcons();
+      document.getElementById("submitReviewBtn")?.addEventListener("click",()=>{ const txt=document.getElementById("reviewText").value; if(ratingVal && txt) submitReview(selectedApp.id, ratingVal, txt); else showToast("Please provide rating and comment", "error");});
+    }
+  }
+  
+  // Navigation listeners
+  document.querySelectorAll(".nav-btn").forEach(btn=>{
+    btn.addEventListener("click",(e)=>{
+      const view = btn.getAttribute("data-nav");
+      if(view) { activeView = view; selectedApp = null; renderCurrentView(); }
+      document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("border-purple-600","text-purple-600"));
+      btn.classList.add("border-purple-600","text-purple-600");
+    });
+  });
+  
+  // Theme toggle
+  const themeToggle = document.getElementById("themeToggle");
+  themeToggle?.addEventListener("click",()=>{ document.documentElement.classList.toggle("dark"); localStorage.setItem("meonTheme", document.documentElement.classList.contains("dark") ? "dark" : "light"); if(window.lucide) lucide.createIcons(); });
+  if(localStorage.getItem("meonTheme") === "dark") document.documentElement.classList.add("dark");
+  
+  // M-Pesa modal handlers
+  document.getElementById("mpesaConfirmBtn")?.addEventListener("click", confirmMpesaPayment);
+  document.getElementById("mpesaCancelBtn")?.addEventListener("click", () => {
+    document.getElementById("mpesaModal").classList.add("hidden");
+    currentPaymentApp = null;
+  });
+  
+  renderNav();
+  renderCurrentView();
+  window.toggleFavorite = toggleFavorite;
+  window.downloadApp = downloadApp;
 </script>
 </body>
 </html>
