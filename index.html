@@ -3,93 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Meon | Intelligence · Innovation · Inspiration</title>
-  <meta name="description" content="Meon App Store – Daraja M-Pesa STK Push for seamless payments">
+  <title>Meon Travel | Intelligent Stays · Future Experience</title>
+  <meta name="description" content="Meon-inspired travel cards – glassmorphic, neon purple, futuristic design">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     * { font-family: 'Inter', sans-serif; }
     body {
       background: radial-gradient(circle at 10% 20%, #030014, #010108);
       color: #f1f5f9;
     }
-    /* Glassmorphic core */
-    .glass-card {
+    /* custom glassmorphic enhancements */
+    .meon-card {
       background: rgba(15, 25, 45, 0.55);
       backdrop-filter: blur(14px);
-      border: 1px solid rgba(139, 92, 246, 0.3);
-      border-radius: 2rem;
-      box-shadow: 0 25px 40px -12px rgba(0,0,0,0.5);
-    }
-    .glass-panel {
-      background: rgba(10, 20, 35, 0.65);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(139, 92, 246, 0.3);
-    }
-    .stats-glow {
-      background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(59,130,246,0.1));
-      border: 1px solid rgba(139,92,246,0.4);
-      backdrop-filter: blur(4px);
-      border-radius: 1.5rem;
-      transition: all 0.2s;
-    }
-    .category-chip {
-      background: rgba(30, 41, 59, 0.5);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(139, 92, 246, 0.3);
-      transition: all 0.2s ease;
-      border-radius: 9999px;
-      padding: 0.5rem 1.25rem;
-      font-size: 0.875rem;
-      font-weight: 500;
-      cursor: pointer;
-    }
-    .category-chip:hover, .category-chip.active-cat {
-      background: linear-gradient(135deg, #8b5cf6, #6366f1);
-      border-color: transparent;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px -8px #8b5cf6;
-      color: white;
-    }
-    .explore-cat-card {
-      background: rgba(18, 28, 45, 0.7);
-      backdrop-filter: blur(12px);
       border: 1px solid rgba(139, 92, 246, 0.35);
-      border-radius: 1.5rem;
-      transition: all 0.2s;
-      cursor: pointer;
-      text-align: center;
-      padding: 1.5rem 1rem;
-    }
-    .explore-cat-card:hover {
-      transform: translateY(-6px);
-      background: rgba(139, 92, 246, 0.2);
-      border-color: #8b5cf6;
-      box-shadow: 0 15px 30px -12px rgba(139,92,246,0.3);
-    }
-    .app-card {
-      background: rgba(18, 28, 45, 0.75);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(139, 92, 246, 0.3);
       border-radius: 1.75rem;
       transition: all 0.25s ease;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.4);
     }
-    .app-card:hover {
+    .meon-card:hover {
       transform: translateY(-6px);
       border-color: rgba(139, 92, 246, 0.7);
-      box-shadow: 0 20px 35px -12px rgba(139, 92, 246, 0.3);
+      box-shadow: 0 25px 40px -12px rgba(139, 92, 246, 0.3);
       background: rgba(25, 35, 55, 0.85);
     }
-    .btn-primary {
+    .btn-glow {
       background: linear-gradient(105deg, #8b5cf6, #4f46e5);
-      border: none;
       transition: all 0.2s;
     }
-    .btn-primary:hover {
+    .btn-glow:hover {
       background: linear-gradient(105deg, #9b6cff, #6366f1);
       transform: scale(0.98);
       box-shadow: 0 8px 20px -6px #8b5cf6;
+    }
+    .rating-star {
+      color: #facc15;
     }
     .gradient-text {
       background: linear-gradient(135deg, #c084fc, #60a5fa);
@@ -97,205 +46,175 @@
       background-clip: text;
       color: transparent;
     }
-    .hero-glow {
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(139,92,246,0.25), transparent 70%);
-      filter: blur(60px);
-      pointer-events: none;
-    }
-    .modal-transition { transition: opacity 0.2s ease, visibility 0.2s; }
-    .toast { position: fixed; bottom: 24px; right: 24px; z-index: 9999; animation: slideUp 0.3s ease; background: #1e293b; backdrop-filter: blur(12px); border-left: 4px solid #8b5cf6; border-radius: 1rem; padding: 12px 20px; color: white; box-shadow: 0 10px 20px -5px rgba(0,0,0,0.5); }
-    @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    .rating-star { cursor: pointer; transition: transform 0.1s; }
-    .rating-star:hover { transform: scale(1.15);}
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #0f172a; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 10px; }
-    .nav-tab-active {
-      border-bottom: 2px solid #8b5cf6;
-      color: #c084fc;
+    .carousel-dot {
+      transition: all 0.2s;
     }
   </style>
 </head>
-<body class="antialiased">
+<body class="antialiased p-6 md:p-10">
 
-<div id="app" class="min-h-screen flex flex-col">
-  <!-- Header – sleek glass -->
-  <header class="sticky top-0 z-50 bg-[#030014]/80 backdrop-blur-xl border-b border-purple-900/40 shadow-sm">
-    <div class="container mx-auto px-5 py-3 flex flex-wrap items-center justify-between gap-3">
+  <!-- Hero header matching Meon Marketplace style -->
+  <div class="max-w-7xl mx-auto mb-12 text-center md:text-left">
+    <div class="flex flex-wrap items-center justify-between gap-4 border-b border-purple-900/40 pb-5 mb-8">
       <div class="flex items-center gap-3">
-        <div class="flex items-center gap-2 bg-gradient-to-br from-purple-900/40 to-indigo-900/40 px-4 py-2 rounded-2xl border border-purple-500/30">
+        <div class="bg-gradient-to-br from-purple-900/40 to-indigo-900/40 px-5 py-2 rounded-2xl border border-purple-500/30">
           <span class="text-3xl font-black tracking-tighter text-white">meon</span>
-          <span class="hidden md:block text-[10px] font-bold tracking-[0.2em] text-purple-300 uppercase">INTELLIGENCE·INNOVATION·INSPIRATION</span>
+          <span class="hidden md:inline-block text-[10px] font-bold tracking-[0.2em] text-purple-300 uppercase ml-2">TRAVEL · STAYS</span>
         </div>
       </div>
-      <div class="flex items-center gap-3">
-        <button id="themeToggle" class="p-2 rounded-full hover:bg-white/10 transition">
-          <i data-lucide="moon" class="w-5 h-5 text-white"></i>
-        </button>
-        <div id="authSection" class="flex items-center gap-2"></div>
+      <div class="flex gap-3">
+        <button class="px-5 py-2 rounded-full bg-purple-600/20 border border-purple-500/40 text-sm font-semibold hover:bg-purple-600/40 transition">Discover</button>
+        <button class="px-5 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-semibold hover:bg-white/10">Sign In</button>
       </div>
     </div>
-    <div class="container mx-auto px-5">
-      <div class="flex gap-6 overflow-x-auto pb-2 scrollbar-hide">
-        <button data-nav="home" class="nav-btn font-semibold py-2.5 text-sm tracking-wide border-b-2 border-purple-500 text-purple-300 transition">🏠 Home</button>
-        <button data-nav="dashboard" class="nav-btn font-semibold py-2.5 text-sm tracking-wide border-b-2 border-transparent hover:text-purple-300">📊 My Dashboard</button>
-        <button data-nav="admin" id="adminNavBtn" class="nav-btn hidden font-semibold py-2.5 text-sm tracking-wide border-b-2 border-transparent">⚙️ Admin Panel</button>
-        <button data-nav="developer" id="devNavBtn" class="nav-btn hidden font-semibold py-2.5 text-sm tracking-wide border-b-2 border-transparent">🛠️ Developer Hub</button>
-      </div>
-    </div>
-  </header>
-
-  <main id="mainContent" class="flex-1 container mx-auto px-5 py-8"></main>
-  <div id="toastContainer"></div>
-</div>
-
-<!-- M-Pesa Modal Glass -->
-<div id="mpesaModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden modal-transition">
-  <div class="bg-[#0a0f1f]/90 backdrop-blur-xl rounded-3xl p-6 w-full max-w-md mx-4 border border-purple-500/40 shadow-2xl">
-    <h2 class="text-2xl font-bold mb-2 bg-gradient-to-r from-purple-300 to-indigo-300 bg-clip-text text-transparent">Pay with M-Pesa</h2>
-    <p id="mpesaAppName" class="text-gray-300 mb-4"></p>
-    <div class="mb-4"><label class="block text-sm font-medium mb-1 text-purple-200">Phone Number</label><input type="tel" id="mpesaPhone" placeholder="0712345678" class="w-full p-3 rounded-xl bg-white/10 border border-purple-500/30 text-white outline-none focus:border-purple-400"></div>
-    <div class="mb-4"><label class="block text-sm font-medium mb-1 text-purple-200">Amount (KES)</label><input type="number" id="mpesaAmount" readonly class="w-full p-3 rounded-xl bg-white/5 border border-purple-500/30 text-gray-300"></div>
-    <div class="flex gap-3"><button id="mpesaConfirmBtn" class="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 py-3 rounded-xl font-bold">Pay Now</button><button id="mpesaCancelBtn" class="flex-1 bg-white/10 border border-white/20 py-3 rounded-xl">Cancel</button></div>
-    <p class="text-xs text-gray-400 mt-3 text-center">STK push will be sent to your registered M-Pesa number</p>
+    <h1 class="text-5xl md:text-6xl font-black tracking-tight">LogicDriven. <span class="gradient-text">FutureStays.</span></h1>
+    <p class="text-gray-300 max-w-2xl mt-3 text-lg">Intelligent accommodations, curated experiences, and <br> seamless booking – powered by Meon.</p>
   </div>
-</div>
 
-<script>
-  // ========== FULL APP DATA (15 apps, logos, screenshots) ==========
-  const logoMapping = {
-    "maji-gas": "https://i.ibb.co/sJwP77mq/file-000000002a7c724698774712139656f9.png",
-    "deep-focus": "https://i.ibb.co/204QYyVF/file-00000000c6707243af95f3105457c8b5.png",
-    "data-vision": "https://i.ibb.co/NfCgDtT/file-00000000b57072438b98c6777ee7804e.png",
-    "insight": "https://i.ibb.co/FR12Cbh/file-0000000003947246bfbd3e5ce474edd4.png",
-    "rider-app": "https://i.ibb.co/Myk5kQFw/file-00000000888871f482a587c6a8d8847e.png",
-    "guard-ai": "https://i.ibb.co/GQWZnykb/file-00000000379c71f4a01216ae10901877.png",
-    "clients-hub": "https://i.ibb.co/ynD8T6th/file-00000000225471f4a1e44c664b9fd555.png",
-    "cv-maker": "https://i.ibb.co/cSvLqcLX/file-00000000d5e071f4ba22a75f0817c803.png",
-    "smart-duka": "https://i.ibb.co/nMBpS9WF/file-00000000826c71f48191fe3abb47a9d3.png",
-    "agriculture": "https://i.ibb.co/xqM1JCWG/file-000000004a8071f480fdac11e406f891.png",
-    "luminor-studio": "https://i.ibb.co/3959zVpj/file-000000008d8c71f49373b77a647572d6.png",
-    "matatu-booking": "https://i.ibb.co/392pGZq9/file-0000000093b871f4b17cbccefe4d7bc7.png",
-    "home-search": "https://i.ibb.co/N6jb2762/file-000000004c4871f49ca1cb9d0d2c1de4.png",
-    "school-360": "https://i.ibb.co/rK4xNYFs/file-000000001ee871f4b8169a28703091b7.png",
-    "kanisa-launcher": "https://i.ibb.co/7NrfmcHn/file-0000000081ac72468a2293c64472a4fc.png"
-  };
-  const screenshotUrls = [
-    "https://i.ibb.co/JPVGw2p/Screenshot-20260611-024707-Chrome.jpg","https://i.ibb.co/8D8qyBGg/Screenshot-20260611-024637-Chrome.jpg","https://i.ibb.co/4RBfvvjm/Screenshot-20260611-024610-Chrome.jpg","https://i.ibb.co/4g42CZRx/Screenshot-20260611-024506-Chrome.jpg","https://i.ibb.co/cSpb60gC/Screenshot-20260611-024412-Chrome.jpg","https://i.ibb.co/cXsqXjsx/Screenshot-20260611-024344-Chrome.jpg","https://i.ibb.co/FLFnBh7g/Screenshot-20260611-024154-Chrome.jpg","https://i.ibb.co/XxkBRrJ9/Screenshot-20260611-024111-Chrome.jpg","https://i.ibb.co/rWr1ZWW/Screenshot-20260611-024047-Chrome.jpg","https://i.ibb.co/B5wFG9Yh/Screenshot-20260611-023951-Chrome.jpg","https://i.ibb.co/RkcNfHh6/Screenshot-20260611-023843-Chrome.jpg","https://i.ibb.co/vF5TLKP/Screenshot-20260611-023556-Chrome.jpg","https://i.ibb.co/R4TPbxsB/Screenshot-20260611-023537-Chrome.jpg","https://i.ibb.co/PGT1M64C/Screenshot-20260611-023518-Chrome.jpg"
-  ];
-  const appList = [
-    { id: "maji-gas", name: "Maji Gas Delivery", shortDesc: "Cooking gas & water delivery on demand", category: "Utilities", price: 0, isFree: true, rating: 4.6, ratingCount: 234, downloads: 12540, version: "2.1.0", features: ["Real-time tracking", "Scheduled deliveries"], description: "Fast, reliable LPG and water delivery." },
-    { id: "deep-focus", name: "Deep Focus", shortDesc: "Pomodoro timer & distraction blocker", category: "Productivity", price: 4.99, isFree: false, rating: 4.8, ratingCount: 1890, downloads: 45200, version: "3.0.2", features: ["Pomodoro timer", "Website blocker"], description: "Boost productivity with focus tools." },
-    { id: "guard-ai", name: "Guard AI", shortDesc: "AI cybersecurity protection", category: "AI Tools", price: 9.99, isFree: false, rating: 4.9, ratingCount: 523, downloads: 18730, version: "1.5.0", features: ["Threat detection", "VPN"], description: "Next-gen AI shield for digital security." },
-    { id: "data-vision", name: "Data Vision", shortDesc: "AI business intelligence", category: "Analytics", price: 19.99, isFree: false, rating: 4.7, ratingCount: 312, downloads: 9800, version: "4.2.1", features: ["Dashboards", "AI predictions"], description: "Turn data into insights with AI." },
-    { id: "rider-app", name: "Rider App", shortDesc: "Logistics & delivery platform", category: "Transport", price: 0, isFree: true, rating: 4.5, ratingCount: 892, downloads: 67300, version: "2.3.0", features: ["Route optimization", "Live tracking"], description: "Complete solution for riders and fleets." },
-    { id: "insight", name: "Insight", shortDesc: "Customer analytics platform", category: "Analytics", price: 29.99, isFree: false, rating: 4.6, ratingCount: 178, downloads: 5400, version: "1.8.0", features: ["Segmentation", "Predictive models"], description: "Deep customer behavior intelligence." },
-    { id: "clients-hub", name: "Clients Hub", shortDesc: "CRM for modern business", category: "CRM", price: 14.99, isFree: false, rating: 4.4, ratingCount: 421, downloads: 12400, version: "3.1.0", features: ["Contact mgmt", "Deal tracking"], description: "Grow relationships with powerful CRM." },
-    { id: "smart-duka", name: "Smart Duka", shortDesc: "Retail management system", category: "Business", price: 9.99, isFree: false, rating: 4.7, ratingCount: 563, downloads: 28900, version: "2.0.0", features: ["Inventory", "POS"], description: "Modern POS for small shops." },
-    { id: "agriculture", name: "Agriculture", shortDesc: "Smart farming solution", category: "Agriculture", price: 0, isFree: true, rating: 4.3, ratingCount: 197, downloads: 8100, version: "1.4.0", features: ["Crop monitor", "Weather"], description: "Empower farmers with digital tools." },
-    { id: "luminor-studio", name: "Luminor Studio", shortDesc: "AI photo & video editing", category: "Design", price: 12.99, isFree: false, rating: 4.9, ratingCount: 734, downloads: 34200, version: "5.0.1", features: ["AI enhancement", "4K export"], description: "Creative suite for professionals." },
-    { id: "cv-maker", name: "CV Maker", shortDesc: "Professional resume builder", category: "Productivity", price: 0, isFree: true, rating: 4.6, ratingCount: 1280, downloads: 98700, version: "1.9.0", features: ["Templates", "PDF export"], description: "Create job-winning resumes instantly." },
-    { id: "matatu-booking", name: "Matatu Booking", shortDesc: "Public transport booking", category: "Transport", price: 0, isFree: true, rating: 4.5, ratingCount: 567, downloads: 45300, version: "2.2.0", features: ["Real-time tracking", "Digital tickets"], description: "Book matatus and track in real-time." },
-    { id: "home-search", name: "Home Search", shortDesc: "Real estate marketplace", category: "Real Estate", price: 0, isFree: true, rating: 4.4, ratingCount: 398, downloads: 22500, version: "3.3.0", features: ["Property search", "Virtual tours"], description: "Find dream home or rental." },
-    { id: "school-360", name: "School 360", shortDesc: "School management system", category: "Education", price: 49.99, isFree: false, rating: 4.8, ratingCount: 245, downloads: 6700, version: "4.1.0", features: ["Student records", "Fee mgmt"], description: "Complete school ERP with CBC." },
-    { id: "kanisa-launcher", name: "Kanisa Launcher", shortDesc: "Church management", category: "Religion", price: 0, isFree: true, rating: 4.7, ratingCount: 156, downloads: 5300, version: "1.2.0", features: ["Events", "Giving platform"], description: "Digital tools for modern ministry." }
-  ];
-  appList.forEach((app, idx) => { app.logoUrl = logoMapping[app.id]; app.screenshots = [screenshotUrls[idx % screenshotUrls.length]]; app.developer = { name: "Meon", verified: true }; });
-  function fallbackLogo(appId, size=60){ return `https://ui-avatars.com/api/?background=8b5cf6&color=fff&name=${appId.slice(0,2)}&size=${size}&rounded=true&bold=true`; }
-  function appLogoImg(app, sizeClass="w-14 h-14", px=56){ return `<img src="${app.logoUrl || fallbackLogo(app.id, px)}" class="${sizeClass} rounded-2xl shadow-lg object-cover border border-purple-500/30" onerror="this.src='${fallbackLogo(app.id, px)}'">`; }
-  
-  // ---------- STATE (fully preserved) ----------
-  let currentUser = JSON.parse(localStorage.getItem("meonUser")) || null;
-  let activeView = "home", selectedApp = null, searchQuery = "", activeCategoryFilter = "";
-  let userFavorites = JSON.parse(localStorage.getItem("meonFavorites")) || [];
-  let userDownloads = JSON.parse(localStorage.getItem("meonDownloads")) || [];
-  let reviewsData = JSON.parse(localStorage.getItem("meonReviews")) || {};
-  function saveState() { if(currentUser) localStorage.setItem("meonUser", JSON.stringify(currentUser)); else localStorage.removeItem("meonUser"); localStorage.setItem("meonFavorites", JSON.stringify(userFavorites)); localStorage.setItem("meonDownloads", JSON.stringify(userDownloads)); localStorage.setItem("meonReviews", JSON.stringify(reviewsData)); }
-  function showToast(msg, type="success") { const cont=document.getElementById("toastContainer"); const toast=document.createElement("div"); toast.className=`toast flex items-center gap-2`; toast.innerHTML=`<i data-lucide="${type==='success'?'check-circle':'alert-circle'}" class="w-5 h-5 text-purple-400"></i><span>${msg}</span>`; cont.appendChild(toast); if(window.lucide) lucide.createIcons(); setTimeout(()=>toast.remove(), 3800); }
-  function loginUser(email, role="user"){ currentUser={id:Date.now(),email,name:email.split('@')[0],role}; saveState(); renderNav(); renderCurrentView(); showToast(`Welcome ${currentUser.name} to Meon`, "success");}
-  function logout(){ currentUser=null; userFavorites=[]; userDownloads=[]; saveState(); renderNav(); renderCurrentView(); showToast("Logged out");}
-  function toggleFavorite(appId){ if(!currentUser){ showToast("Sign in to save favorites","error"); return false; } const idx=userFavorites.indexOf(appId); idx===-1? userFavorites.push(appId):userFavorites.splice(idx,1); saveState(); renderCurrentView(); showToast(idx===-1?"Added to favorites":"Removed","success"); return true;}
-  function downloadApp(app){ if(!currentUser){ showToast("Please login","error"); return; } if(!app.isFree){ showMpesaPaymentModal(app); return; } if(!userDownloads.find(d=>d.appId===app.id)){ userDownloads.push({appId:app.id, downloadedAt:new Date().toISOString(), version:app.version}); app.downloads+=1; saveState(); showToast(`Downloaded ${app.name}`,"success"); renderCurrentView(); } else showToast("Already installed","info");}
-  function submitReview(appId, rating, content){ if(!currentUser){ showToast("Login to review","error"); return false; } if(!reviewsData[appId]) reviewsData[appId]=[]; reviewsData[appId].push({userId:currentUser.id, user:currentUser.name, rating, content, date:new Date().toISOString()}); const allRatings=reviewsData[appId].map(r=>r.rating); const avg=allRatings.reduce((a,b)=>a+b,0)/allRatings.length; const appObj=appList.find(a=>a.id===appId); if(appObj){ appObj.rating=parseFloat(avg.toFixed(1)); appObj.ratingCount=allRatings.length; } saveState(); showToast("Review submitted","success"); renderCurrentView(); return true;}
-  async function initiateMpesaPayment(phone,amount,ref,appName){ return new Promise((resolve)=>{ showToast(`📱 STK push to ${phone} for KES ${amount}. Check your phone.`,"info"); setTimeout(()=>{ showToast(`✅ Payment of KES ${amount} for ${appName} successful! Receipt: MOCK${Date.now()}`,"success"); resolve(true); },2500); });}
-  let currentPaymentApp=null; function showMpesaPaymentModal(app){ if(!currentUser){ showToast("Login to purchase","error"); return; } currentPaymentApp=app; document.getElementById("mpesaAppName").innerText=`${app.name} - KES ${app.price}`; document.getElementById("mpesaAmount").value=app.price; document.getElementById("mpesaPhone").value=""; document.getElementById("mpesaModal").classList.remove("hidden");}
-  async function confirmMpesaPayment(){ const phone=document.getElementById("mpesaPhone").value.trim(); if(!phone){ showToast("Enter M-Pesa number","error"); return; } if(!currentPaymentApp) return; const amount=currentPaymentApp.price; document.getElementById("mpesaModal").classList.add("hidden"); const success=await initiateMpesaPayment(phone,amount,`MEON_${currentPaymentApp.id}`,currentPaymentApp.name); if(success){ if(!userDownloads.find(d=>d.appId===currentPaymentApp.id)){ userDownloads.push({appId:currentPaymentApp.id, downloadedAt:new Date().toISOString(), version:currentPaymentApp.version}); currentPaymentApp.downloads+=1; saveState(); showToast(`${currentPaymentApp.name} added to library`,"success"); renderCurrentView(); } } currentPaymentApp=null; }
-  function getFilteredApps(){ let filtered=[...appList]; if(searchQuery){ const q=searchQuery.toLowerCase(); filtered=filtered.filter(app=>app.name.toLowerCase().includes(q)||app.shortDesc.toLowerCase().includes(q)||app.category.toLowerCase().includes(q)); } if(activeCategoryFilter) filtered=filtered.filter(app=>app.category.toLowerCase()===activeCategoryFilter.toLowerCase()); return filtered; }
-  
-  // ---------- MODERN UI RENDER (image match) ----------
-  function renderHome(){
-    const filtered = getFilteredApps();
-    const featuredApps = ["guard-ai","deep-focus","luminor-studio"].map(id=>appList.find(a=>a.id===id)).filter(Boolean);
-    const trending = [...filtered].sort((a,b)=>b.downloads-a.downloads).slice(0,6);
-    // Category chips exactly as image
-    const categoryChips = ["All Solutions","AI Solutions","Business","Education","Agriculture","Transport","Creativity"];
-    const catFilterMap = {"All Solutions":"","AI Solutions":"ai tools","Business":"business","Education":"education","Agriculture":"agriculture","Transport":"transport","Creativity":"design"};
-    // Explore categories cards (Agriculture, Transport, Creativity, etc)
-    const exploreCategories = [
-      { name: "Agriculture", icon: "🌾", filter: "agriculture" },
-      { name: "Transport", icon: "🚚", filter: "transport" },
-      { name: "Creativity", icon: "🎨", filter: "design" },
-      { name: "AI Solutions", icon: "🧠", filter: "ai tools" },
-      { name: "Business", icon: "💼", filter: "business" },
-      { name: "Education", icon: "📚", filter: "education" }
-    ];
-    return `
-      <div class="space-y-12">
-        <!-- Hero Section with stats (inspired by reference image) -->
-        <div class="relative overflow-hidden rounded-3xl glass-card p-8 md:p-10">
-          <div class="hero-glow top-0 -right-40"></div><div class="hero-glow bottom-0 left-20 opacity-40"></div>
-          <div class="relative z-10">
-            <div class="flex flex-wrap justify-between items-start gap-6">
-              <div>
-                <div class="text-sm font-mono text-purple-300 tracking-wider">MEON MARKETPLACE</div>
-                <h1 class="text-5xl md:text-7xl font-black mt-2 tracking-tight">LogicDriven. <span class="gradient-text">FutureProven.</span></h1>
-                <p class="text-gray-300 max-w-xl mt-3 text-lg">Building intelligent solutions for a smarter tomorrow. Technology, creativity, purpose.</p>
-              </div>
-              <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 md:mt-0">
-                <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-black">15+</div><div class="text-xs uppercase tracking-wider text-purple-300">Applications</div></div>
-                <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-black">500K+</div><div class="text-xs uppercase tracking-wider text-purple-300">Downloads</div></div>
-                <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-black">4.8★</div><div class="text-xs uppercase tracking-wider text-purple-300">Avg Rating</div></div>
-                <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-black">24/7</div><div class="text-xs uppercase tracking-wider text-purple-300">Innovation</div></div>
-              </div>
+  <div class="max-w-7xl mx-auto">
+    <!-- Title for card examples -->
+    <div class="mb-6 flex items-center gap-2">
+      <div class="w-2 h-2 rounded-full bg-purple-500"></div>
+      <span class="text-sm font-mono text-purple-300 uppercase tracking-wider">Featured stays · Glass edition</span>
+    </div>
+
+    <!-- Grid of Travel Cards (pure HTML/CSS implementation matching Meon visual) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- CARD 1 - Image bottom (original style) -->
+      <div class="meon-card flex flex-col overflow-hidden">
+        <!-- content section (top) -->
+        <div class="p-6 flex flex-col flex-1 min-h-[220px] bg-gradient-to-br from-gray-900/60 to-gray-800/40">
+          <div>
+            <div class="flex justify-between items-start mb-1">
+              <h2 class="text-2xl font-bold text-white tracking-tight">Seaside Haven, <span class="text-purple-300">Malibu</span></h2>
+              <span class="text-xs font-semibold text-purple-200 border border-purple-500/50 rounded-full px-2.5 py-1 bg-purple-900/40 backdrop-blur-sm">★ Top rated</span>
             </div>
-            <div class="flex flex-wrap gap-4 mt-8"><button id="exploreAllBtn" class="btn-primary px-6 py-3 rounded-xl font-bold text-white shadow-lg">Explore All Apps →</button><button id="becomeDevHeroBtn" class="bg-white/10 border border-purple-400/40 px-6 py-3 rounded-xl font-bold backdrop-blur-sm hover:bg-white/20">Become a Developer</button></div>
+            <p class="text-xs text-purple-300/80 font-medium mb-3">May 12–19 • Private Host</p>
+            <p class="text-xs text-gray-300 leading-relaxed max-w-[90%]">Oceanfront villa with infinity pool, smart home controls and 24/7 concierge.</p>
+          </div>
+          <div class="flex justify-between items-center mt-4">
+            <div><span class="text-lg font-bold text-white">$349</span><span class="text-sm text-purple-300/80"> / night</span></div>
+            <button class="flex items-center gap-2 btn-glow text-white rounded-full pl-5 pr-2 py-2 shadow-md shadow-purple-500/30 group">
+              <span class="text-xs font-bold tracking-wide">Book Now</span>
+              <div class="bg-white text-purple-700 rounded-full p-1 group-hover:rotate-45 transition-transform duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M7 7h10v10"></path></svg>
+              </div>
+            </button>
           </div>
         </div>
-        <!-- Search bar -->
-        <div class="glass-panel rounded-2xl p-3 flex items-center gap-3"><i data-lucide="search" class="text-purple-400 w-5 h-5"></i><input type="text" id="globalSearchInput" placeholder="Search apps, services, AI tools, business solutions..." class="w-full bg-transparent outline-none text-white" value="${searchQuery.replace(/"/g, '&quot;')}"></div>
-        <!-- Category chips row -->
-        <div class="flex flex-wrap gap-3 justify-center">${categoryChips.map(cat=>`<button data-cat-filter="${catFilterMap[cat] || ''}" class="category-chip ${(activeCategoryFilter===catFilterMap[cat]) ? 'active-cat' : ''}">${cat}</button>`).join('')}${activeCategoryFilter?`<button id="clearCatFilter" class="bg-red-500/20 border border-red-400/40 px-4 py-2 rounded-full text-sm">Clear ✕</button>`:""}</div>
-        <!-- Explore Categories section with cards -->
-        <div><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-lucide="grid" class="text-purple-400"></i> Explore Categories</h2><div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">${exploreCategories.map(cat=>`<div class="explore-cat-card" data-cat-filter="${cat.filter}"><div class="text-3xl mb-2">${cat.icon}</div><div class="font-semibold">${cat.name}</div><div class="text-xs text-purple-300 mt-1">View All →</div></div>`).join('')}</div></div>
-        <!-- Featured Apps row (3 cards exactly as image) -->
-        <div><h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="zap" class="text-purple-400"></i> Featured Intelligence</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">${featuredApps.map(app=>appCardModern(app)).join('')}</div></div>
-        <!-- Trending section -->
-        <div><h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="trending-up" class="text-purple-400"></i> Trending on Meon</h2><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">${trending.map(app=>appCardModern(app)).join('')}</div></div>
+        <!-- image section (bottom) -->
+        <div class="relative h-[260px] w-full overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format" alt="Seaside Haven" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-purple-900/20"></div>
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+            <span class="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-md"></span><span class="w-1.5 h-1.5 rounded-full bg-white/40"></span><span class="w-1.5 h-1.5 rounded-full bg-white/40"></span><span class="w-1.5 h-1.5 rounded-full bg-white/40"></span>
+          </div>
+          <div class="absolute bottom-4 left-4 right-4 flex justify-between items-center z-10">
+            <div class="flex gap-2"><span class="text-[10px] font-semibold text-white bg-black/40 backdrop-blur-md border border-purple-400/40 rounded-full px-3 py-1.5">Ocean view</span><span class="text-[10px] font-semibold text-white bg-black/40 backdrop-blur-md border border-purple-400/40 rounded-full px-3 py-1.5">Pool</span></div>
+            <div class="flex items-center gap-1 text-white text-xs font-bold bg-black/30 backdrop-blur-sm px-2 py-1 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="#c084fc" stroke="none"><polygon points="12 17.27 18.18 21 16.54 13.97 22 9.24 14.81 8.63 12 2 9.19 8.63 2 9.24 7.46 13.97 5.82 21 12 17.27"></polygon></svg> 4.9</div>
+          </div>
+        </div>
       </div>
-    `;
-  }
-  function appCardModern(app){
-    const isFav = currentUser && userFavorites.includes(app.id);
-    return `<div class="app-card p-5 cursor-pointer transition-all" onclick="window.showAppDetail('${app.id}')"><div class="flex gap-4"><div>${appLogoImg(app, "w-16 h-16",64)}</div><div class="flex-1"><h3 class="font-extrabold text-lg">${app.name}</h3><p class="text-gray-300 text-sm">${app.shortDesc}</p><div class="flex items-center gap-2 mt-1"><div class="flex text-yellow-400 text-xs">${'★'.repeat(Math.floor(app.rating))}${app.rating%1>=0.5?'½':''}</div><span class="text-xs text-gray-400">(${app.ratingCount})</span><span class="text-xs bg-purple-500/20 px-2 py-0.5 rounded-full">${app.category}</span></div></div><button onclick="event.stopPropagation(); toggleFavorite('${app.id}')" class="text-pink-400"><i data-lucide="heart" class="w-5 h-5 ${isFav ? 'fill-pink-500' : ''}"></i></button></div><div class="flex justify-between items-center mt-4"><span class="text-xs font-mono text-purple-300">${app.downloads.toLocaleString()} downloads</span><button onclick="event.stopPropagation(); downloadApp(${JSON.stringify(app).replace(/"/g, '&quot;')})" class="bg-gradient-to-r from-purple-700 to-indigo-700 px-5 py-2 rounded-xl text-sm font-bold hover:shadow-lg">${app.isFree ? 'Get · Free' : `Buy KES ${app.price}`}</button></div></div>`;
-  }
-  function renderAppDetail(){ if(!selectedApp) return renderHome(); const app=selectedApp; const revs=reviewsData[app.id]||[]; return `<div class="max-w-5xl mx-auto"><button onclick="window.backToHome()" class="flex items-center gap-1 text-purple-400 mb-5">&larr; Back to Marketplace</button><div class="glass-card p-7 rounded-3xl"><div class="flex flex-wrap gap-6"><div>${appLogoImg(app,"w-28 h-28",100)}</div><div><h1 class="text-4xl font-black">${app.name}</h1><p class="text-gray-300">${app.shortDesc}</p><div class="flex gap-4 mt-2"><span>⭐ ${app.rating} (${app.ratingCount})</span><span>📥 ${app.downloads.toLocaleString()}</span></div><div class="flex gap-3 mt-4"><button onclick="downloadApp(${JSON.stringify(app).replace(/"/g, '&quot;')})" class="btn-primary px-8 py-2 rounded-xl font-bold">${app.isFree?'Download':'Buy KES '+app.price}</button><button onclick="toggleFavorite('${app.id}')" class="border border-purple-500 px-5 py-2 rounded-xl">❤️ Favorite</button></div></div></div><div class="mt-6"><h2 class="text-xl font-bold">Description</h2><p>${app.description}</p><ul class="list-disc pl-5 mt-2 space-y-1">${app.features.map(f=>`<li>${f}</li>`).join('')}</ul></div><div class="mt-6"><h2 class="text-xl font-bold">Screenshots</h2><div class="flex gap-3 overflow-x-auto">${app.screenshots.map(url=>`<img src="${url}" class="rounded-2xl h-40 w-auto object-cover border border-white/20">`).join('')}</div></div><div class="mt-8"><h2 class="text-xl font-bold">Rate & Review</h2><div id="reviewStars" class="flex gap-1 my-2"></div><textarea id="reviewText" rows="2" class="w-full bg-white/10 border border-purple-500/30 rounded-xl p-3" placeholder="Share your experience..."></textarea><button id="submitReviewBtn" class="mt-2 bg-purple-600 px-5 py-2 rounded-xl">Submit</button><div class="mt-6 space-y-4">${revs.map(r=>`<div class="border-b border-white/10 pb-3"><div class="font-bold">${r.user}</div><div class="text-yellow-400">${'★'.repeat(r.rating)}</div><p>${r.content}</p><small class="text-gray-400">${new Date(r.date).toLocaleDateString()}</small></div>`).join('')}</div></div></div></div>`;}
-  function renderDashboard(){ if(!currentUser) return `<div class="text-center py-20 glass-panel rounded-3xl">🔐 Sign in to access Meon Workspace</div>`; const downloaded=appList.filter(a=>userDownloads.some(d=>d.appId===a.id)); const favs=appList.filter(a=>userFavorites.includes(a.id)); return `<div class="glass-panel rounded-3xl p-8"><h1 class="text-3xl font-bold">👤 My Dashboard</h1><div class="grid md:grid-cols-2 gap-7 mt-7"><div><h2 class="text-xl font-bold">📦 Installed (${downloaded.length})</h2>${downloaded.map(a=>`<div class="flex gap-3 items-center mt-3 p-2 glass-card">${appLogoImg(a,"w-10 h-10",40)}<span>${a.name}</span></div>`).join('')||"<p class='text-gray-400'>No apps installed yet</p>"}</div><div><h2 class="text-xl font-bold">❤️ Favorites</h2>${favs.map(a=>`<div class="flex gap-3 items-center mt-3">${appLogoImg(a,"w-10 h-10",40)}<span>${a.name}</span></div>`).join('')}</div></div></div>`;}
-  function renderAdmin(){ if(!currentUser||(currentUser.role!=='admin'&&currentUser.role!=='super_admin')) return `<div class="text-center py-20">Admin Restricted</div>`; return `<div class="glass-panel p-7 rounded-3xl"><h1 class="text-3xl font-bold">Meon Admin Console</h1><div class="grid grid-cols-3 gap-5 mt-6"><div class="stats-glow p-4 rounded-2xl"><div class="text-2xl font-black">1.2k+</div><div>Active Users</div></div><div class="stats-glow p-4 rounded-2xl"><div class="text-2xl font-black">${appList.reduce((s,a)=>s+a.downloads,0).toLocaleString()}</div><div>Downloads</div></div><div class="stats-glow p-4 rounded-2xl"><div class="text-2xl font-black">$22.4k</div><div>Revenue</div></div></div><div class="mt-8"><h2 class="font-bold">App Management</h2>${appList.map(a=>`<div class="flex justify-between items-center border-b border-white/10 py-2"><span>${a.name}</span><button class="btn-primary px-3 py-1 rounded-lg text-xs" onclick="alert('Demo: Manage ${a.name}')">Edit</button></div>`).join('')}</div></div>`;}
-  function renderDeveloper(){ if(!currentUser||currentUser.role!=='developer') return `<div class="text-center py-20">Developer Hub Access Only</div>`; return `<div class="glass-panel p-7 rounded-3xl"><h1 class="text-3xl font-bold">🛠️ Developer Hub</h1><p>Analytics & Submissions</p><div class="mt-5 grid gap-3">${appList.slice(0,3).map(a=>`<div class="flex justify-between"><span>${a.name}</span><span>📈 ${a.downloads} downloads | ⭐${a.rating}</span></div>`).join('')}</div><button class="mt-7 btn-primary px-6 py-2 rounded-xl">+ Submit New Version</button></div>`;}
-  
-  function renderCurrentView(){ const container=document.getElementById("mainContent"); if(!container) return; if(selectedApp) container.innerHTML=renderAppDetail(); else if(activeView==="home"){ container.innerHTML=renderHome(); setTimeout(()=>{ const search=document.getElementById("globalSearchInput"); if(search) search.addEventListener("input",(e)=>{ searchQuery=e.target.value; renderCurrentView(); }); document.querySelectorAll(".category-chip").forEach(ch=>{ ch.addEventListener("click",()=>{ activeCategoryFilter=ch.getAttribute("data-cat-filter")||""; renderCurrentView(); }); }); document.querySelectorAll(".explore-cat-card").forEach(card=>{ card.addEventListener("click",()=>{ const filter=card.getAttribute("data-cat-filter"); if(filter){ activeCategoryFilter=filter; renderCurrentView(); } }); }); const clear=document.getElementById("clearCatFilter"); if(clear) clear.addEventListener("click",()=>{ activeCategoryFilter=""; renderCurrentView(); }); const exploreBtn=document.getElementById("exploreAllBtn"); if(exploreBtn) exploreBtn.addEventListener("click",()=>window.scrollTo({top:document.body.scrollHeight/2,behavior:"smooth"})); const devHero=document.getElementById("becomeDevHeroBtn"); if(devHero) devHero.addEventListener("click",()=>{ if(!currentUser) showToast("Login to become developer","error"); else { activeView="developer"; renderCurrentView(); } }); },50); } else if(activeView==="dashboard") container.innerHTML=renderDashboard(); else if(activeView==="admin") container.innerHTML=renderAdmin(); else if(activeView==="developer") container.innerHTML=renderDeveloper(); if(window.lucide) lucide.createIcons(); if(selectedApp&&document.getElementById("reviewStars")){ let ratingVal=0; const starDiv=document.getElementById("reviewStars"); starDiv.innerHTML=""; for(let i=1;i<=5;i++){ let star=document.createElement("i"); star.setAttribute("data-lucide","star"); star.className="w-6 h-6 cursor-pointer rating-star text-gray-400 hover:text-yellow-400"; star.onclick=()=>{ratingVal=i; document.querySelectorAll("#reviewStars i").forEach((s,idx)=>s.style.fill=idx<i?"#facc15":"none");}; starDiv.appendChild(star);} if(window.lucide) lucide.createIcons(); document.getElementById("submitReviewBtn")?.addEventListener("click",()=>{ const txt=document.getElementById("reviewText").value; if(ratingVal&&txt) submitReview(selectedApp.id,ratingVal,txt); else showToast("Provide rating & comment","error");}); } }
-  function renderNav(){ const authDiv=document.getElementById("authSection"); if(!authDiv) return; if(currentUser){ authDiv.innerHTML=`<span class="text-sm hidden sm:inline">${currentUser.email}</span><button id="logoutBtn" class="bg-red-600/80 px-4 py-1.5 rounded-xl text-sm font-medium">Logout</button>`; document.getElementById("logoutBtn")?.addEventListener("click",logout); const adminBtn=document.getElementById("adminNavBtn"),devBtn=document.getElementById("devNavBtn"); if(currentUser.role==="admin"||currentUser.role==="super_admin") adminBtn?.classList.remove("hidden"); else adminBtn?.classList.add("hidden"); if(currentUser.role==="developer") devBtn?.classList.remove("hidden"); else devBtn?.classList.add("hidden"); } else { authDiv.innerHTML=`<button id="showLoginModalBtn" class="bg-purple-600/80 px-5 py-1.5 rounded-xl text-sm font-medium">Sign In</button>`; document.getElementById("showLoginModalBtn")?.addEventListener("click",()=>{ const modalDiv=document.createElement("div"); modalDiv.className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"; modalDiv.innerHTML=`<div class="bg-[#0a0f1f] rounded-3xl p-7 w-96 border border-purple-500/40"><h2 class="text-2xl font-bold">Meon Access</h2><input id="loginEmailDemo" placeholder="Email" class="w-full mt-4 p-3 rounded-xl bg-white/10 border"><div class="flex gap-3 mt-5"><button id="demoLoginBtn" class="flex-1 btn-primary py-2 rounded-xl">Login</button><button id="demoAdminAccessBtn" class="flex-1 bg-purple-800 py-2 rounded-xl">Admin Demo</button><button id="demoDevAccessBtn" class="flex-1 bg-amber-700 py-2 rounded-xl">Dev Demo</button></div><button id="closeAuthModal" class="mt-4 text-gray-400 text-sm w-full">Cancel</button></div>`; document.body.appendChild(modalDiv); document.getElementById("demoLoginBtn")?.addEventListener("click",()=>{ const email=document.getElementById("loginEmailDemo").value||"user@meon.com"; loginUser(email,"user"); modalDiv.remove();}); document.getElementById("demoAdminAccessBtn")?.addEventListener("click",()=>{ loginUser("admin@meon.com","admin"); modalDiv.remove();}); document.getElementById("demoDevAccessBtn")?.addEventListener("click",()=>{ loginUser("dev@meon.com","developer"); modalDiv.remove();}); document.getElementById("closeAuthModal")?.addEventListener("click",()=>modalDiv.remove()); }); document.getElementById("adminNavBtn")?.classList.add("hidden"); document.getElementById("devNavBtn")?.classList.add("hidden"); } if(window.lucide) lucide.createIcons(); }
-  window.showAppDetail=(id)=>{ selectedApp=appList.find(a=>a.id===id); renderCurrentView(); };
-  window.backToHome=()=>{ selectedApp=null; renderCurrentView(); };
-  document.querySelectorAll(".nav-btn").forEach(btn=>{ btn.addEventListener("click",()=>{ const view=btn.getAttribute("data-nav"); if(view){ activeView=view; selectedApp=null; renderCurrentView(); } document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("border-purple-500","text-purple-300")); btn.classList.add("border-purple-500","text-purple-300"); }); });
-  document.getElementById("themeToggle")?.addEventListener("click",()=>{ document.documentElement.classList.toggle("dark"); });
-  document.getElementById("mpesaConfirmBtn")?.addEventListener("click",confirmMpesaPayment);
-  document.getElementById("mpesaCancelBtn")?.addEventListener("click",()=>{ document.getElementById("mpesaModal").classList.add("hidden"); currentPaymentApp=null; });
-  renderNav(); renderCurrentView();
-  window.toggleFavorite=toggleFavorite; window.downloadApp=downloadApp;
-</script>
+
+      <!-- CARD 2 - Image top (variant with tags & rating on top) -->
+      <div class="meon-card flex flex-col overflow-hidden">
+        <div class="relative h-[260px] w-full overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format" alt="Mountain Retreat" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-purple-900/20"></div>
+          <div class="absolute top-4 left-4 flex gap-2 z-10"><span class="text-[10px] font-semibold text-white bg-black/40 backdrop-blur-md border border-purple-400/40 rounded-full px-3 py-1.5">Mountains</span><span class="text-[10px] font-semibold text-white bg-black/40 backdrop-blur-md border border-purple-400/40 rounded-full px-3 py-1.5">Ski-in/out</span></div>
+          <div class="absolute top-4 right-4 flex items-center gap-1 text-white text-xs font-bold bg-black/30 backdrop-blur-sm px-2 py-1 rounded-full z-10"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="#c084fc" stroke="none"><polygon points="12 17.27 18.18 21 16.54 13.97 22 9.24 14.81 8.63 12 2 9.19 8.63 2 9.24 7.46 13.97 5.82 21 12 17.27"></polygon></svg> 4.8</div>
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10"><span class="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-md"></span><span class="w-1.5 h-1.5 rounded-full bg-white/40"></span><span class="w-1.5 h-1.5 rounded-full bg-white/40"></span></div>
+        </div>
+        <div class="p-6 flex flex-col flex-1 min-h-[220px] bg-gradient-to-br from-gray-900/60 to-gray-800/40">
+          <div>
+            <div class="flex justify-between items-start mb-1"><h2 class="text-2xl font-bold text-white tracking-tight">Alpine Chalet, <span class="text-purple-300">Swiss Alps</span></h2><span class="text-xs font-semibold text-purple-200 border border-purple-500/50 rounded-full px-2.5 py-1 bg-purple-900/40 backdrop-blur-sm">★ Exclusive</span></div>
+            <p class="text-xs text-purple-300/80 font-medium mb-3">Jun 8–15 • Superhost</p>
+            <p class="text-xs text-gray-300 leading-relaxed max-w-[90%]">Luxury wooden chalet with panoramic views, fireplace and private spa.</p>
+          </div>
+          <div class="flex justify-between items-center mt-4"><div><span class="text-lg font-bold text-white">$529</span><span class="text-sm text-purple-300/80"> / night</span></div><button class="flex items-center gap-2 btn-glow text-white rounded-full pl-5 pr-2 py-2 shadow-md shadow-purple-500/30 group"><span class="text-xs font-bold tracking-wide">Book Now</span><div class="bg-white text-purple-700 rounded-full p-1 group-hover:rotate-45 transition-transform duration-200"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"></path><path d="M7 7h10v10"></path></svg></div></button></div>
+        </div>
+      </div>
+
+      <!-- CARD 3 - image bottom, different tags, price etc -->
+      <div class="meon-card flex flex-col overflow-hidden">
+        <div class="p-6 flex flex-col flex-1 min-h-[220px] bg-gradient-to-br from-gray-900/60 to-gray-800/40">
+          <div>
+            <div class="flex justify-between items-start mb-1"><h2 class="text-2xl font-bold text-white tracking-tight">Urban Loft, <span class="text-purple-300">Tokyo</span></h2><span class="text-xs font-semibold text-purple-200 border border-purple-500/50 rounded-full px-2.5 py-1 bg-purple-900/40 backdrop-blur-sm">Trending</span></div>
+            <p class="text-xs text-purple-300/80 font-medium mb-3">Jul 2–9 • Entire apartment</p>
+            <p class="text-xs text-gray-300 leading-relaxed max-w-[90%]">Minimalist loft in Shibuya, high-speed wifi, smart lighting and city views.</p>
+          </div>
+          <div class="flex justify-between items-center mt-4"><div><span class="text-lg font-bold text-white">$189</span><span class="text-sm text-purple-300/80"> / night</span></div><button class="flex items-center gap-2 btn-glow text-white rounded-full pl-5 pr-2 py-2 shadow-md shadow-purple-500/30 group"><span class="text-xs font-bold tracking-wide">Book Now</span><div class="bg-white text-purple-700 rounded-full p-1 group-hover:rotate-45 transition-transform duration-200"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"></path><path d="M7 7h10v10"></path></svg></div></button></div>
+        </div>
+        <div class="relative h-[260px] w-full overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1974&auto=format" alt="Tokyo Loft" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-purple-900/20"></div>
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10"><span class="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-md"></span><span class="w-1.5 h-1.5 rounded-full bg-white/40"></span><span class="w-1.5 h-1.5 rounded-full bg-white/40"></span><span class="w-1.5 h-1.5 rounded-full bg-white/40"></span></div>
+          <div class="absolute bottom-4 left-4 right-4 flex justify-between items-center z-10"><div class="flex gap-2"><span class="text-[10px] font-semibold text-white bg-black/40 backdrop-blur-md border border-purple-400/40 rounded-full px-3 py-1.5">City center</span><span class="text-[10px] font-semibold text-white bg-black/40 backdrop-blur-md border border-purple-400/40 rounded-full px-3 py-1.5">Fast WiFi</span></div><div class="flex items-center gap-1 text-white text-xs font-bold bg-black/30 backdrop-blur-sm px-2 py-1 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="#c084fc" stroke="none"><polygon points="12 17.27 18.18 21 16.54 13.97 22 9.24 14.81 8.63 12 2 9.19 8.63 2 9.24 7.46 13.97 5.82 21 12 17.27"></polygon></svg> 4.7</div></div>
+        </div>
+      </div>
+
+      <!-- CARD 4 - extra: desert escape, image top variant with rating -->
+      <div class="meon-card flex flex-col overflow-hidden">
+        <div class="relative h-[260px] w-full overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?q=80&w=2076&auto=format" alt="Desert Dome" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-purple-900/20"></div>
+          <div class="absolute top-4 left-4 flex gap-2 z-10"><span class="text-[10px] font-semibold text-white bg-black/40 backdrop-blur-md border border-purple-400/40 rounded-full px-3 py-1.5">Stargazing</span><span class="text-[10px] font-semibold text-white bg-black/40 backdrop-blur-md border border-purple-400/40 rounded-full px-3 py-1.5">Eco-dome</span></div>
+          <div class="absolute top-4 right-4 flex items-center gap-1 text-white text-xs font-bold bg-black/30 backdrop-blur-sm px-2 py-1 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="#c084fc" stroke="none"><polygon points="12 17.27 18.18 21 16.54 13.97 22 9.24 14.81 8.63 12 2 9.19 8.63 2 9.24 7.46 13.97 5.82 21 12 17.27"></polygon></svg> 4.95</div>
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10"><span class="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-md"></span><span class="w-1.5 h-1.5 rounded-full bg-white/40"></span></div>
+        </div>
+        <div class="p-6 flex flex-col flex-1 min-h-[220px] bg-gradient-to-br from-gray-900/60 to-gray-800/40">
+          <div><div class="flex justify-between items-start mb-1"><h2 class="text-2xl font-bold text-white tracking-tight">Cosmic Dome, <span class="text-purple-300">Joshua Tree</span></h2><span class="text-xs font-semibold text-purple-200 border border-purple-500/50 rounded-full px-2.5 py-1 bg-purple-900/40 backdrop-blur-sm">✨ Best seller</span></div><p class="text-xs text-purple-300/80 font-medium mb-3">Aug 20–27 • Unique stay</p><p class="text-xs text-gray-300 leading-relaxed max-w-[90%]">Transparent dome with desert views, hammock and outdoor hot tub.</p></div>
+          <div class="flex justify-between items-center mt-4"><div><span class="text-lg font-bold text-white">$279</span><span class="text-sm text-purple-300/80"> / night</span></div><button class="flex items-center gap-2 btn-glow text-white rounded-full pl-5 pr-2 py-2 shadow-md shadow-purple-500/30 group"><span class="text-xs font-bold tracking-wide">Book Now</span><div class="bg-white text-purple-700 rounded-full p-1 group-hover:rotate-45 transition-transform duration-200"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"></path><path d="M7 7h10v10"></path></svg></div></button></div>
+        </div>
+      </div>
+      
+      <!-- CARD 5 - image bottom, with "Top rated" badge, etc -->
+      <div class="meon-card flex flex-col overflow-hidden">
+        <div class="p-6 flex flex-col flex-1 min-h-[220px] bg-gradient-to-br from-gray-900/60 to-gray-800/40">
+          <div><div class="flex justify-between items-start mb-1"><h2 class="text-2xl font-bold text-white tracking-tight">Vineyard Estate, <span class="text-purple-300">Tuscany</span></h2><span class="text-xs font-semibold text-purple-200 border border-purple-500/50 rounded-full px-2.5 py-1 bg-purple-900/40 backdrop-blur-sm">★ Top rated</span></div><p class="text-xs text-purple-300/80 font-medium mb-3">Sep 5–12 • Historic villa</p><p class="text-xs text-gray-300 leading-relaxed max-w-[90%]">Renaissance villa with private vineyard, chef’s kitchen and olive groves.</p></div>
+          <div class="flex justify-between items-center mt-4"><div><span class="text-lg font-bold text-white">$459</span><span class="text-sm text-purple-300/80"> / night</span></div><button class="flex items-center gap-2 btn-glow text-white rounded-full pl-5 pr-2 py-2 shadow-md shadow-purple-500/30 group"><span class="text-xs font-bold tracking-wide">Book Now</span><div class="bg-white text-purple-700 rounded-full p-1 group-hover:rotate-45 transition-transform duration-200"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"></path><path d="M7 7h10v10"></path></svg></div></button></div>
+        </div>
+        <div class="relative h-[260px] w-full overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=2070&auto=format" alt="Tuscany Villa" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-purple-900/20"></div>
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span><span class="w-1.5 h-1.5 rounded-full bg-white/40"></span><span class="w-1.5 h-1.5 rounded-full bg-white/40"></span></div>
+          <div class="absolute bottom-4 left-4 right-4 flex justify-between items-center z-10"><div class="flex gap-2"><span class="text-[10px] font-semibold text-white bg-black/40 backdrop-blur-md border border-purple-400/40 rounded-full px-3 py-1.5">Wine tasting</span><span class="text-[10px] font-semibold text-white bg-black/40 backdrop-blur-md border border-purple-400/40 rounded-full px-3 py-1.5">Infinity pool</span></div><div class="flex items-center gap-1 text-white text-xs font-bold bg-black/30 backdrop-blur-sm px-2 py-1 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="#c084fc" stroke="none"><polygon points="12 17.27 18.18 21 16.54 13.97 22 9.24 14.81 8.63 12 2 9.19 8.63 2 9.24 7.46 13.97 5.82 21 12 17.27"></polygon></svg> 4.92</div></div>
+        </div>
+      </div>
+
+      <!-- CARD 6 - image top with multiple tags -->
+      <div class="meon-card flex flex-col overflow-hidden">
+        <div class="relative h-[260px] w-full overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format" alt="Beachfront" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-purple-900/20"></div>
+          <div class="absolute top-4 left-4 flex gap-2"><span class="text-[10px] font-semibold text-white bg-black/40 backdrop-blur-md border border-purple-400/40 rounded-full px-3 py-1.5">Beachfront</span><span class="text-[10px] font-semibold text-white bg-black/40 backdrop-blur-md border border-purple-400/40 rounded-full px-3 py-1.5">Kayaking</span></div>
+          <div class="absolute top-4 right-4 flex items-center gap-1 text-white text-xs font-bold bg-black/30 backdrop-blur-sm px-2 py-1 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="#c084fc" stroke="none"><polygon points="12 17.27 18.18 21 16.54 13.97 22 9.24 14.81 8.63 12 2 9.19 8.63 2 9.24 7.46 13.97 5.82 21 12 17.27"></polygon></svg> 4.85</div>
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span><span class="w-1.5 h-1.5 rounded-full bg-white/40"></span><span class="w-1.5 h-1.5 rounded-full bg-white/40"></span><span class="w-1.5 h-1.5 rounded-full bg-white/40"></span></div>
+        </div>
+        <div class="p-6 flex flex-col flex-1 min-h-[220px] bg-gradient-to-br from-gray-900/60 to-gray-800/40">
+          <div><div class="flex justify-between items-start mb-1"><h2 class="text-2xl font-bold text-white tracking-tight">Coastal Breeze, <span class="text-purple-300">Bali</span></h2><span class="text-xs font-semibold text-purple-200 border border-purple-500/50 rounded-full px-2.5 py-1 bg-purple-900/40">🌊 Popular</span></div><p class="text-xs text-purple-300/80 font-medium mb-3">Oct 10–17 • Eco resort</p><p class="text-xs text-gray-300 leading-relaxed max-w-[90%]">Sustainable bamboo villa, surf lessons and sunrise yoga deck.</p></div>
+          <div class="flex justify-between items-center mt-4"><div><span class="text-lg font-bold text-white">$159</span><span class="text-sm text-purple-300/80"> / night</span></div><button class="flex items-center gap-2 btn-glow text-white rounded-full pl-5 pr-2 py-2 shadow-md shadow-purple-500/30 group"><span class="text-xs font-bold tracking-wide">Book Now</span><div class="bg-white text-purple-700 rounded-full p-1 group-hover:rotate-45 transition-transform duration-200"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"></path><path d="M7 7h10v10"></path></svg></div></button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer note with Meon spirit -->
+    <div class="mt-16 text-center text-xs text-gray-500 border-t border-purple-900/30 pt-8">
+      <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-indigo-300 font-medium">MEON TRAVEL</span> — Intelligence-driven curation. Future‑proof stays. 
+      <br>© 2026 Meon Marketplace · LogicDriven. FutureProven.
+    </div>
+  </div>
+
+  <!-- simple interactivity to simulate booking alerts -->
+  <script>
+    document.querySelectorAll('.btn-glow').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const cardTitle = btn.closest('.meon-card')?.querySelector('h2')?.innerText || 'this stay';
+        alert(`✨ Meon Intelligent Booking: ${cardTitle}\nA secure STK push will be sent to your M-Pesa for the total amount. Demo flow.`);
+      });
+    });
+  </script>
 </body>
 </html>
