@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Anime Fighter Registry | Immersive Hero Section</title>
+    <!-- Tailwind CSS + Google Fonts + Base style overrides -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- React & ReactDOM (modern) -->
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background-color: #0a0a0a; margin: 0; overflow-x: hidden; }
+        /* custom scrollbar for roster */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        @keyframes spin-slow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: spin-slow 120s linear infinite;
+        }
+        /* smooth transitions for character switch */
+        .transition-all-300 { transition: all 0.3s ease-in-out; }
+        .glass-panel {
+            background: rgba(23, 23, 23, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+    </style>
+</head>
+<body class="bg-black text-white antialiased">
+
+<div id="hero-root" class="w-full min-h-screen"></div>
+
+<script>
+    // --------------------------------------------------------------
+    // DATA REGISTRY: 5 UNIQUE FIGHTERS (Anime / Fantasy theme)
+    // --------------------------------------------------------------
+    const INITIAL_CHARACTERS = [
+        {
+            id: "KLD-001",
+            name: "Kaelen",
+            title: "Shadowstep Assassin",
+            faction: "Midnight Syndicate",
+            rarity: "Legendary",
+            image: "https://api.dicebear.com/9.x/adventurer/svg?seed=Kaelen&flip=1&backgroundColor=1a1a2e&radius=50&size=400",
+            bgGradient: "bg-gradient-to-r from-purple-600/20 to-violet-900/20",
+            accentColor: "#a855f7",
+            description: "A ghost among blades, Kaelen moves between dimensions. His twin daggers leave no trace, only whispers in the dark.",
+            stats: { hp: 128, attack: 145, defense: 88, speed: 142 }
+        },
+        {
+            id: "LYR-002",
+            name: "Lyra",
+            title: "Emberheart Mage",
+            faction: "Ashen Covenant",
+            rarity: "Epic",
+            image: "https://api.dicebear.com/9.x/adventurer/svg?seed=Lyra&flip=0&backgroundColor=2d1b2e&radius=50&size=400",
+            bgGradient: "bg-gradient-to-r from-rose-600/20 to-orange-800/20",
+            accentColor: "#e11d48",
+            description: "Flames answer her call. As a master of pyromancy, Lyra’s phoenix familiar rains devastation upon corrupted realms.",
+            stats: { hp: 98, attack: 162, defense: 74, speed: 118 }
+        },
+        {
+            id: "ZEP-003",
+            name: "Zephyr",
+            title: "Stormweaver",
+            faction: "Tempest Dominion",
+            rarity: "Legendary",
+            image: "https://api.dicebear.com/9.x/adventurer/svg?seed=Zephyr&flip=1&backgroundColor=0a2a2a&radius=50&size=400",
+            bgGradient: "bg-gradient-to-r from-cyan-600/20 to-blue-900/20",
+            accentColor: "#06b6d4",
+            description: "Rider of hurricanes, Zephyr commands lightning and gale. His tempest cloak renders him untouchable in battle.",
+            stats: { hp: 112, attack: 138, defense: 92, speed: 158 }
+        },
+        {
+            id: "MAG-004",
+            name: "Magnus",
+            title: "Ironfist Colossus",
+            faction: "Stoneguard Legion",
+            rarity: "Rare",
+            image: "https://api.dicebear.com/9.x/adventurer/svg?seed=Magnus&flip=0&backgroundColor=1e2a2e&radius=50&size=400",
+            bgGradient: "bg-gradient-to-r from-stone-600/20 to-amber-800/20",
+            accentColor: "#d97706",
+            description: "Titan forged in volcanic mountains. Magnus shatters enemy lines with unyielding defense and earth-shattering fists.",
+            stats: { hp: 176, attack: 121, defense: 158, speed: 67 }
+        },
+        {
+            id: "SER-005",
+            name: "Seraphina",
+            title: "Voidwalker Saint",
+            faction: "Eclipsed Order",
+            rarity: "Legendary",
+            image: "https://api.dicebear.com/9.x/adventurer/svg?seed=Seraphina&flip=1&backgroundColor=1a1025&radius=50&size=400",
+            bgGradient: "bg-gradient-to-r from-fuchsia-600/20 to-purple-900/20",
+            accentColor: "#c026d3",
+            description: "She walks between realms, wielding cosmic energies. Seraphina bends reality, healing allies and banishing nightmares.",
+            stats: { hp: 135, attack: 149, defense: 103, speed: 131 }
+        }
+    ];
+
+    // Helper to get stat icons (matching Lucide from React)
+    // We'll embed the necessary Lucide icons via a simple mapping (since we use react components)
+    // But because we render with React, we must map icons: use local function returning JSX
+    // We'll rely on globally available lucide? Actually we will inject icons using createElement from lucide?
+    // In the component we use `import { Shield, Zap, Swords, Flame, ChevronRight, Sparkles } from 'lucide-react'`
+    // Since we are not using a build system, we need to include the icons from CDN and reference them via global?
+    // Easiest: Use Lucide via `lucide` global and manually render svg via `dangerouslySetInnerHTML`? No, we better use `lucide-react` CDN? Not available.
+    // Alternative: Because we use React.createElement, we can create icon components manually with inline SVG? The component relies on lucide-react imports.
+    // To make it work without build, we will provide a small mock for lucide icons inside the component.
+    // I'll rewrite the component to use a custom Icon wrapper that uses inline SVG strings from Lucide CDN, or use `lucide` icons via `data-lucide` but that’s not React.
+    // Easier: Replace `lucide-react` imports with inline SVG manually for those 6 icons (Shield, Zap, Swords, Flame, ChevronRight, Sparkles).
+    // I'll define a helper function `getLucideIcon` that returns a JSX span with the SVG from Lucide CDN? But lucide-react is not available.
+    // Better: I'll copy the raw SVG paths from lucide and make simple Icon components.
+    // Let’s create an internal Icon component for each needed icon.
+    // I will rewrite the component inside the React render to avoid external dependencies.
+    // Solution: Since the component code is given, we adapt it: Replace imports and use custom SVG components.
+    // In the final output I'll embed the full component with inline icon definitions.
+    // I'll produce a full React functional component using the same logic, but with local icon functions.
+    // I'll also ensure Tailwind classes are compatible.
+    // Let's build the final script.
+    // --------------------------------------------------------------
+
+    // ----- DEFINE SVG ICON COMPONENTS (matching lucide-react shape) -----
+    const ShieldIcon = (props) => React.createElement('svg', { ...props, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, 
+        React.createElement('path', { d: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" })
+    );
+    const ZapIcon = (props) => React.createElement('svg', { ...props, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
+        React.createElement('polygon', { points: "13 2 3 14 12 14 11 22 21 10 12 10 13 2" })
+    );
+    const SwordsIcon = (props) => React.createElement('svg', { ...props, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
+        React.createElement('polygon', { points: "14.5 17.5 3 6 3 3 6 3 17.5 14.5" }),
+        React.createElement('line', { x1: "13", y1: "19", x2: "19", y2: "13" }),
+        React.createElement('line', { x1: "16", y1: "16", x2: "20", y2: "20" }),
+        React.createElement('line', { x1: "19", y1: "21", x2: "21", y2: "19" })
+    );
+    const FlameIcon = (props) => React.createElement('svg', { ...props, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
+        React.createElement('path', { d: "M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a3 3 0 0 0 2.5 2.5z" })
+    );
+    const ChevronRightIcon = (props) => React.createElement('svg', { ...props, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
+        React.createElement('polyline', { points: "9 18 15 12 9 6" })
+    );
+    const SparklesIcon = (props) => React.createElement('svg', { ...props, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
+        React.createElement('path', { d: "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" })
+    );
+
+    // Create React component using pure JSX (React.createElement)
+    const HeroSection = (props) => {
+        const { initialCharacters, onSelectCharacter, onCtaClick } = props;
+        const [characters, setCharacters] = React.useState(initialCharacters);
+        const [activeIndex, setActiveIndex] = React.useState(0);
+        const [isTransitioning, setIsTransitioning] = React.useState(false);
+
+        const activeChar = characters[activeIndex] || initialCharacters[0];
+
+        React.useEffect(() => {
+            const stored = localStorage.getItem('anime_fighter_registry');
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    if (parsed && parsed.length) setCharacters(parsed);
+                } catch(e) { console.error(e); }
+            }
+        }, []);
+
+        const handleCharacterChange = (index) => {
+            if (index === activeIndex) return;
+            setIsTransitioning(true);
+            setTimeout(() => {
+                setActiveIndex(index);
+                setIsTransitioning(false);
+                if (onSelectCharacter) onSelectCharacter(characters[index]);
+            }, 300);
+        };
+
+        const getStatIcon = (key) => {
+            switch(key) {
+                case 'hp': return React.createElement(FlameIcon, { className: "w-4 h-4 text-emerald-400" });
+                case 'attack': return React.createElement(SwordsIcon, { className: "w-4 h-4 text-rose-500" });
+                case 'defense': return React.createElement(ShieldIcon, { className: "w-4 h-4 text-blue-400" });
+                case 'speed': return React.createElement(ZapIcon, { className: "w-4 h-4 text-amber-400" });
+                default: return React.createElement(SparklesIcon, { className: "w-4 h-4" });
+            }
+        };
+
+        // main render
+        return React.createElement('section', { className: "relative w-full min-h-[90vh] bg-neutral-950 overflow-hidden flex flex-col justify-between text-white font-sans" },
+            // Background gradients & ambient
+            React.createElement('div', { className: "absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen transition-all duration-700 ease-in-out" },
+                React.createElement('div', { className: `absolute -top-[20%] -right-[10%] w-[600px] h-[600px] rounded-full blur-[160px] ${activeChar.bgGradient.split(' ')[1] || 'from-purple-600/20'}` }),
+                React.createElement('div', { className: "absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neutral-800 to-transparent" })
+            ),
+            // main content grid
+            React.createElement('div', { className: "relative z-10 w-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 pt-12 lg:pt-20 pb-8 items-center flex-grow" },
+                // left column
+                React.createElement('div', { className: `lg:col-span-5 flex flex-col justify-center space-y-6 transition-all duration-300 transform ${isTransitioning ? 'opacity-0 -translate-x-4' : 'opacity-100 translate-x-0'}` },
+                    React.createElement('div', { className: "flex items-center gap-3" },
+                        React.createElement('span', { className: "px-3 py-1 text-xs uppercase font-extrabold tracking-widest bg-neutral-900 border border-neutral-800 rounded-full text-neutral-400 shadow-inner" }, activeChar.faction),
+                        React.createElement('span', { className: "px-3 py-1 text-xs uppercase font-extrabold tracking-widest rounded-full flex items-center gap-1 shadow-lg", style: { backgroundColor: `${activeChar.accentColor}20`, color: activeChar.accentColor, border: `1px solid ${activeChar.accentColor}40` } },
+                            React.createElement(SparklesIcon, { className: "w-3 h-3 animate-pulse" }),
+                            activeChar.rarity
+                        )
+                    ),
+                    React.createElement('div', { className: "space-y-1" },
+                        React.createElement('h2', { className: "text-xl font-medium text-neutral-400 tracking-wide uppercase" }, activeChar.title),
+                        React.createElement('h1', { className: "text-5xl lg:text-7xl font-black tracking-tighter uppercase leading-none bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-neutral-500" }, activeChar.name)
+                    ),
+                    React.createElement('p', { className: "text-neutral-400 text-sm lg:text-base leading-relaxed font-normal max-w-md" }, activeChar.description),
+                    // stats panel
+                    React.createElement('div', { className: "p-4 rounded-2xl bg-neutral-900/60 border border-neutral-800/80 backdrop-blur-md max-w-md space-y-3 shadow-2xl" },
+                        React.createElement('div', { className: "flex items-center justify-between border-b border-neutral-800/50 pb-2" },
+                            React.createElement('span', { className: "text-xs uppercase tracking-widest font-bold text-neutral-500" }, "Combat Registry Spec"),
+                            React.createElement('span', { className: "text-xs text-neutral-400 font-mono" }, `ID: #${activeChar.id}`)
+                        ),
+                        React.createElement('div', { className: "grid grid-cols-2 gap-x-6 gap-y-3" },
+                            Object.entries(activeChar.stats).map(([key, value]) => 
+                                React.createElement('div', { key: key, className: "space-y-1" },
+                                    React.createElement('div', { className: "flex items-center justify-between text-xs" },
+                                        React.createElement('span', { className: "capitalize text-neutral-400 flex items-center gap-1.5 font-medium" }, getStatIcon(key), key),
+                                        React.createElement('span', { className: "font-mono font-bold text-neutral-200" }, value)
+                                    ),
+                                    React.createElement('div', { className: "h-1.5 w-full bg-neutral-800 rounded-full overflow-hidden" },
+                                        React.createElement('div', { className: "h-full transition-all duration-1000 ease-out rounded-full", style: { width: `${(value / 150) * 100}%`, backgroundColor: activeChar.accentColor } })
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    // CTA Button
+                    React.createElement('div', { className: "pt-2" },
+                        React.createElement('button', { onClick: onCtaClick, className: "group relative px-6 py-3.5 rounded-xl font-bold text-sm tracking-wider uppercase overflow-hidden transition-all duration-300 shadow-xl hover:scale-[1.02] active:scale-[0.98]", style: { backgroundColor: activeChar.accentColor } },
+                            React.createElement('div', { className: "absolute inset-0 bg-white/20 transform -skews-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out" }),
+                            React.createElement('span', { className: "relative z-10 flex items-center gap-2 text-neutral-950" }, "Deploy to Arena", React.createElement(ChevronRightIcon, { className: "w-4 h-4 transition-transform group-hover:translate-x-1" }))
+                        )
+                    )
+                ),
+                // right column: image / asset viewport
+                React.createElement('div', { className: "lg:col-span-7 relative h-[400px] lg:h-[600px] w-full flex items-center justify-center" },
+                    React.createElement('div', { className: "absolute w-[320px] h-[320px] lg:w-[480px] lg:h-[480px] rounded-full border border-dashed border-neutral-800/60 animate-spin-slow pointer-events-none" }),
+                    React.createElement('div', { className: "absolute w-[260px] h-[260px] lg:w-[400px] lg:h-[400px] rounded-full border border-neutral-800/40 pointer-events-none" }),
+                    React.createElement('div', { className: `relative z-10 w-full h-full flex items-center justify-center transition-all duration-500 transform ${isTransitioning ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-none'}` },
+                        React.createElement('img', { src: activeChar.image, alt: activeChar.name, className: "max-h-[85%] max-w-[85%] object-contain drop-shadow-[0_35px_35px_rgba(0,0,0,0.6)] select-none pointer-events-none transform hover:scale-105 transition-transform duration-700 ease-out" })
+                    ),
+                    React.createElement('div', { className: "absolute top-12 right-4 lg:right-12 p-3 bg-neutral-900/80 border border-neutral-800 backdrop-blur-md rounded-xl shadow-2xl z-20 hidden sm:flex items-center gap-3" },
+                        React.createElement('div', { className: "p-2 rounded-lg bg-neutral-800" }, React.createElement(SwordsIcon, { className: "w-5 h-5 text-rose-500" })),
+                        React.createElement('div', null,
+                            React.createElement('p', { className: "text-[10px] text-neutral-500 uppercase tracking-widest font-bold" }, "Base Power"),
+                            React.createElement('p', { className: "text-lg font-mono font-black text-white" }, activeChar.stats.attack * 12)
+                        )
+                    )
+                )
+            ),
+            // bottom control dock
+            React.createElement('div', { className: "relative z-20 w-full bg-gradient-to-t from-neutral-950 via-neutral-950/90 to-transparent border-t border-neutral-900 px-6 py-4" },
+                React.createElement('div', { className: "max-w-7xl mx-auto flex items-center justify-between overflow-x-auto no-scrollbar gap-4" },
+                    React.createElement('div', { className: "text-xs text-neutral-500 uppercase font-bold tracking-widest whitespace-nowrap hidden md:block" }, "Roster Ledger"),
+                    React.createElement('div', { className: "flex items-center gap-3 overflow-x-auto pb-1 max-w-full" },
+                        characters.map((char, idx) => 
+                            React.createElement('button', { key: char.id, onClick: () => handleCharacterChange(idx), className: `flex items-center gap-3 px-4 py-2.5 rounded-xl border transition-all duration-300 text-left shrink-0 ${idx === activeIndex ? 'bg-neutral-900 text-white shadow-lg shadow-black/40' : 'bg-transparent border-transparent text-neutral-500 hover:text-neutral-300'}`, style: { borderColor: idx === activeIndex ? char.accentColor : 'transparent' } },
+                                React.createElement('div', { className: "w-7 h-7 rounded-lg overflow-hidden bg-neutral-800 border border-neutral-700 shrink-0 flex items-center justify-center font-mono text-xs font-bold text-neutral-300" }, idx + 1),
+                                React.createElement('div', null,
+                                    React.createElement('p', { className: "text-xs font-bold uppercase tracking-wide leading-none" }, char.name),
+                                    React.createElement('p', { className: "text-[10px] text-neutral-500 font-medium capitalize mt-0.5" }, char.faction)
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
+    };
+
+    // Mount app
+    const rootElement = document.getElementById('hero-root');
+    const root = ReactDOM.createRoot(rootElement);
+    const handleCta = () => {
+        alert("⚔️  DEPLOYMENT SEQUENCE INITIATED ⚔️\nPrepare for dimensional arena combat!");
+    };
+    root.render(
+        React.createElement(HeroSection, {
+            initialCharacters: INITIAL_CHARACTERS,
+            onCtaClick: handleCta,
+            onSelectCharacter: (char) => console.log("Selected fighter:", char.name)
+        })
+    );
+</script>
+</body>
+</html>
