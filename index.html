@@ -6,108 +6,142 @@
   <title>Meon | Intelligence · Innovation · Inspiration</title>
   <meta name="description" content="Meon App Store – Daraja M-Pesa STK Push for seamless payments">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     * { font-family: 'Inter', sans-serif; }
-    body { transition: background-color 0.3s, color 0.3s; }
-    .dark { background-color: #0f172a; color: #e2e8f0; }
-    .rating-star { cursor: pointer; transition: transform 0.1s; }
-    .rating-star:hover { transform: scale(1.1); }
-    .modal-transition { transition: opacity 0.2s ease, visibility 0.2s; }
-    .scrollbar-hide::-webkit-scrollbar { display: none; }
-    .card-hover { transition: all 0.2s ease; }
-    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1); }
-    .meon-logo-bg {
-      background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 100%);
-      border-radius: 14px;
-      box-shadow: 0 6px 12px -6px rgba(0,0,0,0.3);
+    body {
+      background: radial-gradient(circle at 10% 20%, #030014, #010108);
+      color: #f1f5f9;
+    }
+    /* glassmorphism core */
+    .glass-card {
+      background: rgba(15, 25, 45, 0.55);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(139, 92, 246, 0.25);
+      border-radius: 2rem;
+      box-shadow: 0 25px 40px -12px rgba(0,0,0,0.5);
+    }
+    .glass-panel {
+      background: rgba(10, 20, 35, 0.65);
+      backdrop-filter: blur(12px);
       border: 1px solid rgba(139, 92, 246, 0.3);
     }
-    .toast { position: fixed; bottom: 20px; right: 20px; z-index: 9999; animation: slideIn 0.3s ease; }
-    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-    img.app-logo { background: #1e293b; object-fit: cover; }
-    /* Animations for hero */
-    @keyframes spin-slow {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    .stats-glow {
+      background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(59,130,246,0.1));
+      border: 1px solid rgba(139,92,246,0.4);
+      backdrop-filter: blur(4px);
     }
-    .animate-spin-slow {
-      animation: spin-slow 20s linear infinite;
+    .category-chip {
+      transition: all 0.2s ease;
+      background: rgba(30, 41, 59, 0.5);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(139, 92, 246, 0.3);
     }
-    .animate-spin-reverse {
-      animation: spin-slow 30s linear infinite reverse;
+    .category-chip:hover, .category-chip.active-cat {
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      border-color: transparent;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px -8px #8b5cf6;
     }
-    @keyframes floatImage {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
+    .app-card {
+      background: rgba(18, 28, 45, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 1.75rem;
+      transition: all 0.25s ease;
     }
-    .animate-float {
-      animation: floatImage 6s ease-in-out infinite;
+    .app-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(139, 92, 246, 0.7);
+      box-shadow: 0 20px 35px -12px rgba(139, 92, 246, 0.3);
+      background: rgba(25, 35, 55, 0.85);
+    }
+    .btn-primary {
+      background: linear-gradient(105deg, #8b5cf6, #4f46e5);
+      border: none;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(105deg, #9b6cff, #6366f1);
+      transform: scale(0.98);
+      box-shadow: 0 8px 20px -6px #8b5cf6;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #c084fc, #60a5fa);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(139,92,246,0.25), transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+    }
+    .modal-transition { transition: opacity 0.2s ease, visibility 0.2s; }
+    .toast { position: fixed; bottom: 24px; right: 24px; z-index: 9999; animation: slideUp 0.3s ease; background: #1e293b; backdrop-filter: blur(12px); border-left: 4px solid #8b5cf6; border-radius: 1rem; padding: 12px 20px; color: white; box-shadow: 0 10px 20px -5px rgba(0,0,0,0.5); }
+    @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .rating-star { cursor: pointer; transition: transform 0.1s; }
+    .rating-star:hover { transform: scale(1.15);}
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 10px; }
+    .nav-tab-active {
+      border-bottom: 2px solid #8b5cf6;
+      color: #c084fc;
     }
   </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+<body class="antialiased">
 
 <div id="app" class="min-h-screen flex flex-col">
-  <!-- Header -->
-  <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-800">
-    <div class="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+  <!-- Header – sleek glass -->
+  <header class="sticky top-0 z-50 bg-[#030014]/80 backdrop-blur-xl border-b border-purple-900/40 shadow-sm">
+    <div class="container mx-auto px-5 py-3 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-3">
-        <div class="meon-logo-bg px-4 py-2 flex flex-col items-start leading-tight">
-          <span class="text-white font-extrabold text-2xl tracking-wide">meon</span>
-          <span class="text-[10px] font-medium text-purple-200 tracking-wider uppercase">INTELLIGENCE·INNOVATION·INSPIRATION</span>
+        <div class="flex items-center gap-2 bg-gradient-to-br from-purple-900/40 to-indigo-900/40 px-4 py-2 rounded-2xl border border-purple-500/30">
+          <span class="text-3xl font-black tracking-tighter text-white">meon</span>
+          <span class="hidden md:block text-[10px] font-bold tracking-[0.2em] text-purple-300 uppercase">INTELLIGENCE·INNOVATION·INSPIRATION</span>
         </div>
-        <span class="font-bold text-xl tracking-tight hidden sm:inline-block">Meon Store</span>
       </div>
       <div class="flex items-center gap-3">
-        <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition">
-          <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
-          <i data-lucide="sun" class="w-5 h-5 hidden dark:inline"></i>
+        <button id="themeToggle" class="p-2 rounded-full hover:bg-white/10 transition">
+          <i data-lucide="moon" class="w-5 h-5 text-white"></i>
         </button>
         <div id="authSection" class="flex items-center gap-2"></div>
       </div>
     </div>
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto px-5">
       <div class="flex gap-6 overflow-x-auto pb-2 scrollbar-hide">
-        <button data-nav="home" class="nav-btn font-semibold py-2 border-b-2 border-purple-600 text-purple-600">Home</button>
-        <button data-nav="dashboard" class="nav-btn font-semibold py-2 border-b-2 border-transparent hover:text-gray-700">My Dashboard</button>
-        <button data-nav="admin" id="adminNavBtn" class="nav-btn hidden font-semibold py-2 border-b-2 border-transparent">Admin Panel</button>
-        <button data-nav="developer" id="devNavBtn" class="nav-btn hidden font-semibold py-2 border-b-2 border-transparent">Developer Hub</button>
+        <button data-nav="home" class="nav-btn font-semibold py-2.5 text-sm tracking-wide border-b-2 border-purple-500 text-purple-300 transition">🏠 Home</button>
+        <button data-nav="dashboard" class="nav-btn font-semibold py-2.5 text-sm tracking-wide border-b-2 border-transparent hover:text-purple-300">📊 My Dashboard</button>
+        <button data-nav="admin" id="adminNavBtn" class="nav-btn hidden font-semibold py-2.5 text-sm tracking-wide border-b-2 border-transparent">⚙️ Admin Panel</button>
+        <button data-nav="developer" id="devNavBtn" class="nav-btn hidden font-semibold py-2.5 text-sm tracking-wide border-b-2 border-transparent">🛠️ Developer Hub</button>
       </div>
     </div>
   </header>
 
-  <main id="mainContent" class="flex-1 container mx-auto px-4 py-8"></main>
+  <main id="mainContent" class="flex-1 container mx-auto px-5 py-8"></main>
   <div id="toastContainer"></div>
 </div>
 
-<!-- M-Pesa Modal -->
-<div id="mpesaModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden modal-transition">
-  <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md mx-4">
-    <h2 class="text-2xl font-bold mb-2">Pay with M-Pesa</h2>
-    <p id="mpesaAppName" class="text-gray-600 dark:text-gray-300 mb-4"></p>
-    <div class="mb-4">
-      <label class="block text-sm font-medium mb-1">Phone Number (e.g., 0712345678)</label>
-      <input type="tel" id="mpesaPhone" placeholder="0712345678" class="w-full p-2 border rounded-lg dark:bg-gray-700">
-    </div>
-    <div class="mb-4">
-      <label class="block text-sm font-medium mb-1">Amount (KES)</label>
-      <input type="number" id="mpesaAmount" readonly class="w-full p-2 border rounded-lg bg-gray-100 dark:bg-gray-600">
-    </div>
-    <div class="flex gap-3">
-      <button id="mpesaConfirmBtn" class="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">Pay Now</button>
-      <button id="mpesaCancelBtn" class="flex-1 bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-white py-2 rounded-lg">Cancel</button>
-    </div>
-    <p class="text-xs text-gray-500 mt-3 text-center">STK push will be sent to your phone. Enter M-Pesa PIN to complete.</p>
+<!-- M-Pesa Modal Glass-->
+<div id="mpesaModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden modal-transition">
+  <div class="bg-[#0a0f1f]/90 backdrop-blur-xl rounded-3xl p-6 w-full max-w-md mx-4 border border-purple-500/40 shadow-2xl">
+    <h2 class="text-2xl font-bold mb-2 bg-gradient-to-r from-purple-300 to-indigo-300 bg-clip-text text-transparent">Pay with M-Pesa</h2>
+    <p id="mpesaAppName" class="text-gray-300 mb-4"></p>
+    <div class="mb-4"><label class="block text-sm font-medium mb-1 text-purple-200">Phone Number</label><input type="tel" id="mpesaPhone" placeholder="0712345678" class="w-full p-3 rounded-xl bg-white/10 border border-purple-500/30 text-white outline-none focus:border-purple-400"></div>
+    <div class="mb-4"><label class="block text-sm font-medium mb-1 text-purple-200">Amount (KES)</label><input type="number" id="mpesaAmount" readonly class="w-full p-3 rounded-xl bg-white/5 border border-purple-500/30 text-gray-300"></div>
+    <div class="flex gap-3"><button id="mpesaConfirmBtn" class="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 py-3 rounded-xl font-bold">Pay Now</button><button id="mpesaCancelBtn" class="flex-1 bg-white/10 border border-white/20 py-3 rounded-xl">Cancel</button></div>
+    <p class="text-xs text-gray-400 mt-3 text-center">STK push will be sent to your registered M-Pesa number</p>
   </div>
 </div>
 
 <script>
-  // ============================================================
-  // EXACT LOGO MAPPING (as confirmed)
-  // ============================================================
+  // ---------- FULL APP DATA (15 APPS with exact logos mapping) ----------
   const logoMapping = {
     "maji-gas": "https://i.ibb.co/sJwP77mq/file-000000002a7c724698774712139656f9.png",
     "deep-focus": "https://i.ibb.co/204QYyVF/file-00000000c6707243af95f3105457c8b5.png",
@@ -125,539 +159,92 @@
     "school-360": "https://i.ibb.co/rK4xNYFs/file-000000001ee871f4b8169a28703091b7.png",
     "kanisa-launcher": "https://i.ibb.co/7NrfmcHn/file-0000000081ac72468a2293c64472a4fc.png"
   };
-
   const screenshotUrls = [
-    "https://i.ibb.co/JPVGw2p/Screenshot-20260611-024707-Chrome.jpg",
-    "https://i.ibb.co/8D8qyBGg/Screenshot-20260611-024637-Chrome.jpg",
-    "https://i.ibb.co/4RBfvvjm/Screenshot-20260611-024610-Chrome.jpg",
-    "https://i.ibb.co/4g42CZRx/Screenshot-20260611-024506-Chrome.jpg",
-    "https://i.ibb.co/cSpb60gC/Screenshot-20260611-024412-Chrome.jpg",
-    "https://i.ibb.co/cXsqXjsx/Screenshot-20260611-024344-Chrome.jpg",
-    "https://i.ibb.co/FLFnBh7g/Screenshot-20260611-024154-Chrome.jpg",
-    "https://i.ibb.co/XxkBRrJ9/Screenshot-20260611-024111-Chrome.jpg",
-    "https://i.ibb.co/rWr1ZWW/Screenshot-20260611-024047-Chrome.jpg",
-    "https://i.ibb.co/B5wFG9Yh/Screenshot-20260611-023951-Chrome.jpg",
-    "https://i.ibb.co/RkcNfHh6/Screenshot-20260611-023843-Chrome.jpg",
-    "https://i.ibb.co/vF5TLKP/Screenshot-20260611-023556-Chrome.jpg",
-    "https://i.ibb.co/R4TPbxsB/Screenshot-20260611-023537-Chrome.jpg",
-    "https://i.ibb.co/PGT1M64C/Screenshot-20260611-023518-Chrome.jpg"
+    "https://i.ibb.co/JPVGw2p/Screenshot-20260611-024707-Chrome.jpg","https://i.ibb.co/8D8qyBGg/Screenshot-20260611-024637-Chrome.jpg","https://i.ibb.co/4RBfvvjm/Screenshot-20260611-024610-Chrome.jpg","https://i.ibb.co/4g42CZRx/Screenshot-20260611-024506-Chrome.jpg","https://i.ibb.co/cSpb60gC/Screenshot-20260611-024412-Chrome.jpg","https://i.ibb.co/cXsqXjsx/Screenshot-20260611-024344-Chrome.jpg","https://i.ibb.co/FLFnBh7g/Screenshot-20260611-024154-Chrome.jpg","https://i.ibb.co/XxkBRrJ9/Screenshot-20260611-024111-Chrome.jpg","https://i.ibb.co/rWr1ZWW/Screenshot-20260611-024047-Chrome.jpg","https://i.ibb.co/B5wFG9Yh/Screenshot-20260611-023951-Chrome.jpg","https://i.ibb.co/RkcNfHh6/Screenshot-20260611-023843-Chrome.jpg","https://i.ibb.co/vF5TLKP/Screenshot-20260611-023556-Chrome.jpg","https://i.ibb.co/R4TPbxsB/Screenshot-20260611-023537-Chrome.jpg","https://i.ibb.co/PGT1M64C/Screenshot-20260611-023518-Chrome.jpg"
   ];
-
-  // App Data (15 apps)
   const appList = [
-    { id: "maji-gas", name: "Maji Gas Delivery", slug: "maji-gas-delivery", shortDesc: "Cooking gas & water delivery on demand", category: "Utilities", price: 0, isFree: true, rating: 4.6, ratingCount: 234, downloads: 12540, version: "2.1.0", features: ["Real-time tracking", "Scheduled deliveries", "Multiple payments", "Loyalty rewards"], description: "Fast, reliable LPG and water delivery service with live order tracking." },
-    { id: "deep-focus", name: "Deep Focus", slug: "deep-focus", shortDesc: "Pomodoro timer & distraction blocker", category: "Productivity", price: 4.99, isFree: false, rating: 4.8, ratingCount: 1890, downloads: 45200, version: "3.0.2", features: ["Pomodoro timer", "Website blocker", "Focus music", "Analytics"], description: "Boost productivity with science-backed focus tools." },
-    { id: "guard-ai", name: "Guard AI", slug: "guard-ai", shortDesc: "AI cybersecurity protection", category: "AI Tools", price: 9.99, isFree: false, rating: 4.9, ratingCount: 523, downloads: 18730, version: "1.5.0", features: ["Threat detection", "VPN", "Password manager", "Dark web monitoring"], description: "Next-gen AI shield for digital security." },
-    { id: "data-vision", name: "Data Vision", slug: "data-vision", shortDesc: "AI business intelligence", category: "Analytics", price: 19.99, isFree: false, rating: 4.7, ratingCount: 312, downloads: 9800, version: "4.2.1", features: ["Dashboards", "AI predictions", "Data connectors", "Reports"], description: "Turn data into insights with AI." },
-    { id: "rider-app", name: "Rider App", slug: "rider-app", shortDesc: "Logistics & delivery platform", category: "Transport", price: 0, isFree: true, rating: 4.5, ratingCount: 892, downloads: 67300, version: "2.3.0", features: ["Route optimization", "Live tracking", "Earnings dashboard", "Proof of delivery"], description: "Complete solution for riders and fleets." },
-    { id: "insight", name: "Insight", slug: "insight", shortDesc: "Customer analytics platform", category: "Analytics", price: 29.99, isFree: false, rating: 4.6, ratingCount: 178, downloads: 5400, version: "1.8.0", features: ["Segmentation", "Behavioral analytics", "Predictive models", "APIs"], description: "Deep customer behavior intelligence." },
-    { id: "clients-hub", name: "Clients Hub", slug: "clients-hub", shortDesc: "CRM for modern business", category: "CRM", price: 14.99, isFree: false, rating: 4.4, ratingCount: 421, downloads: 12400, version: "3.1.0", features: ["Contact mgmt", "Deal tracking", "Email sync", "Forecasting"], description: "Grow relationships with powerful CRM." },
-    { id: "smart-duka", name: "Smart Duka", slug: "smart-duka", shortDesc: "Retail management system", category: "Business", price: 9.99, isFree: false, rating: 4.7, ratingCount: 563, downloads: 28900, version: "2.0.0", features: ["Inventory", "POS", "Sales reports", "Supplier mgmt"], description: "Modern POS for small shops." },
-    { id: "agriculture", name: "Agriculture", slug: "agriculture", shortDesc: "Smart farming solution", category: "Agriculture", price: 0, isFree: true, rating: 4.3, ratingCount: 197, downloads: 8100, version: "1.4.0", features: ["Crop monitor", "Weather", "Market prices", "Expert advice"], description: "Empower farmers with digital tools." },
-    { id: "luminor-studio", name: "Luminor Studio", slug: "luminor-studio", shortDesc: "AI photo & video editing", category: "Design", price: 12.99, isFree: false, rating: 4.9, ratingCount: 734, downloads: 34200, version: "5.0.1", features: ["AI enhancement", "Layer editing", "Filters", "4K export"], description: "Creative suite for professionals." },
-    { id: "cv-maker", name: "CV Maker", slug: "cv-maker", shortDesc: "Professional resume builder", category: "Productivity", price: 0, isFree: true, rating: 4.6, ratingCount: 1280, downloads: 98700, version: "1.9.0", features: ["Templates", "PDF export", "LinkedIn import", "Cover letter"], description: "Create job-winning resumes instantly." },
-    { id: "matatu-booking", name: "Matatu Booking", slug: "matatu-booking", shortDesc: "Public transport booking", category: "Transport", price: 0, isFree: true, rating: 4.5, ratingCount: 567, downloads: 45300, version: "2.2.0", features: ["Real-time tracking", "Digital tickets", "Route planning", "Fare calc"], description: "Book matatus and track in real-time." },
-    { id: "home-search", name: "Home Search", slug: "home-search", shortDesc: "Real estate marketplace", category: "Real Estate", price: 0, isFree: true, rating: 4.4, ratingCount: 398, downloads: 22500, version: "3.3.0", features: ["Property search", "Virtual tours", "Mortgage calc", "Agent contact"], description: "Find dream home or rental." },
-    { id: "school-360", name: "School 360", slug: "school-360", shortDesc: "School management system", category: "Education", price: 49.99, isFree: false, rating: 4.8, ratingCount: 245, downloads: 6700, version: "4.1.0", features: ["Student records", "Fee mgmt", "Parent portal", "CBC support"], description: "Complete school ERP with CBC." },
-    { id: "kanisa-launcher", name: "Kanisa Launcher", slug: "kanisa-launcher", shortDesc: "Church management & engagement", category: "Religion", price: 0, isFree: true, rating: 4.7, ratingCount: 156, downloads: 5300, version: "1.2.0", features: ["Events", "Giving platform", "Member directory", "Live stream"], description: "Digital tools for modern ministry." }
+    { id: "maji-gas", name: "Maji Gas Delivery", shortDesc: "Cooking gas & water delivery on demand", category: "Utilities", price: 0, isFree: true, rating: 4.6, ratingCount: 234, downloads: 12540, version: "2.1.0", features: ["Real-time tracking", "Scheduled deliveries"], description: "Fast, reliable LPG and water delivery." },
+    { id: "deep-focus", name: "Deep Focus", shortDesc: "Pomodoro timer & distraction blocker", category: "Productivity", price: 4.99, isFree: false, rating: 4.8, ratingCount: 1890, downloads: 45200, version: "3.0.2", features: ["Pomodoro timer", "Website blocker"], description: "Boost productivity with focus tools." },
+    { id: "guard-ai", name: "Guard AI", shortDesc: "AI cybersecurity protection", category: "AI Tools", price: 9.99, isFree: false, rating: 4.9, ratingCount: 523, downloads: 18730, version: "1.5.0", features: ["Threat detection", "VPN"], description: "Next-gen AI shield for digital security." },
+    { id: "data-vision", name: "Data Vision", shortDesc: "AI business intelligence", category: "Analytics", price: 19.99, isFree: false, rating: 4.7, ratingCount: 312, downloads: 9800, version: "4.2.1", features: ["Dashboards", "AI predictions"], description: "Turn data into insights with AI." },
+    { id: "rider-app", name: "Rider App", shortDesc: "Logistics & delivery platform", category: "Transport", price: 0, isFree: true, rating: 4.5, ratingCount: 892, downloads: 67300, version: "2.3.0", features: ["Route optimization", "Live tracking"], description: "Complete solution for riders and fleets." },
+    { id: "insight", name: "Insight", shortDesc: "Customer analytics platform", category: "Analytics", price: 29.99, isFree: false, rating: 4.6, ratingCount: 178, downloads: 5400, version: "1.8.0", features: ["Segmentation", "Predictive models"], description: "Deep customer behavior intelligence." },
+    { id: "clients-hub", name: "Clients Hub", shortDesc: "CRM for modern business", category: "CRM", price: 14.99, isFree: false, rating: 4.4, ratingCount: 421, downloads: 12400, version: "3.1.0", features: ["Contact mgmt", "Deal tracking"], description: "Grow relationships with powerful CRM." },
+    { id: "smart-duka", name: "Smart Duka", shortDesc: "Retail management system", category: "Business", price: 9.99, isFree: false, rating: 4.7, ratingCount: 563, downloads: 28900, version: "2.0.0", features: ["Inventory", "POS"], description: "Modern POS for small shops." },
+    { id: "agriculture", name: "Agriculture", shortDesc: "Smart farming solution", category: "Agriculture", price: 0, isFree: true, rating: 4.3, ratingCount: 197, downloads: 8100, version: "1.4.0", features: ["Crop monitor", "Weather"], description: "Empower farmers with digital tools." },
+    { id: "luminor-studio", name: "Luminor Studio", shortDesc: "AI photo & video editing", category: "Design", price: 12.99, isFree: false, rating: 4.9, ratingCount: 734, downloads: 34200, version: "5.0.1", features: ["AI enhancement", "4K export"], description: "Creative suite for professionals." },
+    { id: "cv-maker", name: "CV Maker", shortDesc: "Professional resume builder", category: "Productivity", price: 0, isFree: true, rating: 4.6, ratingCount: 1280, downloads: 98700, version: "1.9.0", features: ["Templates", "PDF export"], description: "Create job-winning resumes instantly." },
+    { id: "matatu-booking", name: "Matatu Booking", shortDesc: "Public transport booking", category: "Transport", price: 0, isFree: true, rating: 4.5, ratingCount: 567, downloads: 45300, version: "2.2.0", features: ["Real-time tracking", "Digital tickets"], description: "Book matatus and track in real-time." },
+    { id: "home-search", name: "Home Search", shortDesc: "Real estate marketplace", category: "Real Estate", price: 0, isFree: true, rating: 4.4, ratingCount: 398, downloads: 22500, version: "3.3.0", features: ["Property search", "Virtual tours"], description: "Find dream home or rental." },
+    { id: "school-360", name: "School 360", shortDesc: "School management system", category: "Education", price: 49.99, isFree: false, rating: 4.8, ratingCount: 245, downloads: 6700, version: "4.1.0", features: ["Student records", "Fee mgmt"], description: "Complete school ERP with CBC." },
+    { id: "kanisa-launcher", name: "Kanisa Launcher", shortDesc: "Church management", category: "Religion", price: 0, isFree: true, rating: 4.7, ratingCount: 156, downloads: 5300, version: "1.2.0", features: ["Events", "Giving platform"], description: "Digital tools for modern ministry." }
   ];
-
-  // Attach logos + screenshots
-  appList.forEach((app, idx) => {
-    app.logoUrl = logoMapping[app.id];
-    app.developer = { name: "Meon", verified: true };
-    const screenshotIdx = idx % screenshotUrls.length;
-    const mainScreenshot = screenshotUrls[screenshotIdx];
-    app.screenshots = [mainScreenshot, mainScreenshot];
-    app.versions = [{ version: app.version, changelog: "Latest stable release", createdAt: new Date().toISOString() }];
-    if (!app.ratingCount) app.ratingCount = Math.floor(Math.random() * 800) + 50;
-    if (!app.downloads) app.downloads = Math.floor(Math.random() * 30000) + 1000;
-  });
-
-  function generateFallbackSVG(appId, size = 80) {
-    const colorMap = {
-      "maji-gas": { primary: "#2563EB", secondary: "#F97316", letter: "M" },
-      "deep-focus": { primary: "#4F46E5", secondary: "#7C3AED", letter: "D" },
-      "guard-ai": { primary: "#3B82F6", secondary: "#94A3B8", letter: "G" },
-      "data-vision": { primary: "#10B981", secondary: "#3B82F6", letter: "D" },
-      "rider-app": { primary: "#EA580C", secondary: "#111827", letter: "R" },
-      "insight": { primary: "#A855F7", secondary: "#06B6D4", letter: "I" },
-      "clients-hub": { primary: "#1E3A8A", secondary: "#3B82F6", letter: "C" },
-      "smart-duka": { primary: "#10B981", secondary: "#F59E0B", letter: "S" },
-      "agriculture": { primary: "#059669", secondary: "#78350F", letter: "A" },
-      "luminor-studio": { primary: "#D97706", secondary: "#111827", letter: "L" },
-      "cv-maker": { primary: "#2563EB", secondary: "#FFFFFF", letter: "C" },
-      "matatu-booking": { primary: "#EAB308", secondary: "#111827", letter: "M" },
-      "home-search": { primary: "#0D9488", secondary: "#3B82F6", letter: "H" },
-      "school-360": { primary: "#2563EB", secondary: "#10B981", letter: "S" },
-      "kanisa-launcher": { primary: "#9333EA", secondary: "#D97706", letter: "K" }
-    };
-    const c = colorMap[appId] || { primary: "#0F172A", secondary: "#334155", letter: "S" };
-    const svgString = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="${size}" height="${size}">
-      <rect width="512" height="512" rx="96" fill="${c.primary}"/>
-      <circle cx="256" cy="256" r="140" fill="${c.secondary}" opacity="0.9"/>
-      <text x="256" y="340" text-anchor="middle" fill="white" font-size="180" font-weight="bold" font-family="Inter, sans-serif">${c.letter}</text>
-    </svg>`;
-    return `data:image/svg+xml,${encodeURIComponent(svgString)}`;
-  }
-
-  function appLogoImg(app, sizeClass = "w-16 h-16", pixelSize = 60) {
-    const externalUrl = app.logoUrl;
-    const fallbackSvg = generateFallbackSVG(app.id, pixelSize);
-    if (!externalUrl) {
-      return `<img src="${fallbackSvg}" class="${sizeClass} rounded-xl shadow object-cover" alt="${app.name}">`;
-    }
-    return `<img src="${externalUrl}" class="${sizeClass} rounded-xl shadow object-cover" alt="${app.name}" 
-      onerror="this.onerror=null; this.src='${fallbackSvg}';">`;
-  }
-
-  // State
+  appList.forEach((app, idx) => { app.logoUrl = logoMapping[app.id]; app.screenshots = [screenshotUrls[idx % screenshotUrls.length]]; app.developer = { name: "Meon", verified: true }; });
+  function fallbackLogo(appId, size=60){ return `https://ui-avatars.com/api/?background=8b5cf6&color=fff&name=${appId.slice(0,2)}&size=${size}&rounded=true&bold=true`; }
+  function appLogoImg(app, sizeClass="w-14 h-14", px=56){ return `<img src="${app.logoUrl || fallbackLogo(app.id, px)}" class="${sizeClass} rounded-2xl shadow-lg object-cover border border-purple-500/30" onerror="this.src='${fallbackLogo(app.id, px)}'">`; }
+  
+  // state
   let currentUser = JSON.parse(localStorage.getItem("meonUser")) || null;
-  let activeView = "home";
-  let selectedApp = null;
+  let activeView = "home", selectedApp = null, searchQuery = "", activeCategoryFilter = "";
   let userFavorites = JSON.parse(localStorage.getItem("meonFavorites")) || [];
   let userDownloads = JSON.parse(localStorage.getItem("meonDownloads")) || [];
   let reviewsData = JSON.parse(localStorage.getItem("meonReviews")) || {};
-  let searchQuery = "";
-  let activeCategoryFilter = "";
+  function saveState() { if(currentUser) localStorage.setItem("meonUser", JSON.stringify(currentUser)); else localStorage.removeItem("meonUser"); localStorage.setItem("meonFavorites", JSON.stringify(userFavorites)); localStorage.setItem("meonDownloads", JSON.stringify(userDownloads)); localStorage.setItem("meonReviews", JSON.stringify(reviewsData)); }
+  function showToast(msg, type="success") { const cont=document.getElementById("toastContainer"); const toast=document.createElement("div"); toast.className=`toast flex items-center gap-2`; toast.innerHTML=`<i data-lucide="${type==='success'?'check-circle':'alert-circle'}" class="w-5 h-5 text-purple-400"></i><span>${msg}</span>`; cont.appendChild(toast); if(window.lucide) lucide.createIcons(); setTimeout(()=>toast.remove(), 3800); }
+  function loginUser(email, role="user"){ currentUser={id:Date.now(),email,name:email.split('@')[0],role}; saveState(); renderNav(); renderCurrentView(); showToast(`Welcome ${currentUser.name} to Meon`, "success");}
+  function logout(){ currentUser=null; userFavorites=[]; userDownloads=[]; saveState(); renderNav(); renderCurrentView(); showToast("Logged out");}
+  function toggleFavorite(appId){ if(!currentUser){ showToast("Sign in to save favorites","error"); return false; } const idx=userFavorites.indexOf(appId); idx===-1? userFavorites.push(appId):userFavorites.splice(idx,1); saveState(); renderCurrentView(); showToast(idx===-1?"Added to favorites":"Removed","success"); return true;}
+  function downloadApp(app){ if(!currentUser){ showToast("Please login","error"); return; } if(!app.isFree){ showMpesaPaymentModal(app); return; } if(!userDownloads.find(d=>d.appId===app.id)){ userDownloads.push({appId:app.id, downloadedAt:new Date().toISOString(), version:app.version}); app.downloads+=1; saveState(); showToast(`Downloaded ${app.name}`,"success"); renderCurrentView(); } else showToast("Already installed","info");}
+  function submitReview(appId, rating, content){ if(!currentUser){ showToast("Login to review","error"); return false; } if(!reviewsData[appId]) reviewsData[appId]=[]; reviewsData[appId].push({userId:currentUser.id, user:currentUser.name, rating, content, date:new Date().toISOString()}); const allRatings=reviewsData[appId].map(r=>r.rating); const avg=allRatings.reduce((a,b)=>a+b,0)/allRatings.length; const appObj=appList.find(a=>a.id===appId); if(appObj){ appObj.rating=parseFloat(avg.toFixed(1)); appObj.ratingCount=allRatings.length; } saveState(); showToast("Review submitted","success"); renderCurrentView(); return true;}
+  async function initiateMpesaPayment(phone,amount,ref,appName){ return new Promise((resolve)=>{ showToast(`📱 STK push to ${phone} for KES ${amount}. Check your phone.`,"info"); setTimeout(()=>{ showToast(`✅ Payment of KES ${amount} for ${appName} successful! Receipt: MOCK${Date.now()}`,"success"); resolve(true); },2500); });}
+  let currentPaymentApp=null; function showMpesaPaymentModal(app){ if(!currentUser){ showToast("Login to purchase","error"); return; } currentPaymentApp=app; document.getElementById("mpesaAppName").innerText=`${app.name} - KES ${app.price}`; document.getElementById("mpesaAmount").value=app.price; document.getElementById("mpesaPhone").value=""; document.getElementById("mpesaModal").classList.remove("hidden");}
+  async function confirmMpesaPayment(){ const phone=document.getElementById("mpesaPhone").value.trim(); if(!phone){ showToast("Enter M-Pesa number","error"); return; } if(!currentPaymentApp) return; const amount=currentPaymentApp.price; document.getElementById("mpesaModal").classList.add("hidden"); const success=await initiateMpesaPayment(phone,amount,`MEON_${currentPaymentApp.id}`,currentPaymentApp.name); if(success){ if(!userDownloads.find(d=>d.appId===currentPaymentApp.id)){ userDownloads.push({appId:currentPaymentApp.id, downloadedAt:new Date().toISOString(), version:currentPaymentApp.version}); currentPaymentApp.downloads+=1; saveState(); showToast(`${currentPaymentApp.name} added to library`,"success"); renderCurrentView(); } } currentPaymentApp=null; }
 
-  function saveState() {
-    if (currentUser) localStorage.setItem("meonUser", JSON.stringify(currentUser));
-    else localStorage.removeItem("meonUser");
-    localStorage.setItem("meonFavorites", JSON.stringify(userFavorites));
-    localStorage.setItem("meonDownloads", JSON.stringify(userDownloads));
-    localStorage.setItem("meonReviews", JSON.stringify(reviewsData));
-  }
-
-  function showToast(msg, type = "success") {
-    const container = document.getElementById("toastContainer");
-    const toast = document.createElement("div");
-    toast.className = `toast bg-white dark:bg-gray-800 shadow-lg rounded-xl px-4 py-3 border-l-4 ${type === "success" ? "border-green-500" : type === "error" ? "border-red-500" : "border-blue-500"} flex items-center gap-2`;
-    toast.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle' : 'alert-circle'}" class="w-5 h-5"></i><span>${msg}</span>`;
-    container.appendChild(toast);
-    if (window.lucide) lucide.createIcons();
-    setTimeout(() => toast.remove(), 4000);
-  }
-
-  function loginUser(email, role = "user") {
-    currentUser = { id: Date.now(), email, name: email.split('@')[0], role: role };
-    saveState();
-    renderNav();
-    renderCurrentView();
-    showToast(`Welcome to Meon, ${currentUser.name}!`, "success");
-  }
-  function logout() { currentUser = null; userFavorites = []; userDownloads = []; saveState(); renderNav(); renderCurrentView(); showToast("Logged out", "success"); }
+  function getFilteredApps(){ let filtered=[...appList]; if(searchQuery){ const q=searchQuery.toLowerCase(); filtered=filtered.filter(app=>app.name.toLowerCase().includes(q)||app.shortDesc.toLowerCase().includes(q)||app.category.toLowerCase().includes(q)); } if(activeCategoryFilter) filtered=filtered.filter(app=>app.category.toLowerCase()===activeCategoryFilter.toLowerCase()); return filtered; }
   
-  function toggleFavorite(appId) {
-    if (!currentUser) { showToast("Sign in to save favorites", "error"); return false; }
-    const idx = userFavorites.indexOf(appId);
-    if (idx === -1) { userFavorites.push(appId); showToast("Added to favorites", "success"); }
-    else { userFavorites.splice(idx,1); showToast("Removed from favorites", "success"); }
-    saveState(); renderCurrentView(); return true;
-  }
-  
-  function downloadApp(app) {
-    if (!currentUser) { showToast("Please login to download", "error"); return; }
-    if (!app.isFree) {
-      showMpesaPaymentModal(app);
-      return;
-    }
-    if (!userDownloads.find(d => d.appId === app.id)) {
-      userDownloads.push({ appId: app.id, downloadedAt: new Date().toISOString(), version: app.version });
-      app.downloads += 1;
-      saveState();
-      showToast(`Downloaded ${app.name}`, "success");
-      renderCurrentView();
-    } else { showToast("Already installed", "info"); }
-  }
-  
-  function submitReview(appId, rating, content) {
-    if (!currentUser) { showToast("Login to review", "error"); return false; }
-    if (!reviewsData[appId]) reviewsData[appId] = [];
-    reviewsData[appId].push({ userId: currentUser.id, user: currentUser.name, rating, content, date: new Date().toISOString() });
-    const allRatings = reviewsData[appId].map(r => r.rating);
-    const avg = allRatings.reduce((a,b)=>a+b,0)/allRatings.length;
-    const appObj = appList.find(a=>a.id === appId);
-    if(appObj) { appObj.rating = parseFloat(avg.toFixed(1)); appObj.ratingCount = allRatings.length; }
-    saveState();
-    showToast("Review submitted", "success");
-    renderCurrentView();
-    return true;
-  }
-
-  // M-Pesa mock
-  const USE_REAL_MPESA_API = false;
-  async function initiateMpesaPayment(phoneNumber, amount, accountReference, appName) {
-    if (USE_REAL_MPESA_API) {
-      const response = await fetch('/api/mpesa/stkpush', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phoneNumber, amount, accountReference, transactionDesc: `Purchase of ${appName}` })
-      });
-      const data = await response.json();
-      if (data.success) {
-        showToast(`STK push sent to ${phoneNumber}. Enter PIN on your phone.`, "success");
-        return true;
-      } else {
-        showToast(data.error || "Payment failed", "error");
-        return false;
-      }
-    } else {
-      return new Promise((resolve) => {
-        showToast(`📱 M-Pesa STK push sent to ${phoneNumber} for KES ${amount}. Please check your phone.`, "info");
-        setTimeout(() => {
-          showToast(`✅ Payment of KES ${amount} for ${appName} successful! Receipt: MOCK${Date.now()}`, "success");
-          resolve(true);
-        }, 3000);
-      });
-    }
-  }
-
-  let currentPaymentApp = null;
-  function showMpesaPaymentModal(app) {
-    if (!currentUser) { showToast("Please login to make a purchase", "error"); return; }
-    currentPaymentApp = app;
-    document.getElementById("mpesaAppName").innerText = `App: ${app.name} - KES ${app.price}`;
-    document.getElementById("mpesaAmount").value = app.price;
-    document.getElementById("mpesaPhone").value = "";
-    document.getElementById("mpesaModal").classList.remove("hidden");
-  }
-
-  async function confirmMpesaPayment() {
-    const phone = document.getElementById("mpesaPhone").value.trim();
-    if (!phone) { showToast("Enter your M-Pesa phone number", "error"); return; }
-    if (!currentPaymentApp) return;
-    const amount = currentPaymentApp.price;
-    const accountReference = `MEON_${currentPaymentApp.id}_${Date.now()}`;
-    document.getElementById("mpesaModal").classList.add("hidden");
-    const success = await initiateMpesaPayment(phone, amount, accountReference, currentPaymentApp.name);
-    if (success) {
-      if (!userDownloads.find(d => d.appId === currentPaymentApp.id)) {
-        userDownloads.push({ appId: currentPaymentApp.id, downloadedAt: new Date().toISOString(), version: currentPaymentApp.version });
-        currentPaymentApp.downloads += 1;
-        saveState();
-        showToast(`✅ ${currentPaymentApp.name} added to your library`, "success");
-        renderCurrentView();
-      }
-    }
-    currentPaymentApp = null;
-  }
-
-  // Helper to get filtered apps
-  function getFilteredApps() {
-    let filtered = [...appList];
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase();
-      filtered = filtered.filter(app => app.name.toLowerCase().includes(q) || app.shortDesc.toLowerCase().includes(q) || app.category.toLowerCase().includes(q));
-    }
-    if (activeCategoryFilter) {
-      filtered = filtered.filter(app => app.category.toLowerCase() === activeCategoryFilter.toLowerCase());
-    }
-    return filtered;
-  }
-
-  // New Advert Component (the image provided)
-  function renderAdvert() {
-    return `
-      <div class="my-8 rounded-2xl overflow-hidden shadow-lg border border-purple-200 dark:border-purple-800 bg-white dark:bg-gray-800/50">
-        <div class="relative">
-          <div class="absolute top-2 right-2 bg-black/60 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full z-10 backdrop-blur-sm">Advertisement</div>
-          <a href="#" target="_blank" rel="noopener noreferrer" class="block transition-transform hover:scale-[1.01] duration-300">
-            <img 
-              src="https://i.ibb.co/s9xSnrzz/file-00000000013c71f4b002c5ed572e6ba9.png" 
-              alt="Sponsored Advert" 
-              class="w-full object-cover max-h-[280px] md:max-h-[320px]"
-              loading="lazy"
-            >
-          </a>
-        </div>
-      </div>
-    `;
-  }
-
-  // Homepage with advert inserted between featured and trending sections
-  function renderHome() {
-    const filteredApps = getFilteredApps();
-    const featuredIds = ["guard-ai", "deep-focus", "luminor-studio"];
-    const featured = filteredApps.filter(a => featuredIds.includes(a.id));
-    const trending = [...filteredApps].sort((a,b)=>b.downloads - a.downloads).slice(0,6);
-    const newReleases = [...filteredApps].reverse().slice(0,6);
-
-    const categoryItems = [
-      { name: "AI Solutions", gradient: "from-purple-600 to-violet-600", filter: "ai tools" },
-      { name: "Business", gradient: "from-blue-600 to-cyan-600", filter: "business" },
-      { name: "Education", gradient: "from-green-600 to-emerald-600", filter: "education" },
-      { name: "Agriculture", gradient: "from-orange-600 to-amber-600", filter: "agriculture" },
-      { name: "Transport", gradient: "from-red-600 to-pink-600", filter: "transport" },
-      { name: "Creativity", gradient: "from-indigo-600 to-purple-600", filter: "design" }
-    ];
-
-    const heroHtml = `
-      <div class="relative w-full max-w-6xl mx-auto overflow-hidden bg-gradient-to-br from-[#020024] via-[#050537] to-[#0a005c] p-6 md:p-8 rounded-3xl border border-purple-900/40 font-sans text-white shadow-[0_0_50px_rgba(110,68,255,0.15)]">
-        <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[100px] pointer-events-none"></div>
-        <div class="absolute -bottom-10 -left-10 w-72 h-72 bg-blue-600/10 rounded-full blur-[80px] pointer-events-none"></div>
-        <div class="flex items-center gap-2.5 mb-8">
-          <div class="flex items-center justify-center w-7 h-7 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 shadow-[0_0_10px_rgba(147,51,234,0.5)]">
-            <span class="text-sm font-black text-white italic">M</span>
-          </div>
-          <span class="text-xs font-bold tracking-[0.2em] text-purple-200 uppercase opacity-90">Meon Marketplace</span>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-          <div class="lg:col-span-7 flex flex-col justify-center">
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-4">Meon Marketplace</h1>
-            <h2 class="text-xl md:text-2xl font-black tracking-wider mb-4">
-              <span class="text-white">LOGICDRIVEN.</span> 
-              <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-fuchsia-400">FUTUREPROVEN.</span>
-            </h2>
-            <p class="text-base font-semibold text-purple-300 mb-3">Building intelligent solutions for a smarter tomorrow.</p>
-            <p class="text-xs md:text-sm text-slate-300 leading-relaxed max-w-xl mb-8 opacity-80">
-              Meon Marketplace brings together technology, creativity, and purpose to empower individuals, businesses, and communities.
-            </p>
-            <div class="flex flex-wrap gap-4 mb-10">
-              <button id="exploreMarketplaceBtn" class="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 transition-all shadow-[0_4px_20px_rgba(124,58,237,0.4)] text-white group">
-                <svg class="w-4 h-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-1.41a4.5 4.5 0 003.87-4.51M8.59 10.37a6 6 0 00-7.38 5.84h1.41a4.5 4.5 0 014.51-3.87m4.51-5.17A9 9 0 003 3v1.41a7.5 7.5 0 016.94 6.94m5.17-4.51a9 9 0 016.94 6.94h-1.41a7.5 7.5 0 00-6.94-6.94z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M21 3l-6.5 6.5M21 3v5m0-5h-5"></path></svg>
-                EXPLORE APPS
-              </button>
-              <button id="becomeDevBtn" class="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm bg-transparent border border-purple-500/40 hover:border-purple-400 bg-purple-950/20 hover:bg-purple-900/30 transition-all text-purple-200 tracking-wider">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"></path></svg>
-                BECOME A DEVELOPER
-              </button>
-            </div>
-          </div>
-          <div class="lg:col-span-5 flex justify-center items-center relative py-6">
-            <div class="absolute w-72 h-72 md:w-80 md:h-80 border border-purple-500/20 rounded-full animate-spin-slow pointer-events-none transform rotate-45"></div>
-            <div class="absolute w-72 h-72 md:w-80 md:h-80 border border-indigo-500/10 rounded-full animate-spin-reverse pointer-events-none transform -rotate-45"></div>
-            <div class="relative w-56 h-56 md:w-64 md:h-64 rounded-[2.5rem] bg-gradient-to-br from-purple-600/30 to-indigo-900/40 p-[2px] shadow-[0_0_60px_rgba(139,92,246,0.3)] backdrop-blur-md border border-white/10 flex items-center justify-center group transform hover:scale-105 transition-transform duration-500">
-              <div class="absolute inset-2 rounded-[2.2rem] bg-gradient-to-br from-purple-800 to-indigo-950 flex items-center justify-center shadow-inner">
-                <span class="text-[9rem] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-purple-200 to-purple-400 drop-shadow-[0_15px_20px_rgba(0,0,0,0.7)] selection:bg-transparent italic">M</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="mt-4 pt-6 border-t border-purple-900/30 flex flex-col gap-6">
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="bg-purple-950/20 border border-purple-900/30 rounded-2xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-xl bg-purple-900/40 border border-purple-500/30 flex items-center justify-center text-purple-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg></div><div><div class="text-xl font-bold text-white">15+</div><div class="text-xs text-purple-300/70 font-medium">Applications</div></div></div>
-            <div class="bg-purple-950/20 border border-purple-900/30 rounded-2xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-xl bg-purple-900/40 border border-purple-500/30 flex items-center justify-center text-purple-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg></div><div><div class="text-xl font-bold text-white">500K+</div><div class="text-xs text-purple-300/70 font-medium">Downloads</div></div></div>
-            <div class="bg-purple-950/20 border border-purple-900/30 rounded-2xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-xl bg-purple-900/40 border border-purple-500/30 flex items-center justify-center text-purple-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.907c.961 0 1.36 1.239.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg></div><div><div class="text-xl font-bold text-white flex items-center gap-1">4.8 <span class="text-purple-400 text-sm">★</span></div><div class="text-xs text-purple-300/70 font-medium">Average Rating</div></div></div>
-            <div class="bg-purple-950/20 border border-purple-900/30 rounded-2xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-xl bg-purple-900/40 border border-purple-500/30 flex items-center justify-center text-purple-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg></div><div><div class="text-xl font-bold text-white">24/7</div><div class="text-xs text-purple-300/70 font-medium">Innovation</div></div></div>
-          </div>
-          <div class="mx-auto bg-purple-950/40 border border-purple-900/40 px-8 py-2.5 rounded-full flex items-center gap-6 text-[10px] md:text-xs tracking-[0.25em] text-purple-200 font-bold uppercase shadow-inner">
-            <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>INTELLIGENCE</div>
-            <span class="text-purple-600/60">•</span><div>INNOVATION</div><span class="text-purple-600/60">•</span><div>INSPIRATION</div>
-          </div>
-        </div>
-      </div>
-    `;
-
+  // ---------- MODERN UI RENDER ----------
+  function renderHome(){
+    const filtered = getFilteredApps();
+    const featuredApps = ["guard-ai","deep-focus","luminor-studio"].map(id=>appList.find(a=>a.id===id)).filter(Boolean);
+    const trending = [...filtered].sort((a,b)=>b.downloads-a.downloads).slice(0,6);
+    const categoryList = ["All Solutions","AI Solutions","Business","Education","Agriculture","Transport","Creativity"];
+    const catFilters = {"All Solutions":"","AI Solutions":"ai tools","Business":"business","Education":"education","Agriculture":"agriculture","Transport":"transport","Creativity":"design"};
     return `
       <div class="space-y-12">
-        ${heroHtml}
-        <div class="bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-gray-700 p-4 flex items-center gap-3 shadow-md">
-          <i data-lucide="search" class="w-5 h-5 text-gray-400"></i>
-          <input type="text" id="globalSearchInput" placeholder="Search apps, services, AI tools, business solutions..." class="w-full bg-transparent outline-none text-gray-800 dark:text-gray-200" value="${searchQuery.replace(/"/g, '&quot;')}">
-        </div>
-        <div>
-          <h2 class="text-2xl font-bold mb-6">Explore Categories</h2>
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            ${categoryItems.map(cat => `<div class="rounded-2xl bg-gradient-to-r ${cat.gradient} text-white p-5 text-center font-semibold cursor-pointer hover:scale-105 transition category-chip" data-category="${cat.filter}">${cat.name}</div>`).join('')}
-            ${activeCategoryFilter ? `<div class="rounded-2xl bg-gray-500 text-white p-3 text-center cursor-pointer hover:bg-gray-600 transition" id="clearCategoryBtn">Clear filter ✕</div>` : ""}
-          </div>
-        </div>
-        <div><div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold">⭐ Featured Solutions</h2></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">${featured.map(app=>appCard(app)).join('')}</div></div>
-        <!-- ADVERT INSERTED HERE -->
-        ${renderAdvert()}
-        <div><div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold">🔥 Trending on Meon</h2></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">${trending.map(app=>appCard(app)).join('')}</div></div>
-        <div><div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold">🆕 New Releases</h2></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">${newReleases.map(app=>appCard(app)).join('')}</div></div>
+        <!-- Hero Section glass stats + glow -->
+        <div class="relative overflow-hidden rounded-3xl glass-card p-8 md:p-10">
+          <div class="hero-glow top-0 -right-40"></div><div class="hero-glow bottom-0 left-20 opacity-40"></div>
+          <div class="relative z-10"><div class="flex flex-wrap justify-between items-start gap-6"><div><div class="text-sm font-mono text-purple-300 tracking-wider">MEON MARKETPLACE</div><h1 class="text-5xl md:text-7xl font-black mt-2 tracking-tight">LogicDriven. <span class="gradient-text">FutureProven.</span></h1><p class="text-gray-300 max-w-xl mt-3 text-lg">Building intelligent solutions for a smarter tomorrow. Technology, creativity, purpose.</p></div><div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 md:mt-0"><div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-black">15+</div><div class="text-xs uppercase tracking-wider text-purple-300">Applications</div></div><div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-black">500K+</div><div class="text-xs uppercase tracking-wider text-purple-300">Downloads</div></div><div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-black">4.8★</div><div class="text-xs uppercase tracking-wider text-purple-300">Avg Rating</div></div><div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-black">24/7</div><div class="text-xs uppercase tracking-wider text-purple-300">Innovation</div></div></div></div><div class="flex flex-wrap gap-4 mt-8"><button id="exploreAllBtn" class="btn-primary px-6 py-3 rounded-xl font-bold text-white shadow-lg">Explore All Apps →</button><button id="becomeDevHeroBtn" class="bg-white/10 border border-purple-400/40 px-6 py-3 rounded-xl font-bold backdrop-blur-sm hover:bg-white/20">Become a Developer</button></div></div></div>
+        <!-- search bar glass -->
+        <div class="glass-panel rounded-2xl p-3 flex items-center gap-3"><i data-lucide="search" class="text-purple-400 w-5 h-5"></i><input type="text" id="globalSearchInput" placeholder="Search apps, services, AI tools, business solutions..." class="w-full bg-transparent outline-none text-white" value="${searchQuery.replace(/"/g, '&quot;')}"></div>
+        <!-- category chips -->
+        <div><div class="flex flex-wrap gap-3 justify-center">${categoryList.map(cat=>`<button data-cat-filter="${catFilters[cat] || ''}" class="category-chip px-5 py-2 rounded-full text-sm font-medium ${(activeCategoryFilter===catFilters[cat]) ? 'active-cat text-white' : 'text-gray-300'}">${cat}</button>`).join('')}${activeCategoryFilter?`<button id="clearCatFilter" class="bg-red-500/20 border border-red-400/40 px-4 py-2 rounded-full text-sm">Clear ✕</button>`:""}</div></div>
+        <!-- featured three cards exactly like image -->
+        <div><h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="zap" class="text-purple-400"></i> Featured Intelligence</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">${featuredApps.map(app=>appCardModern(app)).join('')}</div></div>
+        <!-- trending apps -->
+        <div><h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="trending-up" class="text-purple-400"></i> Trending on Meon</h2><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">${trending.map(app=>appCardModern(app)).join('')}</div></div>
       </div>
     `;
   }
-
-  function appCard(app) {
+  function appCardModern(app){
     const isFav = currentUser && userFavorites.includes(app.id);
-    return `<div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 card-hover cursor-pointer" onclick="window.showAppDetail('${app.id}')">
-      <div class="flex gap-3">
-        ${appLogoImg(app, "w-16 h-16", 60)}
-        <div class="flex-1"><h3 class="font-bold">${app.name}</h3><p class="text-sm text-gray-500">${app.shortDesc}</p><div class="flex items-center gap-1 mt-1"><i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i><span>${app.rating}</span><span class="text-xs text-gray-400 ml-1">(${app.ratingCount})</span></div></div>
-        <button class="text-red-500" onclick="event.stopPropagation(); toggleFavorite('${app.id}')"><i data-lucide="heart" class="w-5 h-5 ${isFav ? 'fill-red-500' : ''}"></i></button>
-      </div>
-      <div class="mt-3 flex justify-between items-center"><span class="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">${app.category}</span><button onclick="event.stopPropagation(); downloadApp(${JSON.stringify(app).replace(/"/g, '&quot;')})" class="bg-purple-600 text-white px-4 py-1 rounded-lg text-sm">${app.isFree ? 'Free' : 'Buy KES '+app.price}</button></div>
-    </div>`;
+    return `<div class="app-card p-5 cursor-pointer transition-all" onclick="window.showAppDetail('${app.id}')"><div class="flex gap-4"><div>${appLogoImg(app, "w-16 h-16",64)}</div><div class="flex-1"><h3 class="font-extrabold text-lg">${app.name}</h3><p class="text-gray-300 text-sm">${app.shortDesc}</p><div class="flex items-center gap-2 mt-1"><div class="flex text-yellow-400 text-xs">${'★'.repeat(Math.floor(app.rating))}${app.rating%1>=0.5?'½':''}</div><span class="text-xs text-gray-400">(${app.ratingCount})</span><span class="text-xs bg-purple-500/20 px-2 py-0.5 rounded-full">${app.category}</span></div></div><button onclick="event.stopPropagation(); toggleFavorite('${app.id}')" class="text-pink-400"><i data-lucide="heart" class="w-5 h-5 ${isFav ? 'fill-pink-500' : ''}"></i></button></div><div class="flex justify-between items-center mt-4"><span class="text-xs font-mono text-purple-300">${app.downloads.toLocaleString()} downloads</span><button onclick="event.stopPropagation(); downloadApp(${JSON.stringify(app).replace(/"/g, '&quot;')})" class="bg-gradient-to-r from-purple-700 to-indigo-700 px-5 py-2 rounded-xl text-sm font-bold hover:shadow-lg">${app.isFree ? 'Get · Free' : `Buy KES ${app.price}`}</button></div></div>`;
   }
-
-  window.showAppDetail = (appId) => {
-    selectedApp = appList.find(a=>a.id === appId);
-    renderCurrentView();
-  };
-  window.backToHome = () => { selectedApp = null; renderCurrentView(); };
-
-  function renderAppDetail() { /* unchanged from original but simplified for brevity – keep full logic */ 
-    if (!selectedApp) return renderHome();
-    const app = selectedApp;
-    const appReviews = reviewsData[app.id] || [];
-    const screenshotHtml = app.screenshots.map(url => `<img src="${url}" class="rounded-xl border border-gray-200 dark:border-gray-700 w-64 h-40 object-cover" alt="screenshot">`).join('');
-    return `<div class="max-w-4xl mx-auto"><button onclick="window.backToHome()" class="flex items-center gap-1 text-purple-600 mb-4">&larr; Back to Store</button>
-      <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
-        <div class="flex gap-5 flex-wrap">${appLogoImg(app, "w-24 h-24", 100)}<div><h1 class="text-3xl font-bold">${app.name}</h1><p class="text-gray-500">${app.shortDesc}</p><div class="flex gap-3 mt-2"><div class="flex"><i data-lucide="star" class="fill-yellow-400"></i> ${app.rating} (${app.ratingCount})</div><div><i data-lucide="download"></i> ${app.downloads.toLocaleString()}</div></div><div class="flex gap-3 mt-4"><button onclick="downloadApp(${JSON.stringify(app).replace(/"/g, '&quot;')})" class="bg-purple-600 text-white px-6 py-2 rounded-full">${app.isFree ? 'Download' : 'Buy with M-Pesa (KES '+app.price+')'}</button><button onclick="toggleFavorite('${app.id}')" class="border px-4 py-2 rounded-full">❤️ Favorite</button></div></div></div>
-        <div class="mt-6"><h2 class="text-xl font-semibold">Description</h2><p>${app.description}</p><h3 class="font-semibold mt-4">Key Features</h3><ul class="list-disc pl-5">${app.features.map(f=>`<li>${f}</li>`).join('')}</ul></div>
-        <div class="mt-6"><h2 class="text-xl font-semibold">Screenshots</h2><div class="flex gap-3 overflow-x-auto pb-2">${screenshotHtml}</div></div>
-        <div class="mt-8"><h2 class="text-xl font-semibold">Rate & Review</h2><div id="reviewStars" class="flex gap-1 my-2"></div><textarea id="reviewText" class="w-full border rounded p-2 dark:bg-gray-700" rows="2" placeholder="Write your review..."></textarea><button id="submitReviewBtn" class="mt-2 bg-purple-600 text-white px-4 py-1 rounded">Submit Review</button>
-        <div class="mt-6 space-y-3">${appReviews.map(r => `<div class="border-b pb-2"><div class="font-semibold">${r.user}</div><div class="flex text-yellow-400">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div><p>${r.content}</p><small>${new Date(r.date).toLocaleDateString()}</small></div>`).join('')}</div></div>
-      </div></div>`;
-  }
-
-  function renderDashboard() { /* same as original */ 
-    if(!currentUser) return `<div class="text-center py-12">Access Meon dashboard after login</div>`;
-    const downloadedApps = appList.filter(a => userDownloads.some(d => d.appId === a.id));
-    const favApps = appList.filter(a => userFavorites.includes(a.id));
-    return `<div><h1 class="text-2xl font-bold">Meon Workspace</h1><div class="grid md:grid-cols-2 gap-6 mt-6"><div class="bg-white dark:bg-gray-800 p-4 rounded-xl"><h2 class="font-bold">📦 Installed Apps (${downloadedApps.length})</h2>${downloadedApps.map(a=>`<div class="flex gap-2 items-center mt-2">${appLogoImg(a, "w-10 h-10", 40)}<span>${a.name}</span></div>`).join('')||"No downloads yet"}</div><div class="bg-white dark:bg-gray-800 p-4 rounded-xl"><h2 class="font-bold">❤️ Favorites (${favApps.length})</h2>${favApps.map(a=>`<div class="flex gap-2 mt-2">${appLogoImg(a, "w-10 h-10", 40)}<span>${a.name}</span></div>`).join('')}</div></div></div>`;
-  }
+  function renderAppDetail(){ if(!selectedApp) return renderHome(); const app=selectedApp; const revs=reviewsData[app.id]||[]; return `<div class="max-w-5xl mx-auto"><button onclick="window.backToHome()" class="flex items-center gap-1 text-purple-400 mb-5">&larr; Back to Marketplace</button><div class="glass-card p-7 rounded-3xl"><div class="flex flex-wrap gap-6"><div>${appLogoImg(app,"w-28 h-28",100)}</div><div><h1 class="text-4xl font-black">${app.name}</h1><p class="text-gray-300">${app.shortDesc}</p><div class="flex gap-4 mt-2"><span>⭐ ${app.rating} (${app.ratingCount})</span><span>📥 ${app.downloads.toLocaleString()}</span></div><div class="flex gap-3 mt-4"><button onclick="downloadApp(${JSON.stringify(app).replace(/"/g, '&quot;')})" class="btn-primary px-8 py-2 rounded-xl font-bold">${app.isFree?'Download':'Buy KES '+app.price}</button><button onclick="toggleFavorite('${app.id}')" class="border border-purple-500 px-5 py-2 rounded-xl">❤️ Favorite</button></div></div></div><div class="mt-6"><h2 class="text-xl font-bold">Description</h2><p>${app.description}</p><ul class="list-disc pl-5 mt-2 space-y-1">${app.features.map(f=>`<li>${f}</li>`).join('')}</ul></div><div class="mt-6"><h2 class="text-xl font-bold">Screenshots</h2><div class="flex gap-3 overflow-x-auto">${app.screenshots.map(url=>`<img src="${url}" class="rounded-2xl h-40 w-auto object-cover border border-white/20">`).join('')}</div></div><div class="mt-8"><h2 class="text-xl font-bold">Rate & Review</h2><div id="reviewStars" class="flex gap-1 my-2"></div><textarea id="reviewText" rows="2" class="w-full bg-white/10 border border-purple-500/30 rounded-xl p-3" placeholder="Share your experience..."></textarea><button id="submitReviewBtn" class="mt-2 bg-purple-600 px-5 py-2 rounded-xl">Submit</button><div class="mt-6 space-y-4">${revs.map(r=>`<div class="border-b border-white/10 pb-3"><div class="font-bold">${r.user}</div><div class="text-yellow-400">${'★'.repeat(r.rating)}</div><p>${r.content}</p><small class="text-gray-400">${new Date(r.date).toLocaleDateString()}</small></div>`).join('')}</div></div></div></div>`;}
+  function renderDashboard(){ if(!currentUser) return `<div class="text-center py-20 glass-panel rounded-3xl">🔐 Sign in to access Meon Workspace</div>`; const downloaded=appList.filter(a=>userDownloads.some(d=>d.appId===a.id)); const favs=appList.filter(a=>userFavorites.includes(a.id)); return `<div class="glass-panel rounded-3xl p-8"><h1 class="text-3xl font-bold">👤 My Dashboard</h1><div class="grid md:grid-cols-2 gap-7 mt-7"><div><h2 class="text-xl font-bold">📦 Installed (${downloaded.length})</h2>${downloaded.map(a=>`<div class="flex gap-3 items-center mt-3 p-2 glass-card">${appLogoImg(a,"w-10 h-10",40)}<span>${a.name}</span></div>`).join('')||"<p class='text-gray-400'>No apps installed yet</p>"}</div><div><h2 class="text-xl font-bold">❤️ Favorites</h2>${favs.map(a=>`<div class="flex gap-3 items-center mt-3">${appLogoImg(a,"w-10 h-10",40)}<span>${a.name}</span></div>`).join('')}</div></div></div>`;}
+  function renderAdmin(){ if(!currentUser||(currentUser.role!=='admin'&&currentUser.role!=='super_admin')) return `<div class="text-center py-20">Admin Restricted</div>`; return `<div class="glass-panel p-7 rounded-3xl"><h1 class="text-3xl font-bold">Meon Admin Console</h1><div class="grid grid-cols-3 gap-5 mt-6"><div class="stats-glow p-4 rounded-2xl"><div class="text-2xl font-black">1.2k+</div><div>Active Users</div></div><div class="stats-glow p-4 rounded-2xl"><div class="text-2xl font-black">${appList.reduce((s,a)=>s+a.downloads,0).toLocaleString()}</div><div>Downloads</div></div><div class="stats-glow p-4 rounded-2xl"><div class="text-2xl font-black">$22.4k</div><div>Revenue</div></div></div><div class="mt-8"><h2 class="font-bold">App Management</h2>${appList.map(a=>`<div class="flex justify-between items-center border-b border-white/10 py-2"><span>${a.name}</span><button class="btn-primary px-3 py-1 rounded-lg text-xs" onclick="alert('Demo: Manage ${a.name}')">Edit</button></div>`).join('')}</div></div>`;}
+  function renderDeveloper(){ if(!currentUser||currentUser.role!=='developer') return `<div class="text-center py-20">Developer Hub Access Only</div>`; return `<div class="glass-panel p-7 rounded-3xl"><h1 class="text-3xl font-bold">🛠️ Developer Hub</h1><p>Analytics & Submissions</p><div class="mt-5 grid gap-3">${appList.slice(0,3).map(a=>`<div class="flex justify-between"><span>${a.name}</span><span>📈 ${a.downloads} downloads | ⭐${a.rating}</span></div>`).join('')}</div><button class="mt-7 btn-primary px-6 py-2 rounded-xl">+ Submit New Version</button></div>`;}
   
-  function renderAdmin() {
-    if(!currentUser || (currentUser.role !== 'admin' && currentUser.role !== 'super_admin')) return `<div class="text-center py-12">Restricted to Meon Admin</div>`;
-    const totalDownloads = appList.reduce((s,a)=>s+a.downloads,0);
-    return `<div><h1 class="text-2xl font-bold">Meon Admin Console</h1><div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6"><div class="bg-white dark:bg-gray-800 p-4 rounded-xl"><i data-lucide="users"></i><div class="text-2xl font-bold">1,240</div><div>Active Users</div></div><div class="bg-white dark:bg-gray-800 p-4 rounded-xl"><i data-lucide="download"></i><div class="text-2xl font-bold">${totalDownloads.toLocaleString()}</div><div>Total Downloads</div></div><div class="bg-white dark:bg-gray-800 p-4 rounded-xl"><i data-lucide="dollar-sign"></i><div class="text-2xl font-bold">$18,240</div><div>Revenue (Meon)</div></div></div><div class="mt-8"><h2 class="font-bold">App Portfolio Management</h2><div class="grid gap-2">${appList.map(a=>`<div class="flex justify-between items-center bg-white dark:bg-gray-800 p-2 rounded"><div>${a.name}</div><button class="text-sm bg-purple-600 text-white px-2 py-1 rounded" onclick="alert('Meon Admin: Edit ${a.name} (demo)')">Manage</button></div>`).join('')}</div></div></div>`;
-  }
-  
-  function renderDeveloper() {
-    if(!currentUser || currentUser.role !== 'developer') return `<div class="text-center py-12">Developer portal - Meon Partners only</div>`;
-    return `<div><h1 class="text-2xl font-bold">Meon Developer Hub</h1><p>Submit and analyze your software solutions</p><div class="bg-white dark:bg-gray-800 p-4 rounded-xl mt-4"><h3 class="font-semibold">Your Apps Performance</h3><div class="space-y-2 mt-2">${appList.slice(0,4).map(a=>`<div>${a.name} - Downloads: ${a.downloads} | Rating: ${a.rating}</div>`).join('')}</div><button class="mt-4 bg-green-600 text-white px-4 py-2 rounded">+ Submit New App Version</button></div></div>`;
-  }
-
-  function renderNav() {
-    const authDiv = document.getElementById("authSection");
-    if (!authDiv) return;
-    if (currentUser) {
-      authDiv.innerHTML = `<span class="text-sm hidden sm:inline">${currentUser.email}</span><button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium">Logout</button>`;
-      document.getElementById("logoutBtn")?.addEventListener("click", logout);
-      const adminBtn = document.getElementById("adminNavBtn");
-      const devBtn = document.getElementById("devNavBtn");
-      if (currentUser.role === "admin" || currentUser.role === "super_admin") adminBtn?.classList.remove("hidden");
-      else adminBtn?.classList.add("hidden");
-      if (currentUser.role === "developer") devBtn?.classList.remove("hidden");
-      else devBtn?.classList.add("hidden");
-    } else {
-      authDiv.innerHTML = `<button id="showLoginModalBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-1.5 rounded-lg text-sm font-medium">Sign In</button>`;
-      document.getElementById("showLoginModalBtn")?.addEventListener("click", () => showAuthModal());
-      document.getElementById("adminNavBtn")?.classList.add("hidden");
-      document.getElementById("devNavBtn")?.classList.add("hidden");
-    }
-    if (window.lucide) lucide.createIcons();
-  }
-
-  function showAuthModal() {
-    const modalHtml = `
-      <div id="authModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 modal-transition">
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md mx-4">
-          <h2 class="text-2xl font-bold mb-4">Meon Account</h2>
-          <input type="email" id="loginEmail" placeholder="Email" class="w-full p-2 border rounded-lg dark:bg-gray-700 mb-3">
-          <input type="password" id="loginPassword" placeholder="Password (any for demo)" class="w-full p-2 border rounded-lg dark:bg-gray-700 mb-4">
-          <div class="flex gap-2 mb-3">
-            <button id="loginEmailBtn" class="flex-1 bg-purple-600 text-white py-2 rounded-lg">Login</button>
-            <button id="registerBtn" class="flex-1 bg-green-600 text-white py-2 rounded-lg">Sign Up</button>
-          </div>
-          <button id="demoAdminBtn" class="w-full bg-purple-100 dark:bg-purple-900 py-2 rounded-lg mb-2">Demo Admin Access</button>
-          <button id="demoDevBtn" class="w-full bg-amber-100 dark:bg-amber-900 py-2 rounded-lg">Demo Developer Access</button>
-          <button id="closeModal" class="w-full mt-3 text-gray-500">Cancel</button>
-        </div>
-      </div>`;
-    document.body.insertAdjacentHTML("beforeend", modalHtml);
-    document.getElementById("loginEmailBtn")?.addEventListener("click", () => {
-      const email = document.getElementById("loginEmail").value;
-      if(email) loginUser(email, "user");
-      document.getElementById("authModal")?.remove();
-    });
-    document.getElementById("registerBtn")?.addEventListener("click", () => {
-      const email = document.getElementById("loginEmail").value;
-      if(email) loginUser(email, "user");
-      document.getElementById("authModal")?.remove();
-    });
-    document.getElementById("demoAdminBtn")?.addEventListener("click", () => { loginUser("admin@meon.com", "admin"); document.getElementById("authModal")?.remove(); });
-    document.getElementById("demoDevBtn")?.addEventListener("click", () => { loginUser("dev@meon.com", "developer"); document.getElementById("authModal")?.remove(); });
-    document.getElementById("closeModal")?.addEventListener("click", () => document.getElementById("authModal")?.remove());
-  }
-
-  function attachHomeInteractions() {
-    const searchInput = document.getElementById("globalSearchInput");
-    if (searchInput) {
-      searchInput.addEventListener("input", (e) => {
-        searchQuery = e.target.value;
-        renderCurrentView();
-      });
-    }
-    const categoryChips = document.querySelectorAll(".category-chip");
-    categoryChips.forEach(chip => {
-      chip.addEventListener("click", () => {
-        activeCategoryFilter = chip.getAttribute("data-category");
-        renderCurrentView();
-      });
-    });
-    const clearBtn = document.getElementById("clearCategoryBtn");
-    if (clearBtn) {
-      clearBtn.addEventListener("click", () => {
-        activeCategoryFilter = "";
-        renderCurrentView();
-      });
-    }
-    const exploreBtn = document.getElementById("exploreMarketplaceBtn");
-    if (exploreBtn) {
-      exploreBtn.addEventListener("click", () => {
-        document.querySelector(".grid.grid-cols-1.sm\\:grid-cols-2")?.scrollIntoView({ behavior: "smooth" });
-      });
-    }
-    const becomeDevBtn = document.getElementById("becomeDevBtn");
-    if (becomeDevBtn) {
-      becomeDevBtn.addEventListener("click", () => {
-        if (!currentUser) showToast("Please login to become a developer", "error");
-        else { activeView = "developer"; renderCurrentView(); }
-      });
-    }
-  }
-
-  function renderCurrentView() {
-    const container = document.getElementById("mainContent");
-    if (!container) return;
-    if(selectedApp) container.innerHTML = renderAppDetail();
-    else if(activeView === "home") { container.innerHTML = renderHome(); setTimeout(attachHomeInteractions, 50); }
-    else if(activeView === "dashboard") container.innerHTML = renderDashboard();
-    else if(activeView === "admin") container.innerHTML = renderAdmin();
-    else if(activeView === "developer") container.innerHTML = renderDeveloper();
-    if (window.lucide) lucide.createIcons();
-    if(selectedApp && document.getElementById("reviewStars")) {
-      let ratingVal = 0;
-      const starDiv = document.getElementById("reviewStars");
-      starDiv.innerHTML = '';
-      for(let i=1;i<=5;i++){ let star=document.createElement('i'); star.setAttribute('data-lucide','star'); star.className='w-6 h-6 cursor-pointer rating-star'; star.onclick=()=>{ratingVal=i; document.querySelectorAll('#reviewStars i').forEach((s,idx)=>s.style.fill= idx<i ? '#facc15' : 'none');}; starDiv.appendChild(star);}
-      if (window.lucide) lucide.createIcons();
-      document.getElementById("submitReviewBtn")?.addEventListener("click",()=>{ const txt=document.getElementById("reviewText").value; if(ratingVal && txt) submitReview(selectedApp.id, ratingVal, txt); else showToast("Please provide rating and comment", "error");});
-    }
-  }
-  
-  // Navigation listeners
-  document.querySelectorAll(".nav-btn").forEach(btn=>{
-    btn.addEventListener("click",(e)=>{
-      const view = btn.getAttribute("data-nav");
-      if(view) { activeView = view; selectedApp = null; renderCurrentView(); }
-      document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("border-purple-600","text-purple-600"));
-      btn.classList.add("border-purple-600","text-purple-600");
-    });
-  });
-  
-  // Theme toggle
-  const themeToggle = document.getElementById("themeToggle");
-  themeToggle?.addEventListener("click",()=>{ document.documentElement.classList.toggle("dark"); localStorage.setItem("meonTheme", document.documentElement.classList.contains("dark") ? "dark" : "light"); if(window.lucide) lucide.createIcons(); });
-  if(localStorage.getItem("meonTheme") === "dark") document.documentElement.classList.add("dark");
-  
-  // M-Pesa modal handlers
-  document.getElementById("mpesaConfirmBtn")?.addEventListener("click", confirmMpesaPayment);
-  document.getElementById("mpesaCancelBtn")?.addEventListener("click", () => {
-    document.getElementById("mpesaModal").classList.add("hidden");
-    currentPaymentApp = null;
-  });
-  
-  renderNav();
-  renderCurrentView();
-  window.toggleFavorite = toggleFavorite;
-  window.downloadApp = downloadApp;
+  function renderCurrentView(){ const container=document.getElementById("mainContent"); if(!container) return; if(selectedApp) container.innerHTML=renderAppDetail(); else if(activeView==="home"){ container.innerHTML=renderHome(); setTimeout(()=>{ const search=document.getElementById("globalSearchInput"); if(search) search.addEventListener("input",(e)=>{ searchQuery=e.target.value; renderCurrentView(); }); document.querySelectorAll(".category-chip").forEach(ch=>{ ch.addEventListener("click",()=>{ activeCategoryFilter=ch.getAttribute("data-cat-filter")||""; renderCurrentView(); }); }); const clear=document.getElementById("clearCatFilter"); if(clear) clear.addEventListener("click",()=>{ activeCategoryFilter=""; renderCurrentView(); }); const exploreBtn=document.getElementById("exploreAllBtn"); if(exploreBtn) exploreBtn.addEventListener("click",()=>window.scrollTo({top:document.body.scrollHeight/2,behavior:"smooth"})); const devHero=document.getElementById("becomeDevHeroBtn"); if(devHero) devHero.addEventListener("click",()=>{ if(!currentUser) showToast("Login to become developer","error"); else { activeView="developer"; renderCurrentView(); } }); },50); } else if(activeView==="dashboard") container.innerHTML=renderDashboard(); else if(activeView==="admin") container.innerHTML=renderAdmin(); else if(activeView==="developer") container.innerHTML=renderDeveloper(); if(window.lucide) lucide.createIcons(); if(selectedApp&&document.getElementById("reviewStars")){ let ratingVal=0; const starDiv=document.getElementById("reviewStars"); starDiv.innerHTML=""; for(let i=1;i<=5;i++){ let star=document.createElement("i"); star.setAttribute("data-lucide","star"); star.className="w-6 h-6 cursor-pointer rating-star text-gray-400 hover:text-yellow-400"; star.onclick=()=>{ratingVal=i; document.querySelectorAll("#reviewStars i").forEach((s,idx)=>s.style.fill=idx<i?"#facc15":"none");}; starDiv.appendChild(star);} if(window.lucide) lucide.createIcons(); document.getElementById("submitReviewBtn")?.addEventListener("click",()=>{ const txt=document.getElementById("reviewText").value; if(ratingVal&&txt) submitReview(selectedApp.id,ratingVal,txt); else showToast("Provide rating & comment","error");}); } }
+  function renderNav(){ const authDiv=document.getElementById("authSection"); if(!authDiv) return; if(currentUser){ authDiv.innerHTML=`<span class="text-sm hidden sm:inline">${currentUser.email}</span><button id="logoutBtn" class="bg-red-600/80 px-4 py-1.5 rounded-xl text-sm font-medium">Logout</button>`; document.getElementById("logoutBtn")?.addEventListener("click",logout); const adminBtn=document.getElementById("adminNavBtn"),devBtn=document.getElementById("devNavBtn"); if(currentUser.role==="admin"||currentUser.role==="super_admin") adminBtn?.classList.remove("hidden"); else adminBtn?.classList.add("hidden"); if(currentUser.role==="developer") devBtn?.classList.remove("hidden"); else devBtn?.classList.add("hidden"); } else { authDiv.innerHTML=`<button id="showLoginModalBtn" class="bg-purple-600/80 px-5 py-1.5 rounded-xl text-sm font-medium">Sign In</button>`; document.getElementById("showLoginModalBtn")?.addEventListener("click",()=>{ const modalDiv=document.createElement("div"); modalDiv.className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"; modalDiv.innerHTML=`<div class="bg-[#0a0f1f] rounded-3xl p-7 w-96 border border-purple-500/40"><h2 class="text-2xl font-bold">Meon Access</h2><input id="loginEmailDemo" placeholder="Email" class="w-full mt-4 p-3 rounded-xl bg-white/10 border"><div class="flex gap-3 mt-5"><button id="demoLoginBtn" class="flex-1 btn-primary py-2 rounded-xl">Login</button><button id="demoAdminAccessBtn" class="flex-1 bg-purple-800 py-2 rounded-xl">Admin Demo</button><button id="demoDevAccessBtn" class="flex-1 bg-amber-700 py-2 rounded-xl">Dev Demo</button></div><button id="closeAuthModal" class="mt-4 text-gray-400 text-sm w-full">Cancel</button></div>`; document.body.appendChild(modalDiv); document.getElementById("demoLoginBtn")?.addEventListener("click",()=>{ const email=document.getElementById("loginEmailDemo").value||"user@meon.com"; loginUser(email,"user"); modalDiv.remove();}); document.getElementById("demoAdminAccessBtn")?.addEventListener("click",()=>{ loginUser("admin@meon.com","admin"); modalDiv.remove();}); document.getElementById("demoDevAccessBtn")?.addEventListener("click",()=>{ loginUser("dev@meon.com","developer"); modalDiv.remove();}); document.getElementById("closeAuthModal")?.addEventListener("click",()=>modalDiv.remove()); }); document.getElementById("adminNavBtn")?.classList.add("hidden"); document.getElementById("devNavBtn")?.classList.add("hidden"); } if(window.lucide) lucide.createIcons(); }
+  window.showAppDetail=(id)=>{ selectedApp=appList.find(a=>a.id===id); renderCurrentView(); };
+  window.backToHome=()=>{ selectedApp=null; renderCurrentView(); };
+  document.querySelectorAll(".nav-btn").forEach(btn=>{ btn.addEventListener("click",()=>{ const view=btn.getAttribute("data-nav"); if(view){ activeView=view; selectedApp=null; renderCurrentView(); } document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("border-purple-500","text-purple-300")); btn.classList.add("border-purple-500","text-purple-300"); }); });
+  document.getElementById("themeToggle")?.addEventListener("click",()=>{ document.documentElement.classList.toggle("dark"); });
+  document.getElementById("mpesaConfirmBtn")?.addEventListener("click",confirmMpesaPayment);
+  document.getElementById("mpesaCancelBtn")?.addEventListener("click",()=>{ document.getElementById("mpesaModal").classList.add("hidden"); currentPaymentApp=null; });
+  renderNav(); renderCurrentView();
+  window.toggleFavorite=toggleFavorite; window.downloadApp=downloadApp;
 </script>
 </body>
 </html>
