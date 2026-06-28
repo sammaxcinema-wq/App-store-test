@@ -3,269 +3,2002 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Meon Marketplace | LogicDriven. FutureProven.</title>
-  <meta name="description" content="Meon App Store – Daraja M-Pesa STK Push for seamless payments">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <title>Meon | Intelligence · Innovation · Inspiration</title>
+  <meta name="description" content="Meon App Directory – Launch web apps instantly">
+
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Meon">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Meon Directory">
+  <meta name="msapplication-TileColor" content="#0f172a">
+  <meta name="msapplication-starturl" content="/">
+
+  <!-- Apple Touch Icon -->
+  <link rel="apple-touch-icon" href="https://i.ibb.co/VY0yR03N/file-00000000503c724692cbd3d68fec0056.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://i.ibb.co/VY0yR03N/file-00000000503c724692cbd3d68fec0056.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/VY0yR03N/file-00000000503c724692cbd3d68fec0056.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="https://i.ibb.co/VY0yR03N/file-00000000503c724692cbd3d68fec0056.png">
+
+  <!-- PWA Icon -->
+  <link rel="icon" type="image/png" sizes="192x192" href="https://i.ibb.co/VY0yR03N/file-00000000503c724692cbd3d68fec0056.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="https://i.ibb.co/VY0yR03N/file-00000000503c724692cbd3d68fec0056.png">
+
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest">
+  </script>
   <style>
-    * { font-family: 'Inter', sans-serif; }
+    * {
+      font-family: 'Inter', sans-serif;
+    }
     body {
-      background: radial-gradient(circle at 10% 20%, #030014, #010108);
-      color: #f1f5f9;
+      transition: background-color 0.3s, color 0.3s;
     }
-    .glass-card {
-      background: rgba(15, 25, 45, 0.55);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(139, 92, 246, 0.35);
-      border-radius: 2rem;
-      transition: all 0.25s ease;
+    .dark {
+      background-color: #0f172a;
+      color: #e2e8f0;
     }
-    /* Hero background with the NEW Instagram screenshot image */
-    .hero-bg-image {
-      background-image: url('https://i.ibb.co/7tFcgq9H/Screenshot-20260611-224639-Instagram.jpg');
+    .rating-star {
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .rating-star:hover {
+      transform: scale(1.1);
+    }
+    .modal-transition {
+      transition: opacity 0.2s ease, visibility 0.2s;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+    .card-hover {
+      transition: all 0.2s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.1);
+    }
+    .meon-logo-bg {
+      background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 100%);
+      border-radius: 14px;
+      box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    img.app-logo {
+      background: #1e293b;
+      object-fit: cover;
+    }
+    @keyframes spin-slow {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    .animate-spin-slow {
+      animation: spin-slow 20s linear infinite;
+    }
+    .animate-spin-reverse {
+      animation: spin-slow 30s linear infinite reverse;
+    }
+
+    /* Global Background for Home and Dashboard */
+    .main-bg {
+      background-image: url('https://i.ibb.co/vvBFj1MW/63c08e3fb6ae3a25f24a4016bd106725.jpg');
       background-size: cover;
-      background-position: center 30%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      position: relative;
+      min-height: 100vh;
+      padding: 1rem;
+      border-radius: 1.5rem;
+    }
+    .main-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(2, 0, 36, 0.88) 0%, rgba(5, 5, 55, 0.82) 50%, rgba(10, 0, 92, 0.88) 100%);
+      border-radius: 1.5rem;
+    }
+    .main-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Hero Background */
+    .hero-bg {
+      background-image: url('https://i.ibb.co/4gsK0C8V/431586a4d03a5dc68632c2c349f7b64d.jpg');
+      background-size: cover;
+      background-position: center;
       background-repeat: no-repeat;
       position: relative;
     }
-    .hero-overlay {
-      background: rgba(3, 0, 20, 0.65);
-      backdrop-filter: blur(2px);
-      border-radius: inherit;
-    }
-    .app-card {
-      background: rgba(18, 28, 45, 0.75);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(139, 92, 246, 0.3);
-      border-radius: 1.75rem;
-      transition: all 0.25s ease;
-    }
-    .app-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(139, 92, 246, 0.7);
-      box-shadow: 0 20px 35px -12px rgba(139, 92, 246, 0.3);
-      background: rgba(25, 35, 55, 0.85);
-    }
-    .btn-primary {
-      background: linear-gradient(105deg, #8b5cf6, #4f46e5);
-      transition: all 0.2s;
-    }
-    .btn-primary:hover {
-      background: linear-gradient(105deg, #9b6cff, #6366f1);
-      transform: scale(0.98);
-      box-shadow: 0 8px 20px -6px #8b5cf6;
-    }
-    .category-chip {
-      background: rgba(30, 41, 59, 0.5);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(139, 92, 246, 0.3);
-      transition: all 0.2s;
-      border-radius: 9999px;
-      padding: 0.5rem 1.25rem;
-      cursor: pointer;
-    }
-    .category-chip.active, .category-chip:hover {
-      background: linear-gradient(135deg, #8b5cf6, #6366f1);
-      border-color: transparent;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px -8px #8b5cf6;
-      color: white;
-    }
-    .gradient-text {
-      background: linear-gradient(135deg, #c084fc, #60a5fa);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .toast { position: fixed; bottom: 24px; right: 24px; z-index: 9999; animation: slideUp 0.3s ease; background: #1e293b; backdrop-filter: blur(12px); border-left: 4px solid #8b5cf6; border-radius: 1rem; padding: 12px 20px; color: white; box-shadow: 0 10px 20px -5px rgba(0,0,0,0.5); }
-    @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    .rating-star { cursor: pointer; transition: transform 0.1s; }
-    .modal-transition { transition: opacity 0.2s ease; }
-    .hero-glow {
+    .hero-bg::before {
+      content: '';
       position: absolute;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(139,92,246,0.25), transparent 70%);
-      filter: blur(60px);
-      pointer-events: none;
-    }
-    .stats-glow {
-      background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(59,130,246,0.1));
-      border: 1px solid rgba(139,92,246,0.4);
-      backdrop-filter: blur(4px);
+      inset: 0;
+      background: linear-gradient(135deg, rgba(2, 0, 36, 0.85) 0%, rgba(5, 5, 55, 0.8) 50%, rgba(10, 0, 92, 0.85) 100%);
       border-radius: 1.5rem;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Categories Background */
+    .categories-bg {
+      background-image: url('https://i.ibb.co/cSLDqztC/4f72acf66a08d9dd83601fc69a6dd8c3.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      position: relative;
+      padding: 2rem;
+      border-radius: 1.5rem;
+    }
+    .categories-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(2, 0, 36, 0.88) 0%, rgba(5, 5, 55, 0.82) 50%, rgba(10, 0, 92, 0.88) 100%);
+      border-radius: 1.5rem;
+    }
+    .categories-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Featured Section Background */
+    .featured-bg {
+      background-image: url('https://i.ibb.co/n8LTRbLg/16dbce0c640116ad6a21751b15d0396e.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      position: relative;
+      padding: 2rem;
+      border-radius: 1.5rem;
+    }
+    .featured-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(2, 0, 36, 0.9) 0%, rgba(5, 5, 55, 0.85) 50%, rgba(10, 0, 92, 0.9) 100%);
+      border-radius: 1.5rem;
+    }
+    .featured-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Top Rated Section Background */
+    .toprated-bg {
+      background-image: url('https://i.ibb.co/bMQhQB0P/fd8980ac75d8617208bdb4e65b549f04.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      position: relative;
+      padding: 2rem;
+      border-radius: 1.5rem;
+    }
+    .toprated-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(2, 0, 36, 0.92) 0%, rgba(5, 5, 55, 0.87) 50%, rgba(10, 0, 92, 0.92) 100%);
+      border-radius: 1.5rem;
+    }
+    .toprated-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Recently Added Section Background */
+    .recent-bg {
+      background-image: url('https://i.ibb.co/4ZKz5tDD/669db1c2e2ee4ac1f1328ca814ccc930.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      position: relative;
+      padding: 2rem;
+      border-radius: 1.5rem;
+    }
+    .recent-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(2, 0, 36, 0.88) 0%, rgba(5, 5, 55, 0.83) 50%, rgba(10, 0, 92, 0.88) 100%);
+      border-radius: 1.5rem;
+    }
+    .recent-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Dashboard Background */
+    .dashboard-bg {
+      background-image: url('https://i.ibb.co/vvBFj1MW/63c08e3fb6ae3a25f24a4016bd106725.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      position: relative;
+      padding: 2rem;
+      border-radius: 1.5rem;
+      min-height: 400px;
+    }
+    .dashboard-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(2, 0, 36, 0.9) 0%, rgba(5, 5, 55, 0.85) 50%, rgba(10, 0, 92, 0.9) 100%);
+      border-radius: 1.5rem;
+    }
+    .dashboard-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Admin Panel Background */
+    .admin-bg {
+      background-image: url('https://i.ibb.co/cSLDqztC/4f72acf66a08d9dd83601fc69a6dd8c3.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      position: relative;
+      padding: 2rem;
+      border-radius: 1.5rem;
+      min-height: 400px;
+    }
+    .admin-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(2, 0, 36, 0.92) 0%, rgba(5, 5, 55, 0.88) 50%, rgba(10, 0, 92, 0.92) 100%);
+      border-radius: 1.5rem;
+    }
+    .admin-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Developer Hub Background */
+    .developer-bg {
+      background-image: url('https://i.ibb.co/4gsK0C8V/431586a4d03a5dc68632c2c349f7b64d.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      position: relative;
+      padding: 2rem;
+      border-radius: 1.5rem;
+      min-height: 400px;
+    }
+    .developer-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(2, 0, 36, 0.88) 0%, rgba(5, 5, 55, 0.82) 50%, rgba(10, 0, 92, 0.88) 100%);
+      border-radius: 1.5rem;
+    }
+    .developer-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ATT Tab Background - Ultra Pro */
+    .att-bg {
+      background-image: url('https://i.ibb.co/vvBFj1MW/63c08e3fb6ae3a25f24a4016bd106725.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      position: relative;
+      padding: 2rem;
+      border-radius: 1.5rem;
+      min-height: 600px;
+    }
+    .att-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(2, 0, 36, 0.94) 0%, rgba(5, 5, 55, 0.9) 50%, rgba(10, 0, 92, 0.94) 100%);
+      border-radius: 1.5rem;
+    }
+    .att-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ATT Stats Cards */
+    .stat-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+      border-color: rgba(139, 92, 246, 0.4);
+      box-shadow: 0 12px 40px rgba(139, 92, 246, 0.15);
+    }
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #a78bfa, #8b5cf6, #6d28d9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .stat-change {
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    .stat-change.up {
+      background: rgba(34, 197, 94, 0.2);
+      color: #4ade80;
+    }
+    .stat-change.down {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+    }
+
+    /* ATT Service Cards */
+    .service-card {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .service-card:hover::before {
+      opacity: 1;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(139, 92, 246, 0.3);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+    .service-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+    .service-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    .service-desc {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.5;
+    }
+    .service-status {
+      display: inline-block;
+      padding: 2px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-top: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .service-status.online {
+      background: rgba(34, 197, 94, 0.2);
+      color: #4ade80;
+    }
+    .service-status.offline {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+    }
+    .service-status.maintenance {
+      background: rgba(251, 191, 36, 0.2);
+      color: #fbbf24;
+    }
+    .service-status.beta {
+      background: rgba(139, 92, 246, 0.2);
+      color: #a78bfa;
+    }
+
+    /* ATT Activity Feed */
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+    .activity-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .activity-dot.green {
+      background: #4ade80;
+    }
+    .activity-dot.blue {
+      background: #60a5fa;
+    }
+    .activity-dot.purple {
+      background: #a78bfa;
+    }
+    .activity-dot.yellow {
+      background: #fbbf24;
+    }
+    .activity-dot.red {
+      background: #f87171;
+    }
+    .activity-text {
+      flex: 1;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+    }
+    .activity-time {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.75rem;
+    }
+
+    /* ATT Progress Bar */
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #8b5cf6, #6d28d9);
+      transition: width 1s ease;
+    }
+
+    /* PWA Install Banner */
+    #pwaInstallBanner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 9998;
+      background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 100%);
+      color: white;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-top: 2px solid rgba(139, 92, 246, 0.5);
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.4);
+    }
+    #pwaInstallBanner.show {
+      transform: translateY(0);
+    }
+    #pwaInstallBanner .install-btn {
+      background: #8b5cf6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    #pwaInstallBanner .install-btn:hover {
+      background: #7c3aed;
+    }
+    #pwaInstallBanner .dismiss-btn {
+      background: transparent;
+      color: #cbd5e1;
+      border: 1px solid #475569;
+      padding: 8px 14px;
+      border-radius: 25px;
+      cursor: pointer;
+      white-space: nowrap;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    #pwaInstallBanner .dismiss-btn:hover {
+      color: white;
+      border-color: #94a3b8;
+    }
+
+    /* Offline indicator */
+    #offlineIndicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10000;
+      background: #ef4444;
+      color: white;
+      text-align: center;
+      padding: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transform: translateY(-100%);
+      transition: transform 0.3s ease;
+    }
+    #offlineIndicator.show {
+      transform: translateY(0);
+    }
+
+    /* Scrollbar styling for ATT */
+    .att-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .att-scroll::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+    .att-scroll::-webkit-scrollbar-thumb {
+      background: rgba(139, 92, 246, 0.5);
+      border-radius: 10px;
+    }
+    .att-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(139, 92, 246, 0.8);
     }
   </style>
 </head>
-<body>
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
-<div id="app" class="min-h-screen flex flex-col">
-  <!-- Header glass -->
-  <header class="sticky top-0 z-50 bg-[#030014]/80 backdrop-blur-xl border-b border-purple-900/40">
-    <div class="container mx-auto px-5 py-3 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <div class="bg-gradient-to-br from-purple-900/40 to-indigo-900/40 px-4 py-2 rounded-2xl border border-purple-500/30">
-          <span class="text-3xl font-black tracking-tighter text-white">meon</span>
-          <span class="hidden md:inline-block text-[10px] font-bold tracking-[0.2em] text-purple-300 uppercase ml-2">MARKETPLACE</span>
+  <!-- Offline indicator -->
+  <div id="offlineIndicator">⚠️ You are offline — some features may be limited</div>
+
+  <!-- PWA Install Banner -->
+  <div id="pwaInstallBanner">
+    <div class="flex items-center gap-3">
+      <img src="https://i.ibb.co/VY0yR03N/file-00000000503c724692cbd3d68fec0056.png" alt="Meon" class="w-10 h-10 rounded-xl shadow" style="object-fit:cover;">
+      <div>
+        <div class="font-bold text-sm">Meon Directory</div>
+        <div class="text-xs text-purple-200">Install for quick access</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="dismiss-btn" id="pwaDismissBtn">Not now</button>
+      <button class="install-btn" id="pwaInstallBtn">📲 Install App</button>
+    </div>
+  </div>
+
+  <div id="app" class="min-h-screen flex flex-col">
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-800">
+      <div class="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="meon-logo-bg px-4 py-2 flex flex-col items-start leading-tight">
+            <span class="text-white font-extrabold text-2xl tracking-wide">meon</span>
+            <span class="text-[10px] font-medium text-purple-200 tracking-wider uppercase">INTELLIGENCE·INNOVATION·INSPIRATION</span>
+          </div>
+          <span class="font-bold text-xl tracking-tight hidden sm:inline-block">Meon Directory</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="headerInstallBtn" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition hidden" title="Install App">
+            <i data-lucide="download" class="w-5 h-5"></i>
+          </button>
+          <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
+            <i data-lucide="sun" class="w-5 h-5 hidden dark:inline"></i>
+          </button>
+          <div id="authSection" class="flex items-center gap-2"></div>
         </div>
       </div>
-      <div class="flex items-center gap-3">
-        <button id="themeToggle" class="p-2 rounded-full hover:bg-white/10"><i data-lucide="moon" class="w-5 h-5 text-white"></i></button>
-        <div id="authSection" class="flex items-center gap-2"></div>
+      <div class="container mx-auto px-4">
+        <div class="flex gap-6 overflow-x-auto pb-2 scrollbar-hide">
+          <button data-nav="home" class="nav-btn font-semibold py-2 border-b-2 border-purple-600 text-purple-600">Home</button>
+          <button data-nav="dashboard" class="nav-btn font-semibold py-2 border-b-2 border-transparent hover:text-gray-700">My Dashboard</button>
+          <button data-nav="att" class="nav-btn font-semibold py-2 border-b-2 border-transparent hover:text-gray-700">⚡ ATT</button>
+          <button data-nav="admin" id="adminNavBtn" class="nav-btn hidden font-semibold py-2 border-b-2 border-transparent">Admin Panel</button>
+          <button data-nav="developer" id="devNavBtn" class="nav-btn hidden font-semibold py-2 border-b-2 border-transparent">Developer Hub</button>
+        </div>
       </div>
-    </div>
-    <div class="container mx-auto px-5">
-      <div class="flex gap-6 overflow-x-auto pb-2">
-        <button data-nav="home" class="nav-btn font-semibold py-2.5 text-sm border-b-2 border-purple-500 text-purple-300">🏠 Home</button>
-        <button data-nav="dashboard" class="nav-btn font-semibold py-2.5 text-sm border-b-2 border-transparent">📊 My Dashboard</button>
-        <button data-nav="admin" id="adminNavBtn" class="nav-btn hidden font-semibold py-2.5 text-sm">⚙️ Admin</button>
-        <button data-nav="developer" id="devNavBtn" class="nav-btn hidden font-semibold py-2.5 text-sm">🛠️ Dev Hub</button>
-      </div>
-    </div>
-  </header>
+    </header>
 
-  <main id="mainContent" class="flex-1 container mx-auto px-5 py-8"></main>
-  <div id="toastContainer"></div>
-</div>
-
-<!-- M-Pesa Modal -->
-<div id="mpesaModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden modal-transition">
-  <div class="bg-[#0a0f1f]/90 backdrop-blur-xl rounded-3xl p-6 w-full max-w-md border border-purple-500/40">
-    <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-300 to-indigo-300 bg-clip-text text-transparent">Pay with M-Pesa</h2>
-    <p id="mpesaAppName" class="text-gray-300 mb-4"></p>
-    <div class="mb-4"><label class="text-sm text-purple-200">Phone Number</label><input type="tel" id="mpesaPhone" placeholder="0712345678" class="w-full p-3 rounded-xl bg-white/10 border border-purple-500/30 text-white"></div>
-    <div class="mb-4"><label class="text-sm text-purple-200">Amount (KES)</label><input type="number" id="mpesaAmount" readonly class="w-full p-3 rounded-xl bg-white/5 border border-purple-500/30 text-gray-300"></div>
-    <div class="flex gap-3"><button id="mpesaConfirmBtn" class="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 py-3 rounded-xl font-bold">Pay Now</button><button id="mpesaCancelBtn" class="flex-1 bg-white/10 border border-white/20 py-3 rounded-xl">Cancel</button></div>
+    <main id="mainContent" class="flex-1 container mx-auto px-4 py-8"></main>
+    <div id="toastContainer"></div>
   </div>
-</div>
 
-<script>
-  // ==================== ACTUAL MEON APPS (15 apps) - FULLY PRESERVED ====================
-  const logoMapping = {
-    "maji-gas": "https://i.ibb.co/sJwP77mq/file-000000002a7c724698774712139656f9.png",
-    "deep-focus": "https://i.ibb.co/204QYyVF/file-00000000c6707243af95f3105457c8b5.png",
-    "data-vision": "https://i.ibb.co/NfCgDtT/file-00000000b57072438b98c6777ee7804e.png",
-    "insight": "https://i.ibb.co/FR12Cbh/file-0000000003947246bfbd3e5ce474edd4.png",
-    "rider-app": "https://i.ibb.co/Myk5kQFw/file-00000000888871f482a587c6a8d8847e.png",
-    "guard-ai": "https://i.ibb.co/GQWZnykb/file-00000000379c71f4a01216ae10901877.png",
-    "clients-hub": "https://i.ibb.co/ynD8T6th/file-00000000225471f4a1e44c664b9fd555.png",
-    "cv-maker": "https://i.ibb.co/cSvLqcLX/file-00000000d5e071f4ba22a75f0817c803.png",
-    "smart-duka": "https://i.ibb.co/nMBpS9WF/file-00000000826c71f48191fe3abb47a9d3.png",
-    "agriculture": "https://i.ibb.co/xqM1JCWG/file-000000004a8071f480fdac11e406f891.png",
-    "luminor-studio": "https://i.ibb.co/3959zVpj/file-000000008d8c71f49373b77a647572d6.png",
-    "matatu-booking": "https://i.ibb.co/392pGZq9/file-0000000093b871f4b17cbccefe4d7bc7.png",
-    "home-search": "https://i.ibb.co/N6jb2762/file-000000004c4871f49ca1cb9d0d2c1de4.png",
-    "school-360": "https://i.ibb.co/rK4xNYFs/file-000000001ee871f4b8169a28703091b7.png",
-    "kanisa-launcher": "https://i.ibb.co/7NrfmcHn/file-0000000081ac72468a2293c64472a4fc.png"
-  };
-  const screenshotUrls = [
-    "https://i.ibb.co/JPVGw2p/Screenshot-20260611-024707-Chrome.jpg","https://i.ibb.co/8D8qyBGg/Screenshot-20260611-024637-Chrome.jpg","https://i.ibb.co/4RBfvvjm/Screenshot-20260611-024610-Chrome.jpg","https://i.ibb.co/4g42CZRx/Screenshot-20260611-024506-Chrome.jpg","https://i.ibb.co/cSpb60gC/Screenshot-20260611-024412-Chrome.jpg","https://i.ibb.co/cXsqXjsx/Screenshot-20260611-024344-Chrome.jpg","https://i.ibb.co/FLFnBh7g/Screenshot-20260611-024154-Chrome.jpg","https://i.ibb.co/XxkBRrJ9/Screenshot-20260611-024111-Chrome.jpg","https://i.ibb.co/rWr1ZWW/Screenshot-20260611-024047-Chrome.jpg","https://i.ibb.co/B5wFG9Yh/Screenshot-20260611-023951-Chrome.jpg","https://i.ibb.co/RkcNfHh6/Screenshot-20260611-023843-Chrome.jpg","https://i.ibb.co/vF5TLKP/Screenshot-20260611-023556-Chrome.jpg","https://i.ibb.co/R4TPbxsB/Screenshot-20260611-023537-Chrome.jpg","https://i.ibb.co/PGT1M64C/Screenshot-20260611-023518-Chrome.jpg"
-  ];
+  <script>
+    // ============================================================
+    // PWA: Generate Manifest as Blob URL
+    // ============================================================
+    (function setupPwaManifest() {
+      const iconUrl = 'https://i.ibb.co/VY0yR03N/file-00000000503c724692cbd3d68fec0056.png';
+      const manifest = {
+        name: 'Meon Directory',
+        short_name: 'Meon',
+        description: 'Meon App Directory – Launch web apps instantly',
+        start_url: location.href.split('?')[0],
+        display: 'standalone',
+        orientation: 'any',
+        background_color: '#0f172a',
+        theme_color: '#0f172a',
+        categories: ['productivity', 'utilities', 'developer tools'],
+        icons: [
+          { src: iconUrl, sizes: '72x72', type: 'image/png' },
+          { src: iconUrl, sizes: '96x96', type: 'image/png' },
+          { src: iconUrl, sizes: '128x128', type: 'image/png' },
+          { src: iconUrl, sizes: '144x144', type: 'image/png' },
+          { src: iconUrl, sizes: '152x152', type: 'image/png' },
+          { src: iconUrl, sizes: '180x180', type: 'image/png' },
+          { src: iconUrl, sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
+          { src: iconUrl, sizes: '384x384', type: 'image/png' },
+          { src: iconUrl, sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
+        ],
+        shortcuts: [
+          { name: 'Explore Apps', url: '/?nav=home', description: 'Browse all web apps' },
+          { name: 'Favorites', url: '/?nav=dashboard', description: 'Your favorite apps' }
+        ],
+        scope: '/'
+      };
 
-  const appList = [
-    { id: "maji-gas", name: "Maji Gas Delivery", shortDesc: "Cooking gas & water delivery on demand", category: "Utilities", price: 0, isFree: true, rating: 4.6, ratingCount: 234, downloads: 12540, version: "2.1.0", features: ["Real-time tracking", "Scheduled deliveries"], description: "Fast, reliable LPG and water delivery." },
-    { id: "deep-focus", name: "Deep Focus", shortDesc: "Pomodoro timer & distraction blocker", category: "Productivity", price: 4.99, isFree: false, rating: 4.8, ratingCount: 1890, downloads: 45200, version: "3.0.2", features: ["Pomodoro timer", "Website blocker"], description: "Boost productivity with focus tools." },
-    { id: "guard-ai", name: "Guard AI", shortDesc: "AI cybersecurity protection", category: "AI Tools", price: 9.99, isFree: false, rating: 4.9, ratingCount: 523, downloads: 18730, version: "1.5.0", features: ["Threat detection", "VPN"], description: "Next-gen AI shield." },
-    { id: "data-vision", name: "Data Vision", shortDesc: "AI business intelligence", category: "Analytics", price: 19.99, isFree: false, rating: 4.7, ratingCount: 312, downloads: 9800, version: "4.2.1", features: ["Dashboards", "AI predictions"], description: "Turn data into insights." },
-    { id: "rider-app", name: "Rider App", shortDesc: "Logistics & delivery platform", category: "Transport", price: 0, isFree: true, rating: 4.5, ratingCount: 892, downloads: 67300, version: "2.3.0", features: ["Route optimization", "Live tracking"], description: "Complete solution for riders." },
-    { id: "insight", name: "Insight", shortDesc: "Customer analytics platform", category: "Analytics", price: 29.99, isFree: false, rating: 4.6, ratingCount: 178, downloads: 5400, version: "1.8.0", features: ["Segmentation", "Predictive models"], description: "Deep customer intelligence." },
-    { id: "clients-hub", name: "Clients Hub", shortDesc: "CRM for modern business", category: "CRM", price: 14.99, isFree: false, rating: 4.4, ratingCount: 421, downloads: 12400, version: "3.1.0", features: ["Contact mgmt", "Deal tracking"], description: "Grow relationships." },
-    { id: "smart-duka", name: "Smart Duka", shortDesc: "Retail management system", category: "Business", price: 9.99, isFree: false, rating: 4.7, ratingCount: 563, downloads: 28900, version: "2.0.0", features: ["Inventory", "POS"], description: "Modern POS for small shops." },
-    { id: "agriculture", name: "Agriculture", shortDesc: "Smart farming solution", category: "Agriculture", price: 0, isFree: true, rating: 4.3, ratingCount: 197, downloads: 8100, version: "1.4.0", features: ["Crop monitor", "Weather"], description: "Empower farmers." },
-    { id: "luminor-studio", name: "Luminor Studio", shortDesc: "AI photo & video editing", category: "Design", price: 12.99, isFree: false, rating: 4.9, ratingCount: 734, downloads: 34200, version: "5.0.1", features: ["AI enhancement", "4K export"], description: "Creative suite for pros." },
-    { id: "cv-maker", name: "CV Maker", shortDesc: "Professional resume builder", category: "Productivity", price: 0, isFree: true, rating: 4.6, ratingCount: 1280, downloads: 98700, version: "1.9.0", features: ["Templates", "PDF export"], description: "Create winning resumes." },
-    { id: "matatu-booking", name: "Matatu Booking", shortDesc: "Public transport booking", category: "Transport", price: 0, isFree: true, rating: 4.5, ratingCount: 567, downloads: 45300, version: "2.2.0", features: ["Real-time tracking", "Digital tickets"], description: "Book matatus." },
-    { id: "home-search", name: "Home Search", shortDesc: "Real estate marketplace", category: "Real Estate", price: 0, isFree: true, rating: 4.4, ratingCount: 398, downloads: 22500, version: "3.3.0", features: ["Property search", "Virtual tours"], description: "Find dream home." },
-    { id: "school-360", name: "School 360", shortDesc: "School management system", category: "Education", price: 49.99, isFree: false, rating: 4.8, ratingCount: 245, downloads: 6700, version: "4.1.0", features: ["Student records", "Fee mgmt"], description: "Complete school ERP." },
-    { id: "kanisa-launcher", name: "Kanisa Launcher", shortDesc: "Church management", category: "Religion", price: 0, isFree: true, rating: 4.7, ratingCount: 156, downloads: 5300, version: "1.2.0", features: ["Events", "Giving platform"], description: "Digital tools for ministry." }
-  ];
-  appList.forEach((app, idx) => { app.logoUrl = logoMapping[app.id]; app.screenshots = [screenshotUrls[idx % screenshotUrls.length]]; });
-  function fallbackLogo(appId, size=60){ return `https://ui-avatars.com/api/?background=8b5cf6&color=fff&name=${appId.slice(0,2)}&size=${size}&rounded=true`; }
-  function appLogoImg(app, sizeClass="w-14 h-14", px=56){ return `<img src="${app.logoUrl || fallbackLogo(app.id, px)}" class="${sizeClass} rounded-2xl shadow-lg object-cover border border-purple-500/30" onerror="this.src='${fallbackLogo(app.id, px)}'">`; }
+      const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+      const manifestUrl = URL.createObjectURL(manifestBlob);
 
-  // --- state (full original workflow) ---
-  let currentUser = JSON.parse(localStorage.getItem("meonUser")) || null;
-  let activeView = "home", selectedApp = null, searchQuery = "", activeCategoryFilter = "";
-  let userFavorites = JSON.parse(localStorage.getItem("meonFavorites")) || [];
-  let userDownloads = JSON.parse(localStorage.getItem("meonDownloads")) || [];
-  let reviewsData = JSON.parse(localStorage.getItem("meonReviews")) || {};
+      const linkEl = document.createElement('link');
+      linkEl.rel = 'manifest';
+      linkEl.href = manifestUrl;
+      document.head.appendChild(linkEl);
 
-  function saveState() { if(currentUser) localStorage.setItem("meonUser", JSON.stringify(currentUser)); else localStorage.removeItem("meonUser"); localStorage.setItem("meonFavorites", JSON.stringify(userFavorites)); localStorage.setItem("meonDownloads", JSON.stringify(userDownloads)); localStorage.setItem("meonReviews", JSON.stringify(reviewsData)); }
-  function showToast(msg, type="success") { const cont=document.getElementById("toastContainer"); const toast=document.createElement("div"); toast.className=`toast flex items-center gap-2`; toast.innerHTML=`<i data-lucide="${type==='success'?'check-circle':'alert-circle'}" class="w-5 h-5 text-purple-400"></i><span>${msg}</span>`; cont.appendChild(toast); if(window.lucide) lucide.createIcons(); setTimeout(()=>toast.remove(), 3800); }
-  function loginUser(email, role="user"){ currentUser={id:Date.now(),email,name:email.split('@')[0],role}; saveState(); renderNav(); renderCurrentView(); showToast(`Welcome ${currentUser.name} to Meon`, "success");}
-  function logout(){ currentUser=null; userFavorites=[]; userDownloads=[]; saveState(); renderNav(); renderCurrentView(); showToast("Logged out");}
-  function toggleFavorite(appId){ if(!currentUser){ showToast("Sign in to save favorites","error"); return false; } const idx=userFavorites.indexOf(appId); idx===-1? userFavorites.push(appId):userFavorites.splice(idx,1); saveState(); renderCurrentView(); showToast(idx===-1?"Added to favorites":"Removed","success"); return true;}
-  async function initiateMpesaPayment(phone,amount,ref,appName){ return new Promise((resolve)=>{ showToast(`📱 STK push to ${phone} for KES ${amount}. Check your phone.`,"info"); setTimeout(()=>{ showToast(`✅ Payment of KES ${amount} for ${appName} successful!`,"success"); resolve(true); },2500); });}
-  let currentPaymentApp=null;
-  function showMpesaPaymentModal(app){ if(!currentUser){ showToast("Login to purchase","error"); return; } currentPaymentApp=app; document.getElementById("mpesaAppName").innerText=`${app.name} - KES ${app.price}`; document.getElementById("mpesaAmount").value=app.price; document.getElementById("mpesaPhone").value=""; document.getElementById("mpesaModal").classList.remove("hidden");}
-  async function confirmMpesaPayment(){ const phone=document.getElementById("mpesaPhone").value.trim(); if(!phone){ showToast("Enter M-Pesa number","error"); return; } if(!currentPaymentApp) return; document.getElementById("mpesaModal").classList.add("hidden"); const success=await initiateMpesaPayment(phone,currentPaymentApp.price,`MEON_${currentPaymentApp.id}`,currentPaymentApp.name); if(success){ if(!userDownloads.find(d=>d.appId===currentPaymentApp.id)){ userDownloads.push({appId:currentPaymentApp.id, downloadedAt:new Date().toISOString(), version:currentPaymentApp.version}); currentPaymentApp.downloads+=1; saveState(); showToast(`${currentPaymentApp.name} added to library`,"success"); renderCurrentView(); } } currentPaymentApp=null;}
-  function downloadApp(app){ if(!currentUser){ showToast("Please login","error"); return; } if(!app.isFree){ showMpesaPaymentModal(app); return; } if(!userDownloads.find(d=>d.appId===app.id)){ userDownloads.push({appId:app.id, downloadedAt:new Date().toISOString(), version:app.version}); app.downloads+=1; saveState(); showToast(`Downloaded ${app.name}`,"success"); renderCurrentView(); } else showToast("Already installed","info");}
-  function submitReview(appId, rating, content){ if(!currentUser) return false; if(!reviewsData[appId]) reviewsData[appId]=[]; reviewsData[appId].push({userId:currentUser.id, user:currentUser.name, rating, content, date:new Date().toISOString()}); const allRatings=reviewsData[appId].map(r=>r.rating); const avg=allRatings.reduce((a,b)=>a+b,0)/allRatings.length; const appObj=appList.find(a=>a.id===appId); if(appObj){ appObj.rating=parseFloat(avg.toFixed(1)); appObj.ratingCount=allRatings.length; } saveState(); showToast("Review submitted","success"); renderCurrentView(); return true;}
-  function getFilteredApps(){ let filtered=[...appList]; if(searchQuery){ const q=searchQuery.toLowerCase(); filtered=filtered.filter(app=>app.name.toLowerCase().includes(q)||app.shortDesc.toLowerCase().includes(q)||app.category.toLowerCase().includes(q)); } if(activeCategoryFilter) filtered=filtered.filter(app=>app.category.toLowerCase()===activeCategoryFilter.toLowerCase()); return filtered; }
+      window._pwaManifestUrl = manifestUrl;
+      window._pwaManifest = manifest;
+    })();
 
-  // Updated Hero Section with new background image (Instagram screenshot)
-  function renderHome() {
-    const filtered = getFilteredApps();
-    const featured = ["guard-ai","deep-focus","luminor-studio"].map(id=>appList.find(a=>a.id===id));
-    const trending = [...filtered].sort((a,b)=>b.downloads-a.downloads).slice(0,6);
-    const categories = ["All","AI Solutions","Business","Education","Agriculture","Transport","Creativity","Productivity","Analytics"];
-    const catMap = {"AI Solutions":"ai tools","Business":"business","Education":"education","Agriculture":"agriculture","Transport":"transport","Creativity":"design","Productivity":"productivity","Analytics":"analytics"};
-    return `
-      <div class="space-y-10">
-        <!-- Hero Section: background image = your new Instagram screenshot -->
-        <div class="relative overflow-hidden rounded-3xl border border-purple-500/40 hero-bg-image">
-          <div class="hero-overlay p-8 md:p-10 flex flex-wrap items-center gap-8">
-            <div class="hero-glow top-0 -right-40"></div>
-            <div class="hero-glow bottom-0 left-20 opacity-40"></div>
-            <div class="flex-1 min-w-[280px] z-10">
-              <div class="text-purple-300 text-sm font-mono tracking-wider">MEON MARKETPLACE</div>
-              <h1 class="text-5xl md:text-7xl font-black mt-2 tracking-tight">LogicDriven. <span class="gradient-text">FutureProven.</span></h1>
-              <p class="text-gray-300 max-w-xl mt-3 text-lg">Building intelligent solutions for a smarter tomorrow. 15+ applications, AI-powered.</p>
-              <div class="flex gap-4 mt-6">
-                <button id="exploreBtn" class="btn-primary px-6 py-3 rounded-xl font-bold shadow-lg">Explore All Apps →</button>
-                <button id="devHeroBtn" class="border border-purple-400/40 px-6 py-3 rounded-xl backdrop-blur-sm hover:bg-white/10">Become a Developer</button>
-              </div>
-            </div>
-            <!-- Empty right side to keep balance; background image visible through overlay -->
-            <div class="flex-1 flex justify-center z-10"></div>
-            <!-- Stats summary -->
-            <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 z-10">
-              <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-bold">15+</div><div class="text-xs text-purple-300">Apps</div></div>
-              <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-bold">500K+</div><div class="text-xs text-purple-300">Downloads</div></div>
-              <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-bold">4.8★</div><div class="text-xs text-purple-300">Rating</div></div>
-              <div class="stats-glow rounded-2xl p-4 text-center"><div class="text-2xl font-bold">24/7</div><div class="text-xs text-purple-300">Innovation</div></div>
+    // ============================================================
+    // PWA: Service Worker Registration
+    // ============================================================
+    (function registerServiceWorker() {
+      if (!('serviceWorker' in navigator)) {
+        console.log('[PWA] Service workers not supported');
+        return;
+      }
+
+      const CACHE_NAME = 'meon-directory-v2';
+      const urlsToCache = [
+        location.href.split('?')[0],
+        'https://cdn.tailwindcss.com',
+        'https://unpkg.com/lucide@latest',
+        'https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap',
+        'https://i.ibb.co/VY0yR03N/file-00000000503c724692cbd3d68fec0056.png',
+        'https://i.ibb.co/4gsK0C8V/431586a4d03a5dc68632c2c349f7b64d.jpg',
+        'https://i.ibb.co/cSLDqztC/4f72acf66a08d9dd83601fc69a6dd8c3.jpg',
+        'https://i.ibb.co/n8LTRbLg/16dbce0c640116ad6a21751b15d0396e.jpg',
+        'https://i.ibb.co/bMQhQB0P/fd8980ac75d8617208bdb4e65b549f04.jpg',
+        'https://i.ibb.co/4ZKz5tDD/669db1c2e2ee4ac1f1328ca814ccc930.jpg',
+        'https://i.ibb.co/vvBFj1MW/63c08e3fb6ae3a25f24a4016bd106725.jpg'
+      ];
+
+      const swCode = `
+          const CACHE_NAME = '${CACHE_NAME}';
+          const urlsToCache = ${JSON.stringify(urlsToCache)};
+
+          self.addEventListener('install', (event) => {
+            console.log('[SW] Installing...');
+            event.waitUntil(
+              caches.open(CACHE_NAME).then((cache) => {
+                console.log('[SW] Caching app shell');
+                return cache.addAll(urlsToCache).catch((err) => {
+                  console.warn('[SW] Some assets failed to cache:', err);
+                });
+              }).then(() => {
+                return self.skipWaiting();
+              })
+            );
+          });
+
+          self.addEventListener('activate', (event) => {
+            console.log('[SW] Activating...');
+            event.waitUntil(
+              caches.keys().then((cacheNames) => {
+                return Promise.all(
+                  cacheNames.map((cache) => {
+                    if (cache !== CACHE_NAME) {
+                      console.log('[SW] Deleting old cache:', cache);
+                      return caches.delete(cache);
+                    }
+                  })
+                );
+              }).then(() => {
+                return self.clients.claim();
+              })
+            );
+          });
+
+          self.addEventListener('fetch', (event) => {
+            if (event.request.method !== 'GET') return;
+            if (event.request.url.startsWith('chrome-extension://')) return;
+
+            event.respondWith(
+              fetch(event.request)
+                .then((networkResponse) => {
+                  if (networkResponse && networkResponse.status === 200) {
+                    const responseClone = networkResponse.clone();
+                    caches.open(CACHE_NAME).then((cache) => {
+                      try {
+                        cache.put(event.request, responseClone);
+                      } catch (e) {}
+                    });
+                  }
+                  return networkResponse;
+                })
+                .catch(() => {
+                  return caches.match(event.request).then((cachedResponse) => {
+                    if (cachedResponse) return cachedResponse;
+                    if (event.request.mode === 'navigate') {
+                      return caches.match(urlsToCache[0]);
+                    }
+                    return new Response('Offline – resource not cached', {
+                      status: 503,
+                      statusText: 'Service Unavailable'
+                    });
+                  });
+                })
+            );
+          });
+
+          self.addEventListener('push', (event) => {
+            const options = {
+              body: event.data ? event.data.text() : 'New update from Meon Directory',
+              icon: 'https://i.ibb.co/VY0yR03N/file-00000000503c724692cbd3d68fec0056.png',
+              badge: 'https://i.ibb.co/VY0yR03N/file-00000000503c724692cbd3d68fec0056.png',
+              vibrate: [200, 100, 200],
+              data: { url: self.location.origin }
+            };
+            event.waitUntil(
+              self.registration.showNotification('Meon Directory', options)
+            );
+          });
+
+          self.addEventListener('notificationclick', (event) => {
+            event.notification.close();
+            event.waitUntil(
+              clients.openWindow(event.notification.data.url || self.location.origin)
+            );
+          });
+        `;
+
+      const swBlob = new Blob([swCode], { type: 'application/javascript' });
+      const swUrl = URL.createObjectURL(swBlob);
+
+      navigator.serviceWorker.register(swUrl, { scope: '/' })
+        .then((registration) => {
+          console.log('[PWA] Service Worker registered with scope:', registration.scope);
+          window._pwaSwRegistration = registration;
+          window._pwaSwUrl = swUrl;
+
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            if (newWorker) {
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  console.log('[PWA] New content available – refresh to update');
+                }
+              });
+            }
+          });
+        })
+        .catch((err) => {
+          console.warn('[PWA] Service Worker registration failed:', err);
+        });
+    })();
+
+    // ============================================================
+    // PWA: Install Prompt Handling
+    // ============================================================
+    let deferredPrompt = null;
+    let pwaBannerDismissed = false;
+    let pwaBannerDismissTime = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      console.log('[PWA] Install prompt available');
+
+      const dismissTime = localStorage.getItem('meonPwaBannerDismissTime');
+      if (dismissTime) {
+        const hoursSince = (Date.now() - parseInt(dismissTime)) / (1000 * 60 * 60);
+        if (hoursSince < 48) {
+          pwaBannerDismissed = true;
+        } else {
+          localStorage.removeItem('meonPwaBannerDismissTime');
+          pwaBannerDismissed = false;
+        }
+      }
+
+      if (!pwaBannerDismissed) {
+        setTimeout(() => {
+          document.getElementById('pwaInstallBanner')?.classList.add('show');
+        }, 1500);
+      }
+
+      document.getElementById('headerInstallBtn')?.classList.remove('hidden');
+    });
+
+    window.addEventListener('appinstalled', () => {
+      console.log('[PWA] App installed successfully!');
+      deferredPrompt = null;
+      document.getElementById('pwaInstallBanner')?.classList.remove('show');
+      document.getElementById('headerInstallBtn')?.classList.add('hidden');
+      showToast('🎉 Meon installed! Launch from your home screen.', 'success');
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const installBannerBtn = document.getElementById('pwaInstallBtn');
+      const dismissBannerBtn = document.getElementById('pwaDismissBtn');
+      const headerInstallBtn = document.getElementById('headerInstallBtn');
+
+      function triggerInstall() {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('[PWA] User accepted install');
+            } else {
+              console.log('[PWA] User dismissed install');
+            }
+            deferredPrompt = null;
+            document.getElementById('pwaInstallBanner')?.classList.remove('show');
+            if (headerInstallBtn) headerInstallBtn.classList.add('hidden');
+          });
+        } else {
+          showToast('Install option not available right now. Try refreshing.', 'info');
+        }
+      }
+
+      if (installBannerBtn) {
+        installBannerBtn.addEventListener('click', triggerInstall);
+      }
+
+      if (dismissBannerBtn) {
+        dismissBannerBtn.addEventListener('click', () => {
+          document.getElementById('pwaInstallBanner')?.classList.remove('show');
+          pwaBannerDismissed = true;
+          localStorage.setItem('meonPwaBannerDismissTime', Date.now().toString());
+          if (headerInstallBtn && deferredPrompt) {
+            headerInstallBtn.classList.remove('hidden');
+          }
+          showToast('You can install later from the header 📲', 'info');
+        });
+      }
+
+      if (headerInstallBtn) {
+        headerInstallBtn.addEventListener('click', triggerInstall);
+      }
+    });
+
+    // ============================================================
+    // PWA: Online/Offline Status
+    // ============================================================
+    function updateOnlineStatus() {
+      const indicator = document.getElementById('offlineIndicator');
+      if (!navigator.onLine) {
+        indicator?.classList.add('show');
+      } else {
+        indicator?.classList.remove('show');
+      }
+    }
+
+    window.addEventListener('online', () => {
+      updateOnlineStatus();
+      showToast('🌐 Back online!', 'success');
+    });
+    window.addEventListener('offline', () => {
+      updateOnlineStatus();
+      showToast('⚠️ You are offline. Cached apps still work.', 'info');
+    });
+
+    if (!navigator.onLine) {
+      setTimeout(() => updateOnlineStatus(), 500);
+    }
+
+    // ============================================================
+    // LOGO MAPPING (all apps)
+    // ============================================================
+    const logoMapping = {
+      "maji-gas": "https://i.ibb.co/sJwP77mq/file-000000002a7c724698774712139656f9.png",
+      "deep-focus": "https://i.ibb.co/204QYyVF/file-00000000c6707243af95f3105457c8b5.png",
+      "data-vision": "https://i.ibb.co/NfCgDtT/file-00000000b57072438b98c6777ee7804e.png",
+      "insight": "https://i.ibb.co/FR12Cbh/file-0000000003947246bfbd3e5ce474edd4.png",
+      "rider-app": "https://i.ibb.co/Myk5kQFw/file-00000000888871f482a587c6a8d8847e.png",
+      "guard-ai": "https://i.ibb.co/GQWZnykb/file-00000000379c71f4a01216ae10901877.png",
+      "clients-hub": "https://i.ibb.co/Wp3tKrJp/IMG-20260611-WA0007.jpg",
+      "cv-maker": "https://i.ibb.co/cSvLqcLX/file-00000000d5e071f4ba22a75f0817c803.png",
+      "smart-duka": "https://i.ibb.co/nMBpS9WF/file-00000000826c71f48191fe3abb47a9d3.png",
+      "agriculture": "https://i.ibb.co/xqM1JCWG/file-000000004a8071f480fdac11e406f891.png",
+      "luminor-studio": "https://i.ibb.co/3959zVpj/file-000000008d8c71f49373b77a647572d6.png",
+      "matatu-booking": "https://i.ibb.co/392pGZq9/file-0000000093b871f4b17cbccefe4d7bc7.png",
+      "home-search": "https://i.ibb.co/N6jb2762/file-000000004c4871f49ca1cb9d0d2c1de4.png",
+      "school-360": "https://i.ibb.co/rK4xNYFs/file-000000001ee871f4b8169a28703091b7.png",
+      "kanisa-launcher": "https://i.ibb.co/7NrfmcHn/file-0000000081ac72468a2293c64472a4fc.png",
+      "spark-connect": "https://i.ibb.co/ST5wWMn/file-00000000b6f871f4879ce38381ddcffe.png",
+      "meal-planner-pro": "https://i.ibb.co/gLXWj0Tn/c8a71cc8d8bc8e067883b4c4f4d184b0.jpg",
+      "finance-eight": "https://i.ibb.co/B5VkzwB7/1782584384508.png",
+      "sacco-sable": "https://i.ibb.co/Psfr94nb/1782588375093.png",
+      "cbo-three": "https://i.ibb.co/BH83mCK9/1782590354801.png",
+      "gym-nine": "https://i.ibb.co/GD2WMcJ/1782594191864.png"
+    };
+
+    // Screenshots array
+    const screenshotUrls = [
+      "https://i.ibb.co/JPVGw2p/Screenshot-20260611-024707-Chrome.jpg",
+      "https://i.ibb.co/8D8qyBGg/Screenshot-20260611-024637-Chrome.jpg",
+      "https://i.ibb.co/4RBfvvjm/Screenshot-20260611-024610-Chrome.jpg",
+      "https://i.ibb.co/4g42CZRx/Screenshot-20260611-024506-Chrome.jpg",
+      "https://i.ibb.co/cSpb60gC/Screenshot-20260611-024412-Chrome.jpg",
+      "https://i.ibb.co/cXsqXjsx/Screenshot-20260611-024344-Chrome.jpg",
+      "https://i.ibb.co/Wp3tKrJp/IMG-20260611-WA0007.jpg",
+      "https://i.ibb.co/XxkBRrJ9/Screenshot-20260611-024111-Chrome.jpg",
+      "https://i.ibb.co/rWr1ZWW/Screenshot-20260611-024047-Chrome.jpg",
+      "https://i.ibb.co/B5wFG9Yh/Screenshot-20260611-023951-Chrome.jpg",
+      "https://i.ibb.co/RkcNfHh6/Screenshot-20260611-023843-Chrome.jpg",
+      "https://i.ibb.co/vF5TLKP/Screenshot-20260611-023556-Chrome.jpg",
+      "https://i.ibb.co/R4TPbxsB/Screenshot-20260611-023537-Chrome.jpg",
+      "https://i.ibb.co/PGT1M64C/Screenshot-20260611-023518-Chrome.jpg"
+    ];
+
+    // ---------- APP DATA ----------
+    const appList = [{
+      id: "maji-gas",
+      name: "Maji Gas Delivery",
+      slug: "maji-gas-delivery",
+      shortDesc: "Cooking gas & water delivery on demand",
+      category: "Utilities",
+      rating: 4.6,
+      ratingCount: 234,
+      version: "2.1.0",
+      features: ["Real-time tracking", "Scheduled deliveries", "Multiple payments", "Loyalty rewards"],
+      description: "Fast, reliable LPG and water delivery service with live order tracking.",
+      externalUrl: "https://maji-gasdelivery.vercel.app/"
+    }, {
+      id: "deep-focus",
+      name: "Deep Focus",
+      slug: "deep-focus",
+      shortDesc: "Pomodoro timer & distraction blocker",
+      category: "Productivity",
+      rating: 4.8,
+      ratingCount: 1890,
+      version: "3.0.2",
+      features: ["Pomodoro timer", "Website blocker", "Focus music", "Analytics"],
+      description: "Boost productivity with science-backed focus tools.",
+      externalUrl: "https://deepfocus-roan.vercel.app/"
+    }, {
+      id: "guard-ai",
+      name: "Guard AI",
+      slug: "guard-ai",
+      shortDesc: "AI cybersecurity protection",
+      category: "AI Tools",
+      rating: 4.9,
+      ratingCount: 523,
+      version: "1.5.0",
+      features: ["Threat detection", "VPN", "Password manager", "Dark web monitoring"],
+      description: "Next-gen AI shield for digital security.",
+      externalUrl: "https://guard-ai-six.vercel.app/"
+    }, {
+      id: "data-vision",
+      name: "Data Vision",
+      slug: "data-vision",
+      shortDesc: "AI business intelligence",
+      category: "Analytics",
+      rating: 4.7,
+      ratingCount: 312,
+      version: "4.2.1",
+      features: ["Dashboards", "AI predictions", "Data connectors", "Reports"],
+      description: "Turn data into insights with AI.",
+      externalUrl: "https://datavision-beta.vercel.app/"
+    }, {
+      id: "rider-app",
+      name: "Rider App",
+      slug: "rider-app",
+      shortDesc: "Logistics & delivery platform",
+      category: "Transport",
+      rating: 4.5,
+      ratingCount: 892,
+      version: "2.3.0",
+      features: ["Route optimization", "Live tracking", "Earnings dashboard", "Proof of delivery"],
+      description: "Complete solution for riders and fleets.",
+      externalUrl: "https://rider-app-psi.vercel.app/"
+    }, {
+      id: "insight",
+      name: "Insight",
+      slug: "insight",
+      shortDesc: "Customer analytics platform",
+      category: "Analytics",
+      rating: 4.6,
+      ratingCount: 178,
+      version: "1.8.0",
+      features: ["Segmentation", "Behavioral analytics", "Predictive models", "APIs"],
+      description: "Deep customer behavior intelligence.",
+      externalUrl: "https://insight-eta-lime.vercel.app/"
+    }, {
+      id: "clients-hub",
+      name: "Clients Hub",
+      slug: "clients-hub",
+      shortDesc: "CRM for modern business",
+      category: "CRM",
+      rating: 4.4,
+      ratingCount: 421,
+      version: "3.1.0",
+      features: ["Contact mgmt", "Deal tracking", "Email sync", "Forecasting"],
+      description: "Grow relationships with powerful CRM.",
+      externalUrl: "https://clients-hub.vercel.app/"
+    }, {
+      id: "smart-duka",
+      name: "Smart Duka",
+      slug: "smart-duka",
+      shortDesc: "Retail management system",
+      category: "Business",
+      rating: 4.7,
+      ratingCount: 563,
+      version: "2.0.0",
+      features: ["Inventory", "POS", "Sales reports", "Supplier mgmt"],
+      description: "Modern POS for small shops.",
+      externalUrl: "https://smartduka-rho.vercel.app/"
+    }, {
+      id: "agriculture",
+      name: "Agriculture",
+      slug: "agriculture",
+      shortDesc: "Smart farming solution",
+      category: "Agriculture",
+      rating: 4.3,
+      ratingCount: 197,
+      version: "1.4.0",
+      features: ["Crop monitor", "Weather", "Market prices", "Expert advice"],
+      description: "Empower farmers with digital tools.",
+      externalUrl: "https://agriculture-puce-eta.vercel.app/"
+    }, {
+      id: "luminor-studio",
+      name: "Luminor Studio",
+      slug: "luminor-studio",
+      shortDesc: "AI photo & video editing",
+      category: "Design",
+      rating: 4.9,
+      ratingCount: 734,
+      version: "5.0.1",
+      features: ["AI enhancement", "Layer editing", "Filters", "4K export"],
+      description: "Creative suite for professionals.",
+      externalUrl: "https://luminor-studio.vercel.app/"
+    }, {
+      id: "cv-maker",
+      name: "CV Maker",
+      slug: "cv-maker",
+      shortDesc: "Professional resume builder",
+      category: "Productivity",
+      rating: 4.6,
+      ratingCount: 1280,
+      version: "1.9.0",
+      features: ["Templates", "PDF export", "LinkedIn import", "Cover letter"],
+      description: "Create job-winning resumes instantly.",
+      externalUrl: "https://cv-maker-five-mu.vercel.app/"
+    }, {
+      id: "matatu-booking",
+      name: "Matatu Booking",
+      slug: "matatu-booking",
+      shortDesc: "Public transport booking",
+      category: "Transport",
+      rating: 4.5,
+      ratingCount: 567,
+      version: "2.2.0",
+      features: ["Real-time tracking", "Digital tickets", "Route planning", "Fare calc"],
+      description: "Book matatus and track in real-time.",
+      externalUrl: "https://matatu-booking.vercel.app/"
+    }, {
+      id: "home-search",
+      name: "Home Search",
+      slug: "home-search",
+      shortDesc: "Real estate marketplace",
+      category: "Real Estate",
+      rating: 4.4,
+      ratingCount: 398,
+      version: "3.3.0",
+      features: ["Property search", "Virtual tours", "Mortgage calc", "Agent contact"],
+      description: "Find dream home or rental.",
+      externalUrl: "https://home-search-j529.vercel.app/"
+    }, {
+      id: "school-360",
+      name: "School 360",
+      slug: "school-360",
+      shortDesc: "School management system",
+      category: "Education",
+      rating: 4.8,
+      ratingCount: 245,
+      version: "4.1.0",
+      features: ["Student records", "Fee mgmt", "Parent portal", "CBC support"],
+      description: "Complete school ERP with CBC.",
+      externalUrl: "https://school-360-one.vercel.app/"
+    }, {
+      id: "kanisa-launcher",
+      name: "Kanisa Launcher",
+      slug: "kanisa-launcher",
+      shortDesc: "Church management & engagement",
+      category: "Religion",
+      rating: 4.7,
+      ratingCount: 156,
+      version: "1.2.0",
+      features: ["Events", "Giving platform", "Member directory", "Live stream"],
+      description: "Digital tools for modern ministry.",
+      externalUrl: "https://kanisa-launcher.vercel.app/"
+    }, {
+      id: "spark-connect",
+      name: "Spark Connect",
+      slug: "spark-connect",
+      shortDesc: "Authentic dating & meaningful connections",
+      category: "Social",
+      rating: 4.8,
+      ratingCount: 342,
+      version: "2.0.0",
+      features: ["Smart matching", "Video calls", "Verified profiles", "Interest-based groups", "Safety tools"],
+      description: "Find genuine relationships with AI-powered matching.",
+      externalUrl: "https://dating-app-six-pi.vercel.app/"
+    }, {
+      id: "meal-planner-pro",
+      name: "Meal Planner PRO",
+      slug: "meal-planner-pro",
+      shortDesc: "AI-powered weekly meal planning & grocery lists",
+      category: "Health & Wellness",
+      rating: 4.7,
+      ratingCount: 312,
+      version: "1.0.0",
+      features: ["7-day meal plans", "AI recommendations", "Grocery lists", "Dietary preferences", "Budget tracking"],
+      description: "Meal Planner PRO designs daily meal plans tailored to your dietary goals, preferences, and budget.",
+      externalUrl: "https://diet-snowy-five.vercel.app/"
+    }, {
+      id: "finance-eight",
+      name: "Finance Eight",
+      slug: "finance-eight",
+      shortDesc: "Smart personal finance & budgeting tool",
+      category: "Finance",
+      rating: 4.6,
+      ratingCount: 198,
+      version: "1.0.0",
+      features: ["Budget tracking", "Expense categorization", "Savings goals", "Financial insights", "Multi-currency support"],
+      description: "Take control of your finances with smart budgeting tools.",
+      externalUrl: "https://finance-eight-fawn.vercel.app/"
+    }, {
+      id: "sacco-sable",
+      name: "Sacco Sable",
+      slug: "sacco-sable",
+      shortDesc: "Digital savings & investment platform",
+      category: "Finance",
+      rating: 4.5,
+      ratingCount: 156,
+      version: "1.0.0",
+      features: ["Savings goals", "Investment tracking", "Dividend management", "Member contributions", "Financial reports"],
+      description: "Sacco Sable helps you manage your savings and investments.",
+      externalUrl: "https://sacco-sable.vercel.app/"
+    }, {
+      id: "cbo-three",
+      name: "CBO Three",
+      slug: "cbo-three",
+      shortDesc: "Community Based Organization management platform",
+      category: "Business",
+      rating: 4.4,
+      ratingCount: 89,
+      version: "1.0.0",
+      features: ["Member management", "Contribution tracking", "Project monitoring", "Financial reporting",
+        "Communication tools"
+      ],
+      description: "CBO Three is a comprehensive management platform for Community Based Organizations.",
+      externalUrl: "https://c-b-o-three.vercel.app/"
+    }, {
+      id: "gym-nine",
+      name: "Gym Nine",
+      slug: "gym-nine",
+      shortDesc: "Fitness tracker & workout planner",
+      category: "Health & Wellness",
+      rating: 4.7,
+      ratingCount: 124,
+      version: "1.0.0",
+      features: ["Workout tracking", "Progress monitoring", "Exercise library", "Goal setting", "Workout plans"],
+      description: "Gym Nine is your ultimate fitness companion.",
+      externalUrl: "https://gym-nine-sepia.vercel.app/"
+    }];
+
+    // Attach logos + screenshots + developer info
+    appList.forEach((app, idx) => {
+      app.logoUrl = logoMapping[app.id];
+      app.developer = { name: "Meon", verified: true };
+      const screenshotIdx = idx % screenshotUrls.length;
+      const mainScreenshot = screenshotUrls[screenshotIdx];
+      app.screenshots = [mainScreenshot, mainScreenshot];
+      app.versions = [{ version: app.version, changelog: "Latest stable release", createdAt: new Date()
+          .toISOString() }];
+      if (!app.ratingCount) app.ratingCount = Math.floor(Math.random() * 800) + 50;
+    });
+
+    // Fallback SVG generator
+    function generateFallbackSVG(appId, size = 80) {
+      const colorMap = {
+        "maji-gas": { primary: "#2563EB", secondary: "#F97316", letter: "M" },
+        "deep-focus": { primary: "#4F46E5", secondary: "#7C3AED", letter: "D" },
+        "guard-ai": { primary: "#3B82F6", secondary: "#94A3B8", letter: "G" },
+        "data-vision": { primary: "#10B981", secondary: "#3B82F6", letter: "D" },
+        "rider-app": { primary: "#EA580C", secondary: "#111827", letter: "R" },
+        "insight": { primary: "#A855F7", secondary: "#06B6D4", letter: "I" },
+        "clients-hub": { primary: "#1E3A8A", secondary: "#3B82F6", letter: "C" },
+        "smart-duka": { primary: "#10B981", secondary: "#F59E0B", letter: "S" },
+        "agriculture": { primary: "#059669", secondary: "#78350F", letter: "A" },
+        "luminor-studio": { primary: "#D97706", secondary: "#111827", letter: "L" },
+        "cv-maker": { primary: "#2563EB", secondary: "#FFFFFF", letter: "C" },
+        "matatu-booking": { primary: "#EAB308", secondary: "#111827", letter: "M" },
+        "home-search": { primary: "#0D9488", secondary: "#3B82F6", letter: "H" },
+        "school-360": { primary: "#2563EB", secondary: "#10B981", letter: "S" },
+        "kanisa-launcher": { primary: "#9333EA", secondary: "#D97706", letter: "K" },
+        "spark-connect": { primary: "#EC4899", secondary: "#F43F5E", letter: "S" },
+        "meal-planner-pro": { primary: "#22C55E", secondary: "#16A34A", letter: "M" },
+        "finance-eight": { primary: "#0D9488", secondary: "#14B8A6", letter: "F" },
+        "sacco-sable": { primary: "#1E40AF", secondary: "#3B82F6", letter: "S" },
+        "cbo-three": { primary: "#0D9488", secondary: "#0F766E", letter: "C" },
+        "gym-nine": { primary: "#DC2626", secondary: "#991B1B", letter: "G" }
+      };
+      const c = colorMap[appId] || { primary: "#0F172A", secondary: "#334155", letter: "S" };
+      const svgString =
+        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="${size}" height="${size}">
+          <rect width="512" height="512" rx="96" fill="${c.primary}"/>
+          <circle cx="256" cy="256" r="140" fill="${c.secondary}" opacity="0.9"/>
+          <text x="256" y="340" text-anchor="middle" fill="white" font-size="180" font-weight="bold" font-family="Inter, sans-serif">${c.letter}</text>
+        </svg>`;
+      return `data:image/svg+xml,${encodeURIComponent(svgString)}`;
+    }
+
+    function appLogoImg(app, sizeClass = "w-16 h-16", pixelSize = 60) {
+      const externalUrl = app.logoUrl;
+      const fallbackSvg = generateFallbackSVG(app.id, pixelSize);
+      if (!externalUrl) {
+        return `<img src="${fallbackSvg}" class="${sizeClass} rounded-xl shadow object-cover" alt="${app.name}">`;
+      }
+      return `<img src="${externalUrl}" class="${sizeClass} rounded-xl shadow object-cover" alt="${app.name}" 
+          onerror="this.onerror=null; this.src='${fallbackSvg}';">`;
+    }
+
+    // ---------- STATE MANAGEMENT ----------
+    let currentUser = JSON.parse(localStorage.getItem("meonUser")) || null;
+    let activeView = "home";
+    let selectedApp = null;
+    let userFavorites = JSON.parse(localStorage.getItem("meonFavorites")) || [];
+    let reviewsData = JSON.parse(localStorage.getItem("meonReviews")) || {};
+    let searchQuery = "";
+    let activeCategoryFilter = "";
+
+    function saveState() {
+      if (currentUser) localStorage.setItem("meonUser", JSON.stringify(currentUser));
+      else localStorage.removeItem("meonUser");
+      localStorage.setItem("meonFavorites", JSON.stringify(userFavorites));
+      localStorage.setItem("meonReviews", JSON.stringify(reviewsData));
+    }
+
+    function showToast(msg, type = "success") {
+      const container = document.getElementById("toastContainer");
+      const toast = document.createElement("div");
+      toast.className =
+        `toast bg-white dark:bg-gray-800 shadow-lg rounded-xl px-4 py-3 border-l-4 ${type === "success" ? "border-green-500" : type === "error" ? "border-red-500" : "border-blue-500"} flex items-center gap-2`;
+      toast.innerHTML =
+        `<i data-lucide="${type === 'success' ? 'check-circle' : 'alert-circle'}" class="w-5 h-5"></i><span>${msg}</span>`;
+      container.appendChild(toast);
+      if (window.lucide) lucide.createIcons();
+      setTimeout(() => toast.remove(), 4000);
+    }
+
+    function loginUser(email, role = "user") {
+      currentUser = { id: Date.now(), email, name: email.split('@')[0], role: role };
+      saveState();
+      renderNav();
+      renderCurrentView();
+      showToast(`Welcome to Meon, ${currentUser.name}!`, "success");
+    }
+
+    function logout() {
+      currentUser = null;
+      userFavorites = [];
+      saveState();
+      renderNav();
+      renderCurrentView();
+      showToast("Logged out", "success");
+    }
+
+    function toggleFavorite(appId) {
+      if (!currentUser) { showToast("Sign in to save favorites", "error"); return false; }
+      const idx = userFavorites.indexOf(appId);
+      if (idx === -1) { userFavorites.push(appId);
+        showToast("Added to favorites", "success"); } else { userFavorites.splice(idx, 1);
+        showToast("Removed from favorites", "success"); }
+      saveState();
+      renderCurrentView();
+      return true;
+    }
+
+    function openApp(app) {
+      if (app.externalUrl) {
+        window.open(app.externalUrl, '_blank');
+        showToast(`Launching ${app.name}...`, "info");
+      } else {
+        showToast("No web link available for this app", "error");
+      }
+    }
+
+    function submitReview(appId, rating, content) {
+      if (!currentUser) { showToast("Login to review", "error"); return false; }
+      if (!reviewsData[appId]) reviewsData[appId] = [];
+      reviewsData[appId].push({ userId: currentUser.id, user: currentUser.name, rating, content,
+        date: new Date().toISOString() });
+      const allRatings = reviewsData[appId].map(r => r.rating);
+      const avg = allRatings.reduce((a, b) => a + b, 0) / allRatings.length;
+      const appObj = appList.find(a => a.id === appId);
+      if (appObj) { appObj.rating = parseFloat(avg.toFixed(1));
+        appObj.ratingCount = allRatings.length; }
+      saveState();
+      showToast("Review submitted", "success");
+      renderCurrentView();
+      return true;
+    }
+
+    function getFilteredApps() {
+      let filtered = [...appList];
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        filtered = filtered.filter(app => app.name.toLowerCase().includes(q) || app.shortDesc.toLowerCase().includes(q) ||
+          app.category.toLowerCase().includes(q));
+      }
+      if (activeCategoryFilter) {
+        filtered = filtered.filter(app => app.category.toLowerCase() === activeCategoryFilter.toLowerCase());
+      }
+      return filtered;
+    }
+
+    function appCard(app) {
+      const isFav = currentUser && userFavorites.includes(app.id);
+      const appJson = JSON.stringify(app).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      return `<div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-md p-4 card-hover cursor-pointer border border-white/20" onclick="window.showAppDetail('${app.id}')">
+          <div class="flex gap-3">
+            ${appLogoImg(app, "w-16 h-16", 60)}
+            <div class="flex-1"><h3 class="font-bold text-gray-900 dark:text-white">${app.name}</h3><p class="text-sm text-gray-600 dark:text-gray-300">${app.shortDesc}</p><div class="flex items-center gap-1 mt-1"><i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i><span class="text-gray-900 dark:text-white">${app.rating}</span><span class="text-xs text-gray-500 dark:text-gray-400 ml-1">(${app.ratingCount})</span></div></div>
+            <button class="text-red-500" onclick="event.stopPropagation(); toggleFavorite('${app.id}')"><i data-lucide="heart" class="w-5 h-5 ${isFav ? 'fill-red-500' : ''}"></i></button>
+          </div>
+          <div class="mt-3 flex justify-between items-center"><span class="text-xs bg-purple-600/20 dark:bg-purple-600/30 text-purple-700 dark:text-purple-300 px-2 py-1 rounded-full">${app.category}</span><button onclick="event.stopPropagation(); window.openApp(${appJson})" class="bg-purple-600 text-white px-4 py-1 rounded-lg text-sm hover:bg-purple-700 transition">Open App →</button></div>
+        </div>`;
+    }
+
+    window.showAppDetail = (appId) => {
+      selectedApp = appList.find(a => a.id === appId);
+      renderCurrentView();
+    };
+    window.backToHome = () => { selectedApp = null;
+      renderCurrentView(); };
+    window.openApp = openApp;
+    window.toggleFavorite = toggleFavorite;
+
+    function renderAppDetail() {
+      if (!selectedApp) return renderHome();
+      const app = selectedApp;
+      const appReviews = reviewsData[app.id] || [];
+      const screenshotHtml = app.screenshots.map(url =>
+        `<img src="${url}" class="rounded-xl border border-gray-200 dark:border-gray-700 w-64 h-40 object-cover" alt="screenshot">`
+      ).join('');
+      const appJson = JSON.stringify(app).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      return `<div class="max-w-4xl mx-auto"><button onclick="window.backToHome()" class="flex items-center gap-1 text-purple-600 mb-4">&larr; Back to Store</button>
+          <div class="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
+            <div class="flex gap-5 flex-wrap">${appLogoImg(app, "w-24 h-24", 100)}<div><h1 class="text-3xl font-bold">${app.name}</h1><p class="text-gray-500">${app.shortDesc}</p><div class="flex gap-3 mt-2"><div class="flex"><i data-lucide="star" class="fill-yellow-400"></i> ${app.rating} (${app.ratingCount})</div></div><div class="flex gap-3 mt-4"><button onclick="window.openApp(${appJson})" class="bg-purple-600 text-white px-6 py-2 rounded-full">Open Web App →</button><button onclick="window.toggleFavorite('${app.id}')" class="border px-4 py-2 rounded-full">❤️ Favorite</button></div></div></div>
+            <div class="mt-6"><h2 class="text-xl font-semibold">Description</h2><p>${app.description}</p><h3 class="font-semibold mt-4">Key Features</h3><ul class="list-disc pl-5">${app.features.map(f=>`<li>${f}</li>`).join('')}</ul></div>
+            <div class="mt-6"><h2 class="text-xl font-semibold">Screenshots</h2><div class="flex gap-3 overflow-x-auto pb-2">${screenshotHtml}</div></div>
+            <div class="mt-8"><h2 class="text-xl font-semibold">Rate & Review</h2><div id="reviewStars" class="flex gap-1 my-2"></div><textarea id="reviewText" class="w-full border rounded p-2 dark:bg-gray-700" rows="2" placeholder="Write your review..."></textarea><button id="submitReviewBtn" class="mt-2 bg-purple-600 text-white px-4 py-1 rounded">Submit Review</button>
+            <div class="mt-6 space-y-3">${appReviews.map(r => `<div class="border-b pb-2"><div class="font-semibold">${r.user}</div><div class="flex text-yellow-400">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div><p>${r.content}</p><small>${new Date(r.date).toLocaleDateString()}</small></div>`).join('')}</div></div>
+          </div></div>`;
+    }
+
+    function renderDashboard() {
+      if (!currentUser) return `<div class="text-center py-12 text-white">Sign in to access your Meon dashboard</div>`;
+      const favApps = appList.filter(a => userFavorites.includes(a.id));
+      return `<div class="dashboard-bg w-full max-w-6xl mx-auto">
+        <div class="dashboard-content">
+          <h1 class="text-3xl font-bold text-white mb-6">My Meon Workspace</h1>
+          <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/10">
+            <h2 class="text-xl font-bold text-white">❤️ Favorite Apps (${favApps.length})</h2>
+            <div class="grid gap-3 mt-3">
+              ${favApps.map(a=>`<div class="flex gap-3 items-center p-3 bg-white/5 backdrop-blur rounded-lg border border-white/10">
+                ${appLogoImg(a, "w-10 h-10", 40)}
+                <span class="flex-1 font-medium text-white">${a.name}</span>
+                <button onclick="window.openApp(${JSON.stringify(a).replace(/"/g, '&quot;').replace(/'/g, '&#39;')})" class="bg-purple-600 text-white px-3 py-1 rounded text-sm hover:bg-purple-700 transition">Open</button>
+              </div>`).join('')||"<p class='text-gray-300'>No favorites yet. ❤️ apps to see them here.</p>"}
             </div>
           </div>
         </div>
-        <!-- Search bar -->
-        <div class="glass-panel rounded-2xl p-3 flex gap-3"><i data-lucide="search" class="text-purple-400"></i><input type="text" id="globalSearch" placeholder="Search apps, AI tools, business solutions..." class="w-full bg-transparent outline-none text-white" value="${searchQuery.replace(/"/g, '&quot;')}"></div>
-        <!-- Category filters -->
-        <div class="flex flex-wrap gap-3 justify-center">${categories.map(cat=>`<button data-cat="${catMap[cat] || (cat==='All'?'':cat.toLowerCase())}" class="category-chip ${(activeCategoryFilter=== (catMap[cat]||(cat==='All'?'':cat.toLowerCase()))) ? 'active' : ''}">${cat}</button>`).join('')}${activeCategoryFilter?`<button id="clearCat" class="bg-red-500/20 px-4 py-2 rounded-full text-sm">Clear ✕</button>`:""}</div>
-        <!-- Featured apps row -->
-        <div><h2 class="text-2xl font-bold flex gap-2 mb-4"><i data-lucide="zap" class="text-purple-400"></i> Featured Intelligence</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-6">${featured.map(app=>appCard(app)).join('')}</div></div>
-        <!-- Trending apps -->
-        <div><h2 class="text-2xl font-bold flex gap-2 mb-4"><i data-lucide="trending-up" class="text-purple-400"></i> Trending on Meon</h2><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">${trending.map(app=>appCard(app)).join('')}</div></div>
-      </div>
-    `;
-  }
-  function appCard(app){
-    const isFav = currentUser && userFavorites.includes(app.id);
-    return `<div class="app-card p-5 cursor-pointer transition-all" onclick="window.showAppDetail('${app.id}')"><div class="flex gap-4"><div>${appLogoImg(app, "w-16 h-16",64)}</div><div class="flex-1"><h3 class="font-extrabold text-lg">${app.name}</h3><p class="text-gray-300 text-sm">${app.shortDesc}</p><div class="flex items-center gap-2 mt-1"><div class="flex text-yellow-400 text-xs">${'★'.repeat(Math.floor(app.rating))}${app.rating%1>=0.5?'½':''}</div><span class="text-xs text-gray-400">(${app.ratingCount})</span><span class="text-xs bg-purple-500/20 px-2 py-0.5 rounded-full">${app.category}</span></div></div><button onclick="event.stopPropagation(); toggleFavorite('${app.id}')" class="text-pink-400"><i data-lucide="heart" class="w-5 h-5 ${isFav ? 'fill-pink-500' : ''}"></i></button></div><div class="flex justify-between items-center mt-4"><span class="text-xs font-mono text-purple-300">${app.downloads.toLocaleString()} downloads</span><button onclick="event.stopPropagation(); downloadApp(${JSON.stringify(app).replace(/"/g, '&quot;')})" class="bg-gradient-to-r from-purple-700 to-indigo-700 px-5 py-2 rounded-xl text-sm font-bold">${app.isFree ? 'Get · Free' : `Buy KES ${app.price}`}</button></div></div>`;
-  }
-  function renderAppDetail(){ if(!selectedApp) return renderHome(); const app=selectedApp; const revs=reviewsData[app.id]||[]; return `<div class="max-w-5xl mx-auto"><button onclick="window.backToHome()" class="flex items-center gap-1 text-purple-400 mb-5">&larr; Back to Marketplace</button><div class="glass-card p-7 rounded-3xl"><div class="flex flex-wrap gap-6"><div>${appLogoImg(app,"w-28 h-28",100)}</div><div><h1 class="text-4xl font-black">${app.name}</h1><p class="text-gray-300">${app.shortDesc}</p><div class="flex gap-4 mt-2"><span>⭐ ${app.rating} (${app.ratingCount})</span><span>📥 ${app.downloads.toLocaleString()}</span></div><div class="flex gap-3 mt-4"><button onclick="downloadApp(${JSON.stringify(app).replace(/"/g, '&quot;')})" class="btn-primary px-8 py-2 rounded-xl font-bold">${app.isFree?'Download':'Buy KES '+app.price}</button><button onclick="toggleFavorite('${app.id}')" class="border border-purple-500 px-5 py-2 rounded-xl">❤️ Favorite</button></div></div></div><div class="mt-6"><h2 class="text-xl font-bold">Description</h2><p>${app.description}</p><ul class="list-disc pl-5 mt-2">${app.features.map(f=>`<li>${f}</li>`).join('')}</ul></div><div class="mt-6"><h2 class="text-xl font-bold">Screenshots</h2><div class="flex gap-3 overflow-x-auto">${app.screenshots.map(url=>`<img src="${url}" class="rounded-2xl h-40 w-auto object-cover border border-white/20">`).join('')}</div></div><div class="mt-8"><h2 class="text-xl font-bold">Rate & Review</h2><div id="reviewStars" class="flex gap-1 my-2"></div><textarea id="reviewText" rows="2" class="w-full bg-white/10 border border-purple-500/30 rounded-xl p-3"></textarea><button id="submitReviewBtn" class="mt-2 bg-purple-600 px-5 py-2 rounded-xl">Submit</button><div class="mt-6 space-y-4">${revs.map(r=>`<div class="border-b border-white/10 pb-3"><div class="font-bold">${r.user}</div><div class="text-yellow-400">${'★'.repeat(r.rating)}</div><p>${r.content}</p><small>${new Date(r.date).toLocaleDateString()}</small></div>`).join('')}</div></div></div></div>`;}
-  function renderDashboard(){ if(!currentUser) return `<div class="text-center py-20 glass-card p-8">🔐 Sign in to access Meon Workspace</div>`; const downloaded=appList.filter(a=>userDownloads.some(d=>d.appId===a.id)); const favs=appList.filter(a=>userFavorites.includes(a.id)); return `<div class="glass-card p-8"><h1 class="text-3xl font-bold">👤 My Dashboard</h1><div class="grid md:grid-cols-2 gap-7 mt-7"><div><h2 class="text-xl font-bold">📦 Installed (${downloaded.length})</h2>${downloaded.map(a=>`<div class="flex gap-3 items-center mt-3 p-2 glass-card">${appLogoImg(a,"w-10 h-10",40)}<span>${a.name}</span></div>`).join('')||"<p>No apps installed</p>"}</div><div><h2 class="text-xl font-bold">❤️ Favorites</h2>${favs.map(a=>`<div class="flex gap-3 mt-3">${appLogoImg(a,"w-10 h-10",40)}<span>${a.name}</span></div>`).join('')}</div></div></div>`;}
-  function renderAdmin(){ if(!currentUser||!['admin','super_admin'].includes(currentUser.role)) return `<div class="text-center py-20">Admin Access Only</div>`; return `<div class="glass-card p-7"><h1 class="text-3xl font-bold">Admin Console</h1><div class="grid grid-cols-3 gap-5 mt-6"><div class="stats-glow p-4 rounded-2xl"><div class="text-2xl font-black">1.2k+</div><div>Users</div></div><div class="stats-glow p-4 rounded-2xl"><div class="text-2xl font-black">${appList.reduce((s,a)=>s+a.downloads,0).toLocaleString()}</div><div>Downloads</div></div><div class="stats-glow p-4 rounded-2xl"><div class="text-2xl font-black">$24.1k</div><div>Revenue</div></div></div><div class="mt-6"><h2 class="font-bold">App Management</h2>${appList.map(a=>`<div class="flex justify-between border-b border-white/10 py-2"><span>${a.name}</span><button class="btn-primary px-3 py-1 rounded-lg text-xs" onclick="alert('Manage ${a.name} (demo)')">Edit</button></div>`).join('')}</div></div>`;}
-  function renderDeveloper(){ if(!currentUser||currentUser.role!=='developer') return `<div class="text-center py-20">Developer Hub</div>`; return `<div class="glass-card p-7"><h1 class="text-3xl font-bold">🛠️ Developer Hub</h1><p>Analytics & submissions</p><div class="mt-5">${appList.slice(0,5).map(a=>`<div class="flex justify-between"><span>${a.name}</span><span>${a.downloads} downloads</span></div>`).join('')}</div><button class="mt-6 btn-primary px-5 py-2 rounded-xl">+ Submit New Version</button></div>`;}
-  function renderCurrentView(){ const container=document.getElementById("mainContent"); if(!container) return; if(selectedApp) container.innerHTML=renderAppDetail(); else if(activeView==="home"){ container.innerHTML=renderHome(); setTimeout(()=>{ document.getElementById("globalSearch")?.addEventListener("input",e=>{ searchQuery=e.target.value; renderCurrentView(); }); document.querySelectorAll(".category-chip").forEach(ch=>{ ch.addEventListener("click",()=>{ activeCategoryFilter=ch.getAttribute("data-cat")||""; renderCurrentView(); }); }); const clear=document.getElementById("clearCat"); if(clear) clear.addEventListener("click",()=>{ activeCategoryFilter=""; renderCurrentView(); }); document.getElementById("exploreBtn")?.addEventListener("click",()=>window.scrollTo({top:800,behavior:"smooth"})); document.getElementById("devHeroBtn")?.addEventListener("click",()=>{ if(!currentUser) showToast("Login first","error"); else { activeView="developer"; renderCurrentView(); } }); },50); } else if(activeView==="dashboard") container.innerHTML=renderDashboard(); else if(activeView==="admin") container.innerHTML=renderAdmin(); else if(activeView==="developer") container.innerHTML=renderDeveloper(); if(window.lucide) lucide.createIcons(); if(selectedApp&&document.getElementById("reviewStars")){ let ratingVal=0; const starDiv=document.getElementById("reviewStars"); starDiv.innerHTML=""; for(let i=1;i<=5;i++){ let star=document.createElement("i"); star.setAttribute("data-lucide","star"); star.className="w-6 h-6 cursor-pointer rating-star text-gray-400 hover:text-yellow-400"; star.onclick=()=>{ratingVal=i; document.querySelectorAll("#reviewStars i").forEach((s,idx)=>s.style.fill=idx<i?"#facc15":"none");}; starDiv.appendChild(star);} if(window.lucide) lucide.createIcons(); document.getElementById("submitReviewBtn")?.addEventListener("click",()=>{ const txt=document.getElementById("reviewText").value; if(ratingVal&&txt) submitReview(selectedApp.id,ratingVal,txt); else showToast("Provide rating & comment","error");}); } }
-  function renderNav(){ const authDiv=document.getElementById("authSection"); if(!authDiv) return; if(currentUser){ authDiv.innerHTML=`<span class="text-sm hidden sm:inline">${currentUser.email}</span><button id="logoutBtn" class="bg-red-600/80 px-4 py-1.5 rounded-xl text-sm">Logout</button>`; document.getElementById("logoutBtn")?.addEventListener("click",logout); const adminBtn=document.getElementById("adminNavBtn"),devBtn=document.getElementById("devNavBtn"); if(currentUser.role==="admin") adminBtn?.classList.remove("hidden"); else adminBtn?.classList.add("hidden"); if(currentUser.role==="developer") devBtn?.classList.remove("hidden"); else devBtn?.classList.add("hidden"); } else { authDiv.innerHTML=`<button id="showLoginModalBtn" class="bg-purple-600/80 px-5 py-1.5 rounded-xl text-sm">Sign In</button>`; document.getElementById("showLoginModalBtn")?.addEventListener("click",()=>{ const modal=document.createElement("div"); modal.className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"; modal.innerHTML=`<div class="bg-[#0a0f1f] rounded-3xl p-7 w-96 border border-purple-500/40"><h2 class="text-2xl font-bold">Meon Access</h2><input id="loginEmailDemo" placeholder="Email" class="w-full mt-4 p-3 rounded-xl bg-white/10 border"><div class="flex gap-3 mt-5"><button id="demoLoginBtn" class="flex-1 btn-primary py-2 rounded-xl">Login</button><button id="demoAdminAccessBtn" class="flex-1 bg-purple-800 py-2 rounded-xl">Admin Demo</button><button id="demoDevAccessBtn" class="flex-1 bg-amber-700 py-2 rounded-xl">Dev Demo</button></div><button id="closeAuthModal" class="mt-4 text-gray-400 text-sm">Cancel</button></div>`; document.body.appendChild(modal); document.getElementById("demoLoginBtn")?.addEventListener("click",()=>{ const email=document.getElementById("loginEmailDemo").value||"user@meon.com"; loginUser(email,"user"); modal.remove();}); document.getElementById("demoAdminAccessBtn")?.addEventListener("click",()=>{ loginUser("admin@meon.com","admin"); modal.remove();}); document.getElementById("demoDevAccessBtn")?.addEventListener("click",()=>{ loginUser("dev@meon.com","developer"); modal.remove();}); document.getElementById("closeAuthModal")?.addEventListener("click",()=>modal.remove()); }); document.getElementById("adminNavBtn")?.classList.add("hidden"); document.getElementById("devNavBtn")?.classList.add("hidden"); } if(window.lucide) lucide.createIcons(); }
-  window.showAppDetail=(id)=>{ selectedApp=appList.find(a=>a.id===id); renderCurrentView(); };
-  window.backToHome=()=>{ selectedApp=null; renderCurrentView(); };
-  document.querySelectorAll(".nav-btn").forEach(btn=>{ btn.addEventListener("click",()=>{ const view=btn.getAttribute("data-nav"); if(view){ activeView=view; selectedApp=null; renderCurrentView(); } document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("border-purple-500","text-purple-300")); btn.classList.add("border-purple-500","text-purple-300"); }); });
-  document.getElementById("mpesaConfirmBtn")?.addEventListener("click",confirmMpesaPayment);
-  document.getElementById("mpesaCancelBtn")?.addEventListener("click",()=>document.getElementById("mpesaModal").classList.add("hidden"));
-  renderNav(); renderCurrentView();
-  window.toggleFavorite=toggleFavorite; window.downloadApp=downloadApp;
-</script>
+      </div>`;
+    }
+
+    // ============================================================
+    // ULTRA PRO DETAILED ATT PANEL
+    // ============================================================
+    function renderATT() {
+      // Mock data for stats
+      const stats = {
+        totalServices: 24,
+        activeServices: 18,
+        uptime: 99.97,
+        responseTime: 124,
+        totalUsers: 1247,
+        activeUsers: 893,
+        storageUsed: 2.4,
+        totalStorage: 10,
+        apiCalls: 45678,
+        errorRate: 0.32
+      };
+
+      const services = [{
+        icon: "🤖",
+        name: "AI Analytics Engine",
+        desc: "Real-time data processing with machine learning models and predictive analytics",
+        status: "online",
+        usage: 78
+      }, {
+        icon: "🔒",
+        name: "Zero-Trust Security Suite",
+        desc: "Enterprise-grade security with advanced threat detection and real-time monitoring",
+        status: "online",
+        usage: 92
+      }, {
+        icon: "☁️",
+        name: "Cloud Orchestration Platform",
+        desc: "Multi-cloud management with auto-scaling, load balancing, and disaster recovery",
+        status: "online",
+        usage: 65
+      }, {
+        icon: "📊",
+        name: "Interactive Data Visualization",
+        desc: "Real-time dashboards with 50+ chart types and custom reporting engine",
+        status: "beta",
+        usage: 45
+      }, {
+        icon: "⚡",
+        name: "Intelligent Automation Engine",
+        desc: "AI-powered workflow automation with 200+ pre-built integrations",
+        status: "online",
+        usage: 88
+      }, {
+        icon: "🌐",
+        name: "Global Edge Network",
+        desc: "CDN with 100+ edge locations and intelligent routing optimization",
+        status: "maintenance",
+        usage: 34
+      }, {
+        icon: "🧠",
+        name: "Natural Language Processing",
+        desc: "Advanced NLP with sentiment analysis, entity recognition, and language translation",
+        status: "beta",
+        usage: 52
+      }, {
+        icon: "🔗",
+        name: "Blockchain Integration Hub",
+        desc: "Smart contract management and decentralized application framework",
+        status: "online",
+        usage: 41
+      }];
+
+      const activities = [{
+        dot: "green",
+        text: "AI Analytics Engine processed 2.4M events in the last hour",
+        time: "2 min ago"
+      }, {
+        dot: "blue",
+        text: "New security patch deployed to all Zero-Trust instances",
+        time: "15 min ago"
+      }, {
+        dot: "purple",
+        text: "Cloud Orchestration scaled up 4 nodes in US-East region",
+        time: "1 hour ago"
+      }, {
+        dot: "yellow",
+        text: "Beta release of NLP v2.0 with improved accuracy",
+        time: "3 hours ago"
+      }, {
+        dot: "green",
+        text: "Global Edge Network latency reduced to 12ms average",
+        time: "5 hours ago"
+      }, {
+        dot: "red",
+        text: "Alert: Storage capacity at 85% for US-West cluster",
+        time: "8 hours ago"
+      }, {
+        dot: "blue",
+        text: "New API endpoints added for Blockchain Integration Hub",
+        time: "12 hours ago"
+      }];
+
+      return `<div class="att-bg w-full max-w-7xl mx-auto">
+        <div class="att-content">
+          <!-- Header -->
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+            <div>
+              <h1 class="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3">
+                <span>⚡</span> Advanced Technology Tools
+                <span class="text-sm font-normal text-purple-300 bg-purple-500/20 px-3 py-1 rounded-full">v3.0 Enterprise</span>
+              </h1>
+              <p class="text-purple-200/80 text-lg mt-1">Intelligence · Innovation · Inspiration</p>
+            </div>
+            <div class="flex gap-3 mt-4 md:mt-0">
+              <button class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-semibold transition flex items-center gap-2">
+                <i data-lucide="plus" class="w-4 h-4"></i> New Service
+              </button>
+              <button class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-sm font-semibold transition border border-white/10 flex items-center gap-2">
+                <i data-lucide="settings" class="w-4 h-4"></i> Configure
+              </button>
+            </div>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-8">
+            <div class="stat-card">
+              <div class="stat-number">${stats.totalServices}</div>
+              <div class="stat-label">Total Services</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">${stats.activeServices}</div>
+              <div class="stat-label">Active Services</div>
+              <div class="mt-1"><span class="stat-change up">↑ 12%</span></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">${stats.uptime}%</div>
+              <div class="stat-label">Uptime</div>
+              <div class="mt-1"><span class="stat-change up">↑ 0.2%</span></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">${stats.responseTime}ms</div>
+              <div class="stat-label">Avg Response</div>
+              <div class="mt-1"><span class="stat-change up">↓ 8ms</span></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">${stats.totalUsers.toLocaleString()}</div>
+              <div class="stat-label">Total Users</div>
+              <div class="mt-1"><span class="stat-change up">↑ 156</span></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">${stats.activeUsers.toLocaleString()}</div>
+              <div class="stat-label">Active Users</div>
+              <div class="mt-1"><span class="stat-change up">↑ 89%</span></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">${stats.storageUsed}TB</div>
+              <div class="stat-label">Storage Used</div>
+              <div class="mt-1"><span class="stat-change down">↑ 12%</span></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">${(stats.apiCalls/1000).toFixed(1)}K</div>
+              <div class="stat-label">API Calls</div>
+              <div class="mt-1"><span class="stat-change up">↑ 23%</span></div>
+            </div>
+          </div>
+
+          <!-- Main Content Grid -->
+          <div class="grid lg:grid-cols-3 gap-6">
+            <!-- Services Grid -->
+            <div class="lg:col-span-2">
+              <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <i data-lucide="grid" class="w-5 h-5 text-purple-400"></i> Services Overview
+                <span class="text-sm font-normal text-gray-400 ml-2">${services.length} total</span>
+              </h2>
+              <div class="grid sm:grid-cols-2 gap-4 att-scroll max-h-[600px] overflow-y-auto pr-2">
+                ${services.map(s => `
+                  <div class="service-card">
+                    <div class="service-icon">${s.icon}</div>
+                    <div class="service-title">${s.name}</div>
+                    <div class="service-desc">${s.desc}</div>
+                    <div class="flex items-center justify-between mt-2">
+                      <span class="service-status ${s.status}">${s.status}</span>
+                      <span class="text-xs text-gray-400">${s.usage}% usage</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: ${s.usage}%"></div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Activity Feed & Quick Stats -->
+            <div>
+              <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <i data-lucide="activity" class="w-5 h-5 text-purple-400"></i> Activity Feed
+              </h2>
+              <div class="bg-white/5 backdrop-blur-lg rounded-xl p-4 border border-white/10 att-scroll max-h-[400px] overflow-y-auto">
+                ${activities.map(a => `
+                  <div class="activity-item">
+                    <div class="activity-dot ${a.dot}"></div>
+                    <div class="activity-text">${a.text}</div>
+                    <div class="activity-time">${a.time}</div>
+                  </div>
+                `).join('')}
+              </div>
+
+              <!-- Quick Stats -->
+              <div class="mt-4 bg-white/5 backdrop-blur-lg rounded-xl p-4 border border-white/10">
+                <h3 class="text-sm font-semibold text-white/60 uppercase tracking-wider mb-3">System Health</h3>
+                <div class="space-y-2">
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-400">CPU Usage</span>
+                    <span class="text-white font-medium">42%</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 42%"></div>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-400">Memory Usage</span>
+                    <span class="text-white font-medium">68%</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 68%"></div>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-400">Network Throughput</span>
+                    <span class="text-white font-medium">1.2 Gbps</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 56%"></div>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-400">Error Rate</span>
+                    <span class="text-white font-medium">${stats.errorRate}%</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${stats.errorRate * 10}%; background: ${stats.errorRate > 1 ? '#f87171' : '#4ade80'};"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Actions -->
+              <div class="mt-4 grid grid-cols-2 gap-2">
+                <button class="px-3 py-2 bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 rounded-lg text-xs font-semibold transition border border-purple-500/20 text-center">
+                  <i data-lucide="play" class="w-4 h-4 mx-auto mb-1"></i>
+                  Start Services
+                </button>
+                <button class="px-3 py-2 bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 rounded-lg text-xs font-semibold transition border border-blue-500/20 text-center">
+                  <i data-lucide="bar-chart" class="w-4 h-4 mx-auto mb-1"></i>
+                  View Reports
+                </button>
+                <button class="px-3 py-2 bg-green-600/20 hover:bg-green-600/30 text-green-300 rounded-lg text-xs font-semibold transition border border-green-500/20 text-center">
+                  <i data-lucide="refresh-cw" class="w-4 h-4 mx-auto mb-1"></i>
+                  Sync Data
+                </button>
+                <button class="px-3 py-2 bg-yellow-600/20 hover:bg-yellow-600/30 text-yellow-300 rounded-lg text-xs font-semibold transition border border-yellow-500/20 text-center">
+                  <i data-lucide="alert-triangle" class="w-4 h-4 mx-auto mb-1"></i>
+                  Alerts
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    function renderAdmin() {
+      if (!currentUser || (currentUser.role !== 'admin' && currentUser.role !== 'super_admin'))
+        return `<div class="text-center py-12 text-white">Restricted to Meon Admin</div>`;
+      return `<div class="admin-bg w-full max-w-6xl mx-auto">
+        <div class="admin-content">
+          <h1 class="text-3xl font-bold text-white mb-6">Meon Admin Console</h1>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/10">
+              <h2 class="text-xl font-bold text-white">📊 Directory Stats</h2>
+              <div class="mt-4 space-y-2 text-white">
+                <p class="text-lg">Total apps: <span class="font-bold text-purple-300">${appList.length}</span></p>
+                <p class="text-lg">Categories: <span class="font-bold text-purple-300">${new Set(appList.map(a=>a.category)).size}</span></p>
+                <p class="text-lg">Total reviews: <span class="font-bold text-purple-300">${Object.values(reviewsData).reduce((acc, curr) => acc + curr.length, 0)}</span></p>
+              </div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/10">
+              <h2 class="text-xl font-bold text-white">⭐ Top Rated</h2>
+              <ul class="mt-4 space-y-2 text-white">
+                ${appList.sort((a,b)=>b.rating-a.rating).slice(0,5).map(a=>`<li class="flex justify-between items-center p-2 bg-white/5 rounded"><span>${a.name}</span><span class="text-yellow-400">${a.rating} ★</span></li>`).join('')}
+              </ul>
+            </div>
+          </div>
+          <div class="mt-6">
+            <h2 class="text-xl font-bold text-white mb-4">App Management</h2>
+            <div class="grid gap-2 max-h-96 overflow-y-auto">
+              ${appList.map(a=>`<div class="flex justify-between items-center bg-white/10 backdrop-blur-lg p-3 rounded-lg border border-white/10">
+                <span class="text-white">${a.name}</span>
+                <button class="text-sm bg-purple-600 text-white px-3 py-1 rounded hover:bg-purple-700 transition" onclick="alert('Admin: Manage ${a.name} (demo)')">Edit</button>
+              </div>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    function renderDeveloper() {
+      if (!currentUser || currentUser.role !== 'developer')
+        return `<div class="text-center py-12 text-white">Developer portal - Meon Partners only</div>`;
+      return `<div class="developer-bg w-full max-w-6xl mx-auto">
+        <div class="developer-content">
+          <h1 class="text-3xl font-bold text-white mb-6">Meon Developer Hub</h1>
+          <p class="text-purple-200 text-lg mb-6">Monitor your web apps listed on Meon Directory</p>
+          <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/10">
+            <h3 class="text-xl font-bold text-white mb-4">Your Apps Performance</h3>
+            <div class="space-y-3">
+              ${appList.slice(0,5).map(a=>`<div class="flex justify-between items-center p-3 bg-white/5 rounded-lg border border-white/10">
+                <span class="text-white font-medium">${a.name}</span>
+                <span class="text-yellow-400">Rating: ${a.rating} (${a.ratingCount} reviews)</span>
+              </div>`).join('')}
+            </div>
+            <button class="mt-6 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition font-semibold">+ Submit New App</button>
+          </div>
+          <div class="mt-6 bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/10">
+            <h3 class="text-xl font-bold text-white mb-4">📈 Analytics Overview</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="text-center p-4 bg-white/5 rounded-lg">
+                <div class="text-2xl font-bold text-purple-300">${appList.length}</div>
+                <div class="text-sm text-gray-300">Total Apps</div>
+              </div>
+              <div class="text-center p-4 bg-white/5 rounded-lg">
+                <div class="text-2xl font-bold text-purple-300">${appList.filter(a => a.rating >= 4.5).length}</div>
+                <div class="text-sm text-gray-300">High Rated</div>
+              </div>
+              <div class="text-center p-4 bg-white/5 rounded-lg">
+                <div class="text-2xl font-bold text-purple-300">${new Set(appList.map(a=>a.category)).size}</div>
+                <div class="text-sm text-gray-300">Categories</div>
+              </div>
+              <div class="text-center p-4 bg-white/5 rounded-lg">
+                <div class="text-2xl font-bold text-purple-300">${Object.values(reviewsData).reduce((acc, curr) => acc + curr.length, 0)}</div>
+                <div class="text-sm text-gray-300">Total Reviews</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    function renderHome() {
+      const filteredApps = getFilteredApps();
+      const featuredIds = ["spark-connect", "guard-ai", "deep-focus", "luminor-studio", "maji-gas", "clients-hub",
+        "meal-planner-pro", "finance-eight", "sacco-sable", "cbo-three", "gym-nine"
+      ];
+      const featured = filteredApps.filter(a => featuredIds.includes(a.id));
+      const trending = [...filteredApps].sort((a, b) => b.rating - a.rating).slice(0, 6);
+      const newReleases = [...filteredApps].reverse().slice(0, 6);
+      const categoryItems = [
+        { name: "Social", gradient: "from-pink-600 to-rose-600", filter: "social" },
+        { name: "AI Tools", gradient: "from-purple-600 to-violet-600", filter: "ai tools" },
+        { name: "Business", gradient: "from-blue-600 to-cyan-600", filter: "business" },
+        { name: "Education", gradient: "from-green-600 to-emerald-600", filter: "education" },
+        { name: "Agriculture", gradient: "from-orange-600 to-amber-600", filter: "agriculture" },
+        { name: "Transport", gradient: "from-red-600 to-pink-600", filter: "transport" },
+        { name: "Design", gradient: "from-indigo-600 to-purple-600", filter: "design" },
+        { name: "Utilities", gradient: "from-teal-600 to-cyan-600", filter: "utilities" },
+        { name: "Health & Wellness", gradient: "from-green-600 to-lime-600", filter: "health & wellness" },
+        { name: "Finance", gradient: "from-emerald-600 to-teal-600", filter: "finance" }
+      ];
+
+      const mainBgHtml = `<div class="main-bg w-full max-w-6xl mx-auto">
+        <div class="main-content">`;
+
+      const heroHtml =
+        `<div class="hero-bg w-full mx-auto overflow-hidden p-6 md:p-8 rounded-3xl border border-purple-900/40 text-white shadow-xl mb-8 min-h-[300px] flex items-center">
+          <div class="hero-content flex flex-col md:flex-row justify-between items-center gap-6 w-full">
+            <div>
+              <h1 class="text-4xl md:text-5xl font-extrabold">Meon Directory</h1>
+              <p class="text-purple-200 mt-2">Launch web apps instantly · No payments · No downloads</p>
+              <div class="flex gap-4 mt-4">
+                <button id="exploreMarketplaceBtn" class="bg-purple-600 px-5 py-2 rounded-full text-sm font-semibold hover:bg-purple-500 transition">Explore Apps →</button>
+                <button id="becomeDevBtn" class="border border-purple-400 px-5 py-2 rounded-full text-sm hover:bg-purple-500/20 transition">Become a Developer</button>
+              </div>
+            </div>
+            <div class="bg-white/10 backdrop-blur rounded-2xl p-4 text-center">
+              <div class="text-3xl font-bold">${appList.length}+</div>
+              <div class="text-xs">Web Apps</div>
+            </div>
+          </div>
+        </div>`;
+
+      const categoriesHtml = `<div class="categories-bg w-full mx-auto mb-8">
+        <div class="categories-content">
+          <h2 class="text-2xl font-bold text-white mb-4">Categories</h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
+            ${categoryItems.map(cat => `<div class="rounded-xl bg-gradient-to-r ${cat.gradient} text-white p-3 text-center text-sm font-semibold cursor-pointer hover:scale-105 transition category-chip" data-category="${cat.filter}">${cat.name}</div>`).join('')}
+            ${activeCategoryFilter ? `<div class="rounded-xl bg-gray-500 text-white p-3 text-center cursor-pointer" id="clearCategoryBtn">Clear ✕</div>` : ""}
+          </div>
+        </div>
+      </div>`;
+
+      const searchHtml = `<div class="bg-white/10 dark:bg-gray-800/50 rounded-2xl p-4 flex items-center gap-3 mb-8">
+        <i data-lucide="search" class="text-white"></i>
+        <input type="text" id="globalSearchInput" placeholder="Search apps by name, category..." class="w-full bg-transparent outline-none text-white placeholder-gray-300" value="${searchQuery.replace(/"/g, '&quot;')}">
+      </div>`;
+
+      const featuredHtml = `<div class="featured-bg w-full mx-auto mb-8">
+        <div class="featured-content">
+          <h2 class="text-2xl font-bold text-white mb-4">⭐ Featured</h2>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">${featured.map(app=>appCard(app)).join('')}</div>
+        </div>
+      </div>`;
+
+      const topratedHtml = `<div class="toprated-bg w-full mx-auto mb-8">
+        <div class="toprated-content">
+          <h2 class="text-2xl font-bold text-white mb-4">🔥 Top Rated</h2>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">${trending.map(app=>appCard(app)).join('')}</div>
+        </div>
+      </div>`;
+
+      const recentHtml = `<div class="recent-bg w-full mx-auto mb-8">
+        <div class="recent-content">
+          <h2 class="text-2xl font-bold text-white mb-4">🆕 Recently Added</h2>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">${newReleases.map(app=>appCard(app)).join('')}</div>
+        </div>
+      </div>`;
+
+      const closeHtml = `</div></div>`;
+
+      return `${mainBgHtml}${heroHtml}${categoriesHtml}${searchHtml}${featuredHtml}${topratedHtml}${recentHtml}${closeHtml}`;
+    }
+
+    function renderCurrentView() {
+      const container = document.getElementById("mainContent");
+      if (!container) return;
+      if (selectedApp) { container.innerHTML = renderAppDetail(); } else if (activeView === "home") { container.innerHTML =
+          renderHome();
+        setTimeout(() => {
+          const searchInput = document.getElementById("globalSearchInput");
+          if (searchInput) {
+            searchInput.addEventListener("input", (e) => { searchQuery = e.target.value;
+              renderCurrentView(); });
+          }
+          document.querySelectorAll(".category-chip").forEach(c => c.addEventListener("click", () => {
+            activeCategoryFilter = c.dataset.category;
+            renderCurrentView();
+          }));
+          document.getElementById("clearCategoryBtn")?.addEventListener("click", () => { activeCategoryFilter = "";
+            renderCurrentView(); });
+          document.getElementById("exploreMarketplaceBtn")?.addEventListener("click", () => document.querySelector(
+            ".grid.sm\\:grid-cols-2")?.scrollIntoView({ behavior: "smooth" }));
+          document.getElementById("becomeDevBtn")?.addEventListener("click", () => { if (!currentUser) showToast(
+              "Please login first", "error");
+            else { activeView = "developer";
+              renderCurrentView(); } });
+        }, 50); } else if (activeView === "dashboard") container.innerHTML = renderDashboard();
+      else if (activeView === "att") container.innerHTML = renderATT();
+      else if (activeView === "admin") container.innerHTML = renderAdmin();
+      else if (activeView === "developer") container.innerHTML = renderDeveloper();
+      if (window.lucide) lucide.createIcons();
+      if (selectedApp && document.getElementById("reviewStars")) {
+        let ratingVal = 0;
+        const starDiv = document.getElementById("reviewStars");
+        starDiv.innerHTML = '';
+        for (let i = 1; i <= 5; i++) {
+          let star = document.createElement('i');
+          star.setAttribute('data-lucide', 'star');
+          star.className = 'w-6 h-6 cursor-pointer rating-star';
+          star.onclick = () => { ratingVal = i;
+            document.querySelectorAll('#reviewStars i').forEach((s, idx) => s.style.fill = idx < i ? '#facc15' :
+              'none'); };
+          starDiv.appendChild(star);
+        }
+        lucide.createIcons();
+        document.getElementById("submitReviewBtn")?.addEventListener("click", () => {
+          const txt = document.getElementById("reviewText").value;
+          if (ratingVal && txt) submitReview(selectedApp.id, ratingVal, txt);
+          else showToast("Please provide rating and comment", "error");
+        });
+      }
+    }
+
+    // Navigation & theme init
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const view = btn.getAttribute("data-nav");
+        if (view) { activeView = view;
+          selectedApp = null;
+          renderCurrentView(); }
+        document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("border-purple-600",
+          "text-purple-600"));
+        btn.classList.add("border-purple-600", "text-purple-600");
+      });
+    });
+
+    function renderNav() {
+      const authDiv = document.getElementById("authSection");
+      if (!authDiv) return;
+      if (currentUser) {
+        authDiv.innerHTML =
+          `<span class="text-sm hidden sm:inline text-gray-700 dark:text-gray-300">${currentUser.email}</span><button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg text-sm transition">Logout</button>`;
+        document.getElementById("logoutBtn")?.addEventListener("click", logout);
+        document.getElementById("adminNavBtn")?.classList.toggle("hidden", currentUser.role !== 'admin' && currentUser
+          .role !== 'super_admin');
+        document.getElementById("devNavBtn")?.classList.toggle("hidden", currentUser.role !== 'developer');
+      } else {
+        authDiv.innerHTML =
+          `<button id="showLoginModalBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-1.5 rounded-lg text-sm transition">Sign In</button>`;
+        document.getElementById("showLoginModalBtn")?.addEventListener("click", () => showAuthModal());
+        document.getElementById("adminNavBtn")?.classList.add("hidden");
+        document.getElementById("devNavBtn")?.classList.add("hidden");
+      }
+      lucide.createIcons();
+    }
+
+    function showAuthModal() {
+      const modalHtml =
+        `<div id="authModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"><div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md"><h2 class="text-2xl font-bold mb-4">Meon Account</h2><input type="email" id="loginEmail" placeholder="Email" class="w-full p-2 border rounded-lg dark:bg-gray-700 mb-3"><input type="password" id="loginPassword" placeholder="Password (any)" class="w-full p-2 border rounded-lg dark:bg-gray-700 mb-4"><div class="flex gap-2 mb-3"><button id="loginEmailBtn" class="flex-1 bg-purple-600 text-white py-2 rounded-lg">Login</button><button id="registerBtn" class="flex-1 bg-green-600 text-white py-2 rounded-lg">Sign Up</button></div><button id="demoAdminBtn" class="w-full bg-purple-100 dark:bg-purple-900 py-2 rounded-lg mb-2">Demo Admin Access</button><button id="demoDevBtn" class="w-full bg-amber-100 dark:bg-amber-900 py-2 rounded-lg">Demo Developer Access</button><button id="closeModal" class="w-full mt-3 text-gray-500">Cancel</button></div></div>`;
+      document.body.insertAdjacentHTML("beforeend", modalHtml);
+      document.getElementById("loginEmailBtn")?.addEventListener("click", () => { const email = document.getElementById(
+          "loginEmail").value;
+        if (email) loginUser(email, "user");
+        document.getElementById("authModal")?.remove(); });
+      document.getElementById("registerBtn")?.addEventListener("click", () => { const email = document.getElementById(
+          "loginEmail").value;
+        if (email) loginUser(email, "user");
+        document.getElementById("authModal")?.remove(); });
+      document.getElementById("demoAdminBtn")?.addEventListener("click", () => { loginUser("admin@meon.com", "admin");
+        document.getElementById("authModal")?.remove(); });
+      document.getElementById("demoDevBtn")?.addEventListener("click", () => { loginUser("dev@meon.com", "developer");
+        document.getElementById("authModal")?.remove(); });
+      document.getElementById("closeModal")?.addEventListener("click", () => document.getElementById("authModal")?.remove());
+    }
+    const themeToggle = document.getElementById("themeToggle");
+    themeToggle?.addEventListener("click", () => {
+      document.documentElement.classList.toggle("dark");
+      localStorage.setItem("meonTheme", document.documentElement.classList.contains("dark") ? "dark" : "light");
+      lucide.createIcons();
+    });
+    if (localStorage.getItem("meonTheme") === "dark") document.documentElement.classList.add("dark");
+    renderNav();
+    renderCurrentView();
+    updateOnlineStatus();
+  </script>
 </body>
 </html>
