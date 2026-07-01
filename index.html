@@ -832,13 +832,13 @@
             opacity: 0.1;
         }
 
-        /* ----- MOVIE NIGHT CAROUSEL ----- */
-        .movie-swiper {
+        /* ----- APP SPOTLIGHT CAROUSEL ----- */
+        .spotlight-swiper {
             width: 100%;
-            height: 280px;
+            height: 260px;
             padding: 10px 0;
         }
-        .movie-swiper .swiper-slide {
+        .spotlight-swiper .swiper-slide {
             background: rgba(255, 255, 255, 0.06);
             border-radius: 16px;
             backdrop-filter: blur(8px);
@@ -846,57 +846,52 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-end;
-            padding: 16px;
+            justify-content: center;
+            padding: 20px 16px;
             text-align: center;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            min-height: 260px;
+            min-height: 240px;
             transition: transform 0.3s ease;
+            cursor: pointer;
         }
-        .movie-swiper .swiper-slide:hover {
-            transform: scale(1.03);
+        .spotlight-swiper .swiper-slide:hover {
+            transform: scale(1.04);
+            border-color: rgba(0, 178, 169, 0.3);
         }
-        .movie-swiper .swiper-slide .movie-rating {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: #fbbf24;
-            border: 1px solid rgba(251, 191, 36, 0.2);
+        .spotlight-swiper .swiper-slide .app-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 16px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         }
-        .movie-swiper .swiper-slide .movie-title {
+        .spotlight-swiper .swiper-slide .app-name {
             font-weight: 700;
             font-size: 1rem;
             color: white;
-            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
-        .movie-swiper .swiper-slide .movie-year {
-            font-size: 0.75rem;
+        .spotlight-swiper .swiper-slide .app-category {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .spotlight-swiper .swiper-slide .app-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 6px;
+            font-size: 0.85rem;
+            color: #fbbf24;
+        }
+        .spotlight-swiper .swiper-slide .app-rating span {
             color: rgba(255, 255, 255, 0.6);
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+            font-size: 0.75rem;
+            margin-left: 2px;
         }
-        .movie-swiper .swiper-slide .movie-overlay {
-            position: absolute;
-            inset: 0;
-            border-radius: 16px;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 60%);
-            pointer-events: none;
-        }
-        .movie-swiper .swiper-slide .movie-content {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            padding: 8px 0;
-        }
-        .movie-night-card {
+        .spotlight-card {
             background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(24px) saturate(1.6);
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -906,23 +901,23 @@
             position: relative;
             overflow: hidden;
         }
-        .movie-night-card::before {
+        .spotlight-card::before {
             content: '';
             position: absolute;
             inset: 0;
             background: radial-gradient(ellipse at 70% 20%, rgba(0, 178, 169, 0.08), transparent 60%);
             pointer-events: none;
         }
-        .movie-night-card .movie-text {
+        .spotlight-card .spotlight-text {
             color: #cbd5e1;
             font-size: 0.95rem;
             line-height: 1.7;
         }
-        .movie-night-card .movie-text .highlight {
+        .spotlight-card .spotlight-text .highlight {
             color: #fbbf24;
             font-weight: 600;
         }
-        .movie-night-card .join-btn {
+        .spotlight-card .explore-btn {
             background: #00b2a9;
             color: white;
             padding: 10px 32px;
@@ -934,27 +929,96 @@
             font-size: 0.95rem;
             box-shadow: 0 4px 20px rgba(0, 178, 169, 0.3);
         }
-        .movie-night-card .join-btn:hover {
+        .spotlight-card .explore-btn:hover {
             transform: scale(1.04);
             box-shadow: 0 6px 30px rgba(0, 178, 169, 0.5);
             background: #009e96;
         }
-        .movie-night-card .join-btn:active {
+        .spotlight-card .explore-btn:active {
             transform: scale(0.96);
         }
         @media (max-width: 768px) {
-            .movie-swiper {
+            .spotlight-swiper {
                 height: 220px;
             }
-            .movie-swiper .swiper-slide {
+            .spotlight-swiper .swiper-slide {
                 min-height: 200px;
+                padding: 16px 12px;
             }
-            .movie-night-card {
+            .spotlight-swiper .swiper-slide .app-icon {
+                width: 56px;
+                height: 56px;
+            }
+            .spotlight-card {
                 padding: 20px;
             }
-            .movie-night-card .movie-text {
+            .spotlight-card .spotlight-text {
                 font-size: 0.85rem;
             }
+        }
+
+        /* App spotlight modal */
+        .app-spotlight-modal .modal {
+            max-width: 420px;
+        }
+        .app-spotlight-modal .app-detail-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            object-fit: cover;
+            margin: 0 auto 12px;
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            display: block;
+        }
+        .app-spotlight-modal .app-detail-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            text-align: center;
+        }
+        .app-spotlight-modal .app-detail-category {
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .app-spotlight-modal .app-detail-rating {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            color: #fbbf24;
+            font-size: 1.1rem;
+            margin: 8px 0 4px;
+        }
+        .app-spotlight-modal .app-detail-rating span {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+        }
+        .app-spotlight-modal .app-detail-desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            text-align: center;
+            line-height: 1.6;
+            margin: 8px 0 16px;
+        }
+        .app-spotlight-modal .app-detail-install-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #00b2a9;
+            color: white;
+        }
+        .app-spotlight-modal .app-detail-install-btn:hover {
+            background: #009e96;
+            transform: scale(1.02);
         }
     </style>
 </head>
@@ -1115,6 +1179,28 @@
     </div>
 </div>
 
+<!-- ====== APP SPOTLIGHT DETAIL MODAL ====== -->
+<div class="modal-overlay app-spotlight-modal" id="appSpotlightModal">
+    <div class="modal">
+        <div class="modal-gradient-header">
+            <div class="icon">🚀</div>
+            <h2 id="spotlightModalTitle">App Spotlight</h2>
+            <p id="spotlightModalSubtitle">Discover amazing apps</p>
+        </div>
+        <div class="modal-body">
+            <img id="spotlightModalIcon" class="app-detail-icon" src="" alt="App Icon" />
+            <div class="app-detail-name" id="spotlightModalName">App Name</div>
+            <div class="app-detail-category" id="spotlightModalCategory">Category</div>
+            <div class="app-detail-rating" id="spotlightModalRating">★★★★★ <span>(0 reviews)</span></div>
+            <div class="app-detail-desc" id="spotlightModalDesc">App description goes here.</div>
+        </div>
+        <div class="modal-footer flex flex-col gap-3">
+            <button class="app-detail-install-btn" id="spotlightModalInstall">🚀 Install App</button>
+            <button class="btn-secondary w-full" id="spotlightModalClose">Close</button>
+        </div>
+    </div>
+</div>
+
 <!-- ====== SCRIPTS ====== -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js">
 </script>
@@ -1184,7 +1270,7 @@
     // ============================================================
     (function registerServiceWorker() {
         if (!('serviceWorker' in navigator)) return;
-        const CACHE_NAME = 'meon-directory-v15';
+        const CACHE_NAME = 'meon-directory-v16';
         const urlsToCache = [
             location.href.split('?')[0],
             'https://cdn.tailwindcss.com',
@@ -1534,17 +1620,8 @@
         if (!app.downloads) app.downloads = Math.floor(Math.random() * 50000) + 1000;
     });
 
-    // ============================================================
-    // MOVIE DATA
-    // ============================================================
-    const movieData = [
-        { title: "House M.D.", year: "2004", rating: "9.2", poster: "https://i.ibb.co/7NrfmcHn/file-0000000081ac72468a2293c64472a4fc.png" },
-        { title: "Inception", year: "2010", rating: "8.8", poster: "https://i.ibb.co/ST5wWMn/file-00000000b6f871f4879ce38381ddcffe.png" },
-        { title: "The Dark Knight", year: "2008", rating: "9.0", poster: "https://i.ibb.co/gLXWj0Tn/c8a71cc8d8bc8e067883b4c4f4d184b0.jpg" },
-        { title: "Interstellar", year: "2014", rating: "8.7", poster: "https://i.ibb.co/B5VkzwB7/1782584384508.png" },
-        { title: "Pulp Fiction", year: "1994", rating: "8.9", poster: "https://i.ibb.co/Psfr94nb/1782588375093.png" },
-        { title: "The Matrix", year: "1999", rating: "8.7", poster: "https://i.ibb.co/BH83mCK9/1782590354801.png" }
-    ];
+    // Featured app IDs for spotlight
+    const featuredIds = ["spark-connect", "guard-ai", "deep-focus", "luminor-studio"];
 
     // ============================================================
     // UTILITY FUNCTIONS
@@ -2490,7 +2567,7 @@
                         </div>
 
                         <div class="mt-4 text-center text-xs text-gray-500">
-                            Meon Directory v15.0 · Built with ❤️ in Nairobi, Kenya
+                            Meon Directory v16.0 · Built with ❤️ in Nairobi, Kenya
                         </div>
                     </div>
                 </div>
@@ -2623,14 +2700,65 @@
     }
 
     // ============================================================
+    // APP SPOTLIGHT FUNCTIONS
+    // ============================================================
+    function openAppSpotlight(appId) {
+        const app = appList.find(a => a.id === appId);
+        if (!app) return;
+
+        const modal = document.getElementById('appSpotlightModal');
+        const nameEl = document.getElementById('spotlightModalName');
+        const categoryEl = document.getElementById('spotlightModalCategory');
+        const ratingEl = document.getElementById('spotlightModalRating');
+        const descEl = document.getElementById('spotlightModalDesc');
+        const iconEl = document.getElementById('spotlightModalIcon');
+        const installBtn = document.getElementById('spotlightModalInstall');
+        const titleEl = document.getElementById('spotlightModalTitle');
+        const subtitleEl = document.getElementById('spotlightModalSubtitle');
+
+        // Set the icon
+        const logoUrl = app.logoUrl || generateFallbackSVG(app.id, 80);
+        iconEl.src = logoUrl;
+        iconEl.alt = app.name;
+
+        nameEl.textContent = app.name;
+        categoryEl.textContent = app.category;
+        descEl.textContent = app.description || app.shortDesc;
+
+        // Rating stars
+        const full = Math.floor(app.rating);
+        const half = app.rating % 1 >= 0.5 ? 1 : 0;
+        const empty = 5 - full - half;
+        let stars = '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
+        ratingEl.innerHTML = `${stars} <span>(${app.ratingCount} reviews)</span>`;
+
+        titleEl.textContent = `🚀 ${app.name}`;
+        subtitleEl.textContent = `Discover ${app.name}`;
+
+        // Install button
+        installBtn.onclick = () => {
+            if (app.externalUrl) {
+                window.open(app.externalUrl, '_blank');
+                showToast(`🚀 Launching ${app.name}...`, 'info');
+                modal.classList.remove('active');
+            } else {
+                showToast('No web link available for this app', 'error');
+            }
+        };
+
+        modal.classList.add('active');
+    }
+
+    function closeAppSpotlight() {
+        document.getElementById('appSpotlightModal').classList.remove('active');
+    }
+
+    // ============================================================
     // RENDER VIEWS
     // ============================================================
     function renderHome() {
         const filteredApps = getFilteredApps();
-        const featuredIds = ["spark-connect", "guard-ai", "deep-focus", "luminor-studio", "maji-gas", "clients-hub",
-            "meal-planner-pro", "finance-eight", "sacco-sable", "cbo-three", "gym-nine"
-        ];
-        const featured = filteredApps.filter(a => featuredIds.includes(a.id));
+        const featured = appList.filter(a => featuredIds.includes(a.id));
         const trending = [...filteredApps].sort((a, b) => b.rating - a.rating).slice(0, 6);
         const newReleases = [...filteredApps].reverse().slice(0, 6);
         const categories = [...new Set(appList.map(a => a.category))];
@@ -2645,17 +2773,17 @@
                 `<span style="width:${size}px;height:${size}px;left:${left}%;animation-delay:${delay}s;animation-duration:${duration}s;"></span>`;
         }
 
-        // Build movie swiper slides
-        let movieSlides = '';
-        movieData.forEach(movie => {
-            movieSlides += `
-                    <div class="swiper-slide" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.1) 100%), url('${movie.poster}'); background-size: cover; background-position: center;">
-                        <div class="movie-overlay"></div>
-                        <div class="movie-content">
-                            <div class="movie-title">${movie.title}</div>
-                            <div class="movie-year">${movie.year}</div>
-                        </div>
-                        <div class="movie-rating">⭐ ${movie.rating}</div>
+        // Build app spotlight slides
+        let spotlightSlides = '';
+        featured.forEach(app => {
+            const logoUrl = app.logoUrl || generateFallbackSVG(app.id, 72);
+            const stars = '★'.repeat(Math.floor(app.rating)) + '☆'.repeat(5 - Math.floor(app.rating));
+            spotlightSlides += `
+                    <div class="swiper-slide" onclick="openAppSpotlight('${app.id}')">
+                        <img src="${logoUrl}" class="app-icon" alt="${app.name}" onerror="this.src='${generateFallbackSVG(app.id, 72)}'">
+                        <div class="app-name">${app.name}</div>
+                        <div class="app-category">${app.category}</div>
+                        <div class="app-rating">${stars} <span>${app.rating}</span></div>
                     </div>
                 `;
         });
@@ -2700,35 +2828,35 @@
                 </div>
             `;
 
-        // Movie Night Card
-        const movieNightHtml = `
-                <div class="movie-night-card mb-12 fade-in">
+        // App Spotlight Card
+        const spotlightHtml = `
+                <div class="spotlight-card mb-12 fade-in">
                     <div class="grid md:grid-cols-3 gap-6 relative z-10">
                         <!-- Left: Info -->
                         <div class="md:col-span-2 flex flex-col justify-between">
                             <div>
                                 <div class="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-full px-3 py-1 text-amber-300 text-xs mb-3">
                                     <span class="w-1.5 h-1.5 bg-amber-400 rounded-full animate-pulse"></span>
-                                    🎬 Movie Night
+                                    🌟 App Spotlight
                                 </div>
-                                <h2 class="text-2xl md:text-3xl font-extrabold text-white">Join us for a fantastic <span class="text-amber-400">movie night</span></h2>
-                                <p class="movie-text mt-3">
-                                    Filled with popcorn, laughter, and great company! Whether you're a fan of thrilling action, heartwarming dramas, or side-splitting comedies, we've got a film lineup to cater to all tastes. Save the date and bring your favorite snacks to make it a memorable evening.
+                                <h2 class="text-2xl md:text-3xl font-extrabold text-white">Discover <span class="text-amber-400">featured apps</span></h2>
+                                <p class="spotlight-text mt-3">
+                                    Handpicked by our editors, these apps represent the best of what Meon has to offer. 
+                                    From productivity tools to AI-powered solutions, find your next favorite app today.
                                 </p>
                             </div>
                             <div class="mt-4">
-                                <button class="join-btn" id="movieJoinBtn">
-                                    🎬 Join
+                                <button class="explore-btn" id="spotlightExploreBtn">
+                                    🚀 Explore All
                                 </button>
                             </div>
                         </div>
                         <!-- Right: Swiper -->
                         <div class="relative">
-                            <div class="swiper movie-swiper myMovieSwiper">
+                            <div class="swiper spotlight-swiper mySpotlightSwiper">
                                 <div class="swiper-wrapper">
-                                    ${movieSlides}
+                                    ${spotlightSlides}
                                 </div>
-                                <!-- Optional navigation/pagination -->
                                 <div class="swiper-pagination !static mt-2"></div>
                             </div>
                         </div>
@@ -2784,8 +2912,7 @@
 
         const closeHtml = `</div></div>`;
 
-        // Return the full home HTML with movie night included
-        return `${mainBgHtml}${heroHtml}${movieNightHtml}${searchHtml}${featuredBannerHtml}${featuredHtml}${topratedHtml}${recentHtml}${closeHtml}`;
+        return `${mainBgHtml}${heroHtml}${spotlightHtml}${searchHtml}${featuredBannerHtml}${featuredHtml}${topratedHtml}${recentHtml}${closeHtml}`;
     }
 
     function renderAppDetail() {
@@ -3677,12 +3804,11 @@
             container.innerHTML = renderAppDetail();
         } else if (activeView === "home") {
             container.innerHTML = renderHome();
-            // Initialize Swiper after DOM render
             setTimeout(() => {
                 if (typeof Swiper !== 'undefined') {
-                    const swiperEl = document.querySelector('.myMovieSwiper');
+                    const swiperEl = document.querySelector('.mySpotlightSwiper');
                     if (swiperEl && !swiperEl.swiper) {
-                        new Swiper('.myMovieSwiper', {
+                        new Swiper('.mySpotlightSwiper', {
                             slidesPerView: 1.2,
                             spaceBetween: 16,
                             centeredSlides: false,
@@ -3714,7 +3840,6 @@
                     }
                 }
 
-                // Search input
                 const searchInput = document.getElementById("globalSearchInput");
                 if (searchInput) {
                     searchInput.addEventListener("input", (e) => { searchQuery = e.target.value;
@@ -3735,9 +3860,9 @@
                     else { navigateTo('developer'); }
                 });
 
-                // Movie Join button
-                document.getElementById("movieJoinBtn")?.addEventListener("click", () => {
-                    showToast("🎬 You've joined the movie night! Grab your popcorn 🍿", "success");
+                document.getElementById("spotlightExploreBtn")?.addEventListener("click", () => {
+                    // Scroll to featured section
+                    document.querySelector(".featured-banner")?.scrollIntoView({ behavior: "smooth" });
                 });
             }, 100);
         } else if (activeView === "dashboard") {
@@ -3916,6 +4041,8 @@
     window.handleLogout = handleLogout;
     window.handleDeleteAccount = handleDeleteAccount;
     window.openSettingsEdit = openSettingsEdit;
+    window.openAppSpotlight = openAppSpotlight;
+    window.closeAppSpotlight = closeAppSpotlight;
 
     // Modal event listeners
     document.getElementById('confirmPayment')?.addEventListener('click', processPayment);
@@ -3932,6 +4059,12 @@
         e.target.value = value;
     });
 
+    // App spotlight modal close
+    document.getElementById('spotlightModalClose')?.addEventListener('click', closeAppSpotlight);
+    document.getElementById('appSpotlightModal')?.addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeAppSpotlight();
+    });
+
     // ============================================================
     // INIT
     // ============================================================
@@ -3942,14 +4075,14 @@
     renderCurrentView();
     updateOnlineStatus();
 
-    console.log('🚀 Meon App Directory v15 - Movie Night Feature Added');
-    console.log('🎬 Movie Night: Swiper carousel with movie posters & ratings');
+    console.log('🚀 Meon App Directory v16 - App Spotlight Feature');
+    console.log('🌟 App Spotlight: Showcasing featured apps with Swiper carousel');
     console.log('📱 M-Pesa Sandbox: Active');
     console.log('💳 Plans: Free, Standard (KES 500/mo), Featured (KES 1,500/mo)');
     console.log('👤 User:', currentUser?.email || 'Not logged in');
     console.log('🔐 Demo Admin: admin@meon.com');
     console.log('👨‍💻 Demo Developer: dev@meon.com');
-    console.log('🎨 Design: Teal (#00b2a9) primary + Lime gradient accents + Movie Night card');
+    console.log('🎨 Design: Teal (#00b2a9) primary + App Spotlight with real app data');
 </script>
 </body>
 </html>
